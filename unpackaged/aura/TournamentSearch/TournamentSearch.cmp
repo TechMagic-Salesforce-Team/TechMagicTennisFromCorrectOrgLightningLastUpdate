@@ -1,0 +1,220 @@
+<aura:component controller="AURA_TournamentController">
+
+    <aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>
+    <aura:attribute name="tournament" type="Tournament__c" default="{}"/>
+    <aura:attribute name="tournamentToDisplay" type="Tournament__c"/>
+    <aura:attribute name="currentPlayerId" type="Id"/>
+    <aura:attribute name="currentPlayer" type="Player__c"/>
+    <aura:attribute name="home" type="Boolean" default="false"/>
+    <aura:attribute name="pageName" type="String"/>
+    <aura:handler action="{!c.search}" name="init" value="{!this}"/>
+    <aura:handler name="tournamentSelector" event="c:TournamentSelectedEvent" action="{!c.handleTournamentByClick}"/>
+    <aura:handler name="tournamentUpdate" event="c:UpdateTournamentsTableOnDelete" action="{!c.handleDeletedTournament}"/>
+    <aura:attribute name="createTournamentWindow" type="Boolean" default="false"/>
+    <aura:attribute name="tournamentCreate" type="Tournament__c" default="{}"/>
+    <aura:attribute name="tournamentCreated" type="Boolean" default="false"/>
+    <aura:attribute name="message" type="String"/>
+
+    <body>
+    <fieldset style="width: 100%; margin: 10px auto">
+        <div class="slds-page-header" role="banner" style="background-color: white;">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <p class="slds-text-heading--label">Tournaments</p>
+                    <h1 class="slds-text-heading--medium">
+                        <aura:if isTrue="{!v.home}">All current tournaments</aura:if>
+                        <aura:if isTrue="{!!v.home}">All tournaments</aura:if>
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+        <form class="slds-form--compound">
+            <div class=" slds-grid slds-wrap ">
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                    <label class="slds-form-element__label" for="name">Name</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputText class="slds-input" value="{!v.tournament.Name}" keyup="{!c.search}"
+                                      updateOn="keyup"/>
+                    </div>
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                    <label class="slds-form-element__label" for="name1">Type</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.tournament.Type__c}"
+                                        change="{!c.search}">
+                            <ui:inputSelectOption text="" label="All" value="true"/>
+                            <ui:inputSelectOption text="Single Elimination" label="Single Elimination"/>
+                            <ui:inputSelectOption text="Double Elimination" label="Double Elimination"/>
+                            <ui:inputSelectOption text="Round Robin" label="Round Robin"/>
+                        </ui:inputSelect>
+                    </div>
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                    <label class="slds-form-element__label" for="name">Format</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.tournament.Format__c}"
+                                        change="{!c.search}">
+                            <ui:inputSelectOption text="" label="All" value="true"/>
+                            <ui:inputSelectOption text="1 x 1" label="1 x 1"/>
+                            <ui:inputSelectOption text="2 x 2" label="2 x 2"/>
+                        </ui:inputSelect>
+                    </div>
+                </div>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                </div>
+                <aura:if isTrue="{!!v.home}">
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                    <label class="slds-form-element__label" for="name1">Status</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.tournament.Status__c}"
+                                        change="{!c.search}">
+                            <ui:inputSelectOption text="" label="All" value="true"/>
+                            <ui:inputSelectOption text="Upcoming" label="Upcoming"/>
+                            <ui:inputSelectOption text="Current" label="Current"/>
+                            <ui:inputSelectOption text="Completed" label="Completed"/>
+                        </ui:inputSelect>
+                    </div>
+                </div>
+                </aura:if>
+
+                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                </div>
+                <aura:if isTrue="{!v.currentPlayer.IsManager__c}">
+                <div style="margin: 20px auto">
+                    <lightning:button variant="neutral" label="New" iconName="utility:new" iconPosition="left" onclick="{! c.openModalWindow }"/>
+                </div>
+                </aura:if>
+            </div>
+        </form>
+    </fieldset>
+
+
+    <aura:if isTrue="{!v.createTournamentWindow}">
+    <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+        <div class="slds-modal__container">
+            <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeWindow}">
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header99" class="slds-text-heading--medium">Create tournament</h2>
+            </div>
+
+            <aura:if isTrue="{!v.tournamentCreated}">
+                <div class="slds-modal__content">
+                    <h2 class="slds-text-heading--medium" style="color: green; margin-left: 20px;">{!v.message}</h2>
+                </div>
+            </aura:if>
+
+            <!--###### MODAL BOX BODY Part Start From Here ######-->
+            <div class="slds-modal__content slds-p-around--medium">
+                    <fieldset style="width: 100%; margin: 20px auto">
+                        <form class="slds-form--compound">
+                            <div class=" slds-grid slds-wrap ">
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                                    <label class="slds-form-element__label" for="name">Name</label>
+                                    <div class="slds-form-element__control">
+                                        <ui:inputText class="slds-input" value="{!v.tournamentCreate.Name}" required="true"/>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                                    <label class="slds-form-element__label" for="name">Start date</label>
+                                    <div class="slds-form-element__control">
+                                        <ui:inputDate aura:id="dateField" displayDatePicker="true" class="slds-input" format="yyyy-MM-dd" value="{!v.tournamentCreate.StartDate__c}"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                                    <label class="slds-form-element__label" for="name">Format</label>
+                                    <div class="slds-form-element__control">
+                                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.tournamentCreate.Format__c}">
+                                            <ui:inputSelectOption text="1 x 1" label="1 x 1" value="true"/>
+                                            <ui:inputSelectOption text="2 x 2" label="2 x 2"/>
+                                        </ui:inputSelect>
+                                    </div>
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                                    <label class="slds-form-element__label" for="name1">Type</label>
+                                    <div class="slds-form-element__control">
+                                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.tournamentCreate.Type__c}">
+                                            <ui:inputSelectOption text="Single Elimination" label="Single Elimination" value="true"/>
+                                            <ui:inputSelectOption text="Double Elimination" label="Double Elimination"/>
+                                            <ui:inputSelectOption text="Round Robin" label="Round Robin"/>
+                                        </ui:inputSelect>
+                                    </div>
+                                </div>
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+                                <div style="margin: 20px auto">
+                                    <lightning:button variant="neutral" label="Create" iconName="utility:new" iconPosition="left" onclick="{! c.createTournament }"/>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+            </div>
+            <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}" >Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+
+
+
+
+    <c:TournamentsTable tournaments="{!v.tournaments}" player="{!v.currentPlayer}"/>
+
+
+        <aura:if isTrue="{!v.tournamentToDisplay != null}">
+            <aura:if isTrue="{!v.tournamentToDisplay.Status__c != 'Upcoming'}">
+                <c:TournamentInformation tournamentId="{!v.tournamentToDisplay.Id}" playerId="{!v.currentPlayerId}" tournamentType="{!v.tournamentToDisplay.Type__c}" pageName="{!v.pageName}" tournamentName="{!v.tournamentToDisplay.Name}"/>
+            </aura:if>
+        </aura:if>
+    </body>
+</aura:component>

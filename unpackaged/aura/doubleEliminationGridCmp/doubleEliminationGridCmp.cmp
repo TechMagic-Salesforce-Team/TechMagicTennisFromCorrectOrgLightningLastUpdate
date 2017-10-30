@@ -1,0 +1,203 @@
+<aura:component controller="AURA_DoubleElimination">
+
+    <aura:attribute name="playerId" type="Id"/>
+    <aura:attribute name="tournamentId" type="Id"/>
+    <aura:attribute name="games" type="GameJSON[]"/>
+    <aura:attribute name="winGamesSize" type="Integer"/>
+    <aura:attribute name="losGamesSize" type="Integer"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="pageName" type="String"/>
+    
+
+
+    <style>
+        div.scrollmenu {
+            overflow: auto;
+            white-space: nowrap;
+            background-color: #333;
+            width: 94%;
+            margin: 0 auto;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        div.scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+        .game {
+            width: 250px;
+            height: 125px;
+            display: inline-block;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border: 2px solid whitesmoke;
+            border-radius: 15%;
+            margin: 5px 15px;
+        }
+
+        .gameInfo {
+            border: 1px solid #333;
+            height: 33.3%;
+            width: 100%;
+            font-size: 17px;
+        }
+
+        .gameInfo > p {
+            margin-top: 9px;
+            margin-left: 20px;
+            margin-right: 20px;
+            font-style: italic;
+        }
+
+        .game_link {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: 2px solid white;
+            border-radius: 15%;
+            text-decoration: none;
+        }
+
+        .game_link:hover {
+            color: black;
+            background-color: white;
+        }
+
+        td {
+
+        }
+
+        table {
+            margin: 10px auto;
+        }
+
+        #winnersBasket {
+            width: {!v.winGamesSize * 260}px;
+        }
+
+        #losersBasket {
+            width: {!v.losGamesSize * 260}px;
+        }
+
+        .headerBasket {
+            width: 94%;
+            height: 50px;
+            background-color: grey;
+            margin: 0 auto;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+
+        .emptyGrid {
+            background-color: #333;
+            width: 94%;
+            margin: 0 auto;
+            height: 300px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+    </style>
+    <body>
+    <br/>
+    <br/>
+    <br/>
+
+    <div style="position:relative; margin-bottom: 20px;">
+        <aura:if isTrue="{!v.games.length == 0}">
+            <div aura:id="uploadSpinner">
+                <div class="headerBasket">
+                    <p style="text-align: center; font-size: 20px; color: white; padding-top: 10px">Winners
+                        basket</p>
+                </div>
+                <div class="emptyGrid"></div>
+                <lightning:spinner variant="brand" size="medium"/>
+                <div style="height: 20px; width: 94%; background-color: white">
+
+                </div>
+                <div class="headerBasket">
+                    <p style="text-align: center; font-size: 20px; color: white; padding-top: 10px">Losers
+                        basket</p>
+                </div>
+                <div class="emptyGrid"></div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.games.length != 0}">
+            <div class="headerBasket">
+                <p style="text-align: center; font-size: 20px; color: white; padding-top: 10px">Winners basket</p>
+            </div>
+            <div class="scrollmenu">
+                <table id="winnersBasket">
+                    <tr>
+                        <aura:iteration items="{!v.games}" var="game">
+                            <td>
+                                <aura:iteration items="{!game}" var="g">
+                                    <aura:if isTrue="{!g.winningGroup==true}">
+                                        <div class="game">
+                                            <div class="gameInfo" style="text-align: left;">
+                                                <p>{!g.firstCompetitorName}</p>
+                                            </div>
+                                            <div class="gameInfo" style="width: 40%; margin-left: 30%;">
+                                                <a class="game_link" href="{!g.hrefTo}">
+                                                    <p style="margin-top: -7px;">
+                                                    {!g.firstCompetitorScore} : {!g.secondCompetitorScore}
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <div class="gameInfo" style="text-align: right;">
+                                                <p>{!g.secondCompetitorName}</p>
+                                            </div>
+                                        </div>
+                                        <p style="clear: left"/>
+                                    </aura:if>
+                                </aura:iteration>
+                            </td>
+                        </aura:iteration>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <div class="headerBasket">
+                <p style="text-align: center; font-size: 20px; color: white; padding-top: 10px">Losers basket</p>
+            </div>
+            <div class="scrollmenu">
+                <table id="losersBasket">
+                    <tr>
+                        <aura:iteration items="{!v.games}" var="game">
+                            <td>
+                                <aura:iteration items="{!game}" var="g">
+                                    <aura:if isTrue="{!g.winningGroup==false}">
+                                        <div class="game">
+                                            <div class="gameInfo" style="text-align: left;">
+                                                <p>{!g.firstCompetitorName}</p>
+                                            </div>
+                                            <div class="gameInfo" style="width: 40%; margin-left: 30%;">
+                                                <a class="game_link" href="{!g.hrefTo}">
+                                                    <p style="margin-top: -7px;">
+                                                    {!g.firstCompetitorScore} : {!g.secondCompetitorScore}
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <div class="gameInfo" style="text-align: right;">
+                                                <p>{!g.secondCompetitorName}</p>
+                                            </div>
+                                        </div>
+                                        <p style="clear: left"/>
+                                    </aura:if>
+                                </aura:iteration>
+                            </td>
+                        </aura:iteration>
+                    </tr>
+                </table>
+            </div>
+        </aura:if>
+    </div>
+
+    </body>
+</aura:component>

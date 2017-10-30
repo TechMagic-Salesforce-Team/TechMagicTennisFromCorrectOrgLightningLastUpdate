@@ -1,0 +1,36 @@
+<apex:page controller="GameController" cache="false" showheader="false" tabStyle="Tournament__c" action="{!getInfoFromUrl}">
+    <c:Header />  
+        <apex:pageMessages />      
+            <apex:form >
+
+      <apex:pageBlock title="Score" rendered="{!isExistInCurrentGame && !isHoverCommandButton}">
+                   <h5>{!FirstCompetitor}</h5>
+                        <apex:inputField value="{!currentGame.FirstCompetitorScore__c}"/>
+                   <h5>{!SecondCompetitor}</h5>
+                        <apex:inputField value="{!currentGame.SecondCompetitorScore__c}"/>
+            <apex:pageBlockButtons location="bottom">
+                 <apex:commandButton rendered="{!!isHoverCommandButton}" value="Input Score" action="{!insertScore}"/>
+                 <!--<apex:commandButton rendered="{!!isHoverCommandButton}" value="Redirect page" action="{!redirectPage}"/>-->
+            </apex:pageBlockButtons>
+     </apex:pageBlock>
+     <apex:pageBlock title="Score" rendered="{!isExistInCurrentGame && isHoverCommandButton}">
+                   <h5>{!FirstCompetitor}</h5><br/>
+                        <apex:outputField value="{!currentGame.FirstCompetitorScore__c}"/>: 
+                        <apex:outputField value="{!currentGame.SecondCompetitorScore__c}"/><br/>
+                   <h5>{!SecondCompetitor}</h5>     
+            <apex:pageBlockButtons location="bottom">
+                 <apex:commandButton rendered="{!!isHoverSubmittButton}" value="Submit Score" action="{!submitScore}"/>
+                 <apex:commandButton rendered="{!isHoverCommandButton}" value="Resubmit Score" action="{!changeStatic}"/>
+            </apex:pageBlockButtons>
+     </apex:pageBlock>
+   <apex:pageBlock title="Score" rendered="{!currentPlayer!=null && !isExistInCurrentGame}">
+                        <h>You have no access to achieve this page</h>
+   </apex:pageBlock>
+
+    <apex:pageBlock title="Score" rendered="{!currentPlayer==null}">
+            <h>You have to sign in to achieve this page</h>
+    </apex:pageBlock>
+
+            </apex:form>
+   <c:Footer />
+</apex:page>

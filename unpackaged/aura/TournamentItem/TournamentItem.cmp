@@ -1,0 +1,30 @@
+<aura:component controller="AURA_TournamentController">
+    <aura:attribute name="tournament" type="Tournament__c"/>
+    <aura:attribute name="refreshTournament" type="Boolean" default="true"/>
+    <aura:attribute name="player" type="Player__c"/>
+    <aura:registerEvent name="tournamentSelector" type="c:TournamentSelectedEvent"/>
+    <aura:registerEvent name="tournamentUpdate" type="c:UpdateTournamentsTableOnDelete"/>
+    <tr style="cursor: pointer; height: 50px;" onclick="{!c.clickOntournament}">
+        <td class="slds-truncate" scope="row"><a href="{! '/Tournament?tournamentId='+v.tournament.Id}" onclick="{!c.dontRefreshTournamentAndRedirectPage}"><ui:outputText value="{!v.tournament.Name}"/></a> </td>
+        <td class="slds-truncate" scope="row"><ui:outputText value="{!v.tournament.Type__c}"/></td>
+        <td class="slds-truncate" scope="row"><ui:outputText value="{!v.tournament.Format__c}"/></td>
+        <td class="slds-truncate" scope="row"><ui:outputDate value="{!v.tournament.StartDate__c}"/></td>
+        <td class="slds-truncate" scope="row"><ui:outputText value="{!v.tournament.Status__c}"/></td>
+        <aura:if isTrue="{!v.player != null }">
+            <aura:if isTrue="{!v.player.IsManager__c}">
+                <aura:if isTrue="{!v.tournament.Status__c=='Upcoming'}">
+                   <!--<a href="/Tournaments">-->
+                       <td class="slds-truncate" scope="row"><a href="/Tournaments"><ui:button label="Start" press="{!c.startTournament}"/></a></td>
+                    <!--</a>-->
+                   <td class="slds-truncate" scope="row"><ui:button label="Delete" press="{!c.deleteTournamentAction}"/></td>
+                </aura:if>
+
+                <aura:if isTrue="{!v.tournament.Status__c!='Upcoming'}">
+                    <td class="slds-truncate" scope="row">---------</td>
+                    <td class="slds-truncate" scope="row">---------</td>
+                </aura:if>
+
+            </aura:if>
+        </aura:if>
+    </tr>
+</aura:component>

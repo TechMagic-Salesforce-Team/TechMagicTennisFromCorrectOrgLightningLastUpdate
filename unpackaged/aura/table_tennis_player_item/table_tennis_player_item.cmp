@@ -1,0 +1,52 @@
+<aura:component >
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <style>
+    	.red {
+        	color: red
+        }
+        
+        .green {
+        	color: green
+        }
+        
+        .orange {
+        	color: orange
+        }
+    </style>
+    <aura:attribute name="player" type="Player__c"/>
+    <tr class="slds-hint-parent" style="cursor:pointer;" onclick="{!c.playerClicked}">
+        <th class="slds-truncate" scope="row"></th>
+        <th class="slds-truncate" scope="row"></th>
+        <th class="slds-truncate" scope="row">
+            <!--<img src="https://ak.picdn.net/assets/cms/97e1dd3f8a3ecb81356fe754a1a113f31b6dbfd4-stock-photo-photo-of-a-common-kingfisher-alcedo-atthis-adult-male-perched-on-a-lichen-covered-branch-107647640.jpg"
+                 style="height: 100px;"
+            />-->
+            <aura:if isTrue="{!v.player.Image__c != null}">
+            <img src="{!v.player.Image__c}"
+                 style="height: 100px;"
+            />
+            </aura:if>
+
+            <aura:if isTrue="{!v.player.Image__c == null}">
+                <img src="https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png"
+                     style="height: 100px;"
+                />
+            </aura:if>
+
+            <span style="margin-left: 10px;">{!v.player.Name}</span>
+        </th>
+        <th class="slds-truncate" scope="row"></th>
+      <!--<th class="slds-truncate" scope="row">-->
+          <!--<span class="{!v.player.Status__c == 'Active' ? 'green' : v.player.Status__c != 'Not Active' ? 'orange' : 'red' }">-->
+              <!--{!v.player.Status__c} -->
+          <!--</span>-->
+        <!--</th>  -->
+    </tr>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <div aura:id="uploadSpinner">
+            <lightning:spinner variant="brand" size="medium"/>
+        </div>
+    </aura:if>
+
+</aura:component>

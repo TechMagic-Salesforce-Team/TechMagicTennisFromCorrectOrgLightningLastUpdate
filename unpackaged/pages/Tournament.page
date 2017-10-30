@@ -1,0 +1,40 @@
+<apex:page controller="TournamentController" action="{!getTournament}" cache="false" tabStyle="Tournament__c" showHeader="false">
+    <c:Header />
+    <!--<apex:pageBlock rendered="{!currentTournament.Status__c=='Upcoming'}">-->
+    <!--<c:TournamentInformation tournament="{!currentTournament}" competitors="{!competitorsNames}"/>-->
+    <!--</apex:pageBlock>-->
+    <!--<apex:pageBlock rendered="{!currentTournament.Status__c!='Upcoming'}">-->
+        <!--<c:TournamentInformation tournament="{!currentTournament}"/>-->
+    <!--</apex:pageBlock>-->
+
+    <apex:includeLightning />
+
+    <div style="margin-top: 20px;"/>
+    <div id="lightning"/>
+
+
+    <script>
+        //if ('{!currentTournament != null}') {
+            $Lightning.use("c:TournamentInformationApp", function () {
+                $Lightning.createComponent("c:TournamentInformation", {
+                            tournamentId: "{!currentTournament.Id}",
+                            playerId: "{!currentPlayer.Id}",
+                            tournamentType: "{!currentTournament.Type__c}",
+                            pageName: "Tournament",
+                            tournamentName: "{!currentTournament.Name}"
+                        },
+                        "lightning",
+                        function (cmp) {
+
+                        });
+            });
+        //}
+
+
+
+
+
+    </script>
+
+    <c:Footer />
+</apex:page>

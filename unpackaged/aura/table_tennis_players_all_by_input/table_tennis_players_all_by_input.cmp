@@ -1,0 +1,35 @@
+<aura:component >
+	<aura:attribute name="players" type="Player__c[]"/>
+    
+
+ <table class="slds-table slds-table--bordered" style="width: 80%; border-top: none;">
+    <thead>
+    <tr class="slds-text-heading--label" style="cursor:pointer;">
+
+        <th class="slds-truncate" scope="row" style="width: 30%"></th>
+        <th class="slds-truncate" scope="row"></th>
+
+
+         <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">INFORMATION
+          <button class="slds-button slds-button--icon-bare">
+            <span class="slds-assistive-text">Sort</span>
+          </button>
+        </div>
+      </th>
+
+        <th class="slds-truncate" scope="row"></th>
+
+    </tr>
+  </thead>
+
+
+  <tbody>
+      <aura:iteration items="{!v.players}" var="player" indexVar="index">
+        <!-- <p>INDEX: {!index}</p> -->
+        <c:table_tennis_player_item player="{!player}"/>
+      </aura:iteration>
+  </tbody>
+
+ </table>
+</aura:component>

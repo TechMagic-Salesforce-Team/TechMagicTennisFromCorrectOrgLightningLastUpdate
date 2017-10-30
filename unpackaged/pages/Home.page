@@ -1,0 +1,445 @@
+<apex:page controller="HomeController" cache="false" tabStyle="Tournament__c" showHeader="false">
+    <apex:stylesheet value="{!URLFOR($Resource.SiteSamples, 'css/headerBanner.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SiteSamples, 'css/headerCSS.css')}"/>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <style>
+    
+    .bPageBlock .pbTitle {
+            width: 100%;    
+            text-align: center;
+    }
+    
+    .styled-select {
+        background: white;
+        font-size: 17px;
+        height: 40px;
+        padding: 5px;
+        width: 268px;
+    }
+    .rowByTableTournamentInProgress{
+        cursor:pointer;
+        height : 55px;
+        font-size : 15px;
+        text-align:center;
+    }
+    .headerByTableTournamentInProgress{
+        font-size : 17px;
+        text-align:center;
+    }
+    .mySlides {
+        display:none;
+        display:block;
+        position:absolute;
+        margin-top: -16px;
+        min-width: 800px;
+    }
+    html {
+        min-width: 800px;
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+    #menu ul {
+    width: 300px;
+    margin: 0 auto;
+    background-color: white;
+    color:black;
+    text-decoration: none;
+}
+.circle{
+    width:15px; height: 15px; border-radius: 50%; border: 2px solid orange; cursor: hand; 
+}
+.circle:hover{
+    background-color:orange;
+}
+.categoryImg {
+    cursor: hand;
+    position: relative;
+    float: left;
+}
+.categoryImg:hover{
+    opacity: 0.8;
+}
+
+#text {
+  z-index: 100;
+  color: black;
+  font-size: 17px;
+  margin-top: 5px;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.category-inside-block{
+    display:none;
+    width:100%;
+    height: 100%;
+}
+
+.category-inside-block:hover{
+    display: block;
+}
+
+
+
+
+    </style>
+            <script>var id;</script>
+    
+ 
+    <c:Header />
+    <div style="float:left; width:100%;">
+
+        <div class="w3-content w3-section" style="padding:0px; margin:0px;" id = "mainDiv" >
+        <img class="mySlides" id="aaa" src="{!URLFOR($Resource.SiteSamples,
+                          'img/slider001.jpg')}" width="100%;"/>
+          <img class="mySlides" id = "aab" src="{!URLFOR($Resource.SiteSamples,
+                          'img/slider002.jpg')}" width="100%;"/>
+          <img class="mySlides" id = "aac" src="{!URLFOR($Resource.SiteSamples,
+                          'img/slider003.jpg')}" width="100%;"/>
+          <img class="mySlides" id = "aad" src="{!URLFOR($Resource.SiteSamples,
+                          'img/slider004.jpg')}" width="100%;"/>
+        </div>
+
+        
+        <div id = "anotherElements" style="width:100%; height:auto; margin-top: 35%;">
+
+            <div style="height:10px; float:left; margin-top:0px;" id="divAllHTML">
+                                <div id="menu" style="margin-bottom: 10px;">
+                     <ul id = 'ulCircles' style="background-color: white;">
+                                                <script>
+                                                    var elements = $('.mySlides');
+                                                    for (var i = 0; i < elements.length; i++){
+                                                        $('#ulCircles').append("<li><div class='circle' onclick='circle_selected_and_clear_interval("+i+")'></div></li>");
+                                                    }
+                                                </script>
+                    </ul>   
+                </div> 
+                <div style="float:left; width:500px; height:1px;" id = "divHTML">
+                </div>
+            </div>
+        </div>  
+
+        
+         
+         <div style="width: 100%; height: auto; background-size: cover; background-repeat: no-repeat; float:left; border-radius:30%; margin-left: 20px; margin-bottom: 20px;">
+                <div style="width:30%; height:30%; float:left; margin-left: 1%;">
+                <a href='Tournaments'>
+                <img src="{!URLFOR($Resource.SiteSamples,
+                          'img/all-tournaments.jpg')}" width="100%" height="auto;"  class="categoryImg" style="margin-bottom: 10px;">
+                </img>
+                </a>
+                <p id="text">ALL TOURNAMENTS</p>
+                </div>
+                
+                <div style="width:30%; height:30%; float:left; margin-left: 3%;">
+                <a href='Players'>
+                <img src="{!URLFOR($Resource.SiteSamples,
+                          'img/all-players.jpg')}" width="100%" height="auto;" class="categoryImg" style="margin-bottom: 10px;">
+                </img>
+                </a>
+                <p id = "text">ALL PLAYERS</p>
+                </div>
+                
+                <div style="width:30%; height:auto; float:left; visibility: hidden; margin-left: 3%;" id='profile-id'>
+                        <script>
+                            var isLoggedIn = {!isLoggedIn};
+                            if (isLoggedIn) {
+                                $("#profile-id").css('visibility','visible');
+                            }
+                            
+                        </script>
+                <a href='player?playerId={!currentPlayer.Id}'>
+                <img src="{!URLFOR($Resource.SiteSamples,
+                          'img/profile-icon.jpg')}" width="100%" height="80%;" class="categoryImg" style="margin-bottom: 10px;">
+                </img>
+                </a>
+                
+                <p id = "text">YOUR PROFILE</p>
+                </div>
+                
+     </div>  
+        
+    </div>
+    
+     
+    <script>
+var id1 = 1;
+var id2;
+var elements = $('.mySlides');
+var circles = $('.circle');
+var myIndex = 0;
+carousel();
+marginTogResize();
+myInterval = 1600;
+var count = 2;
+
+
+/*
+function carousel(){
+    var elements = $('.mySlides');
+    myIndex++;
+    myIndex%=elements.length;
+    
+    for (var i=0; i < elements.length; i++){
+        if (i==myIndex){
+            elements[i].style="display:block";
+        } else elements[i].style="display:none";
+    }
+    setTimeout(carousel, 2000);
+}
+*/
+     
+ function carousel(){
+     var height = $(window).height();   
+     var height1 = $(document).height();
+     var width = $(window).width();  
+     var width1 = $(document).width(); 
+     circles[1].style = 'background-color:orange;';
+ }   
+    
+    function marginTogResize(){
+        var marginTop = parseFloat(elements[id1].height)+parseFloat(elements[id1].offsetTop);
+        document.getElementById("divAllHTML").style  = 'margin-top:'+marginTop+'px';
+    }
+    
+    $(document).ready(function() {  
+    if (detectMob()) count=2; 
+    else count = 0;    
+    slideShow();   
+});
+    
+    
+    $( window ).resize(function() {
+        marginTogResize();
+        clearInterval(id);
+    });
+    
+    
+    function isSafari(){
+        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+        return isSafari;
+    }
+    
+     function isAppleProduct(){
+         
+        /*var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+
+        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
+
+        var isEdge = !isIE && !!window.StyleMedia;
+
+        var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+        var isBlink = (isChrome || isOpera) && !!window.CSS;
+        */
+        
+        if (isSafari()) $( ".circle" ).css( "visibility", "hidden" );
+        if( /iPhone|iPad|iPod/i.test(navigator.userAgent)){
+            $( ".circle" ).css( "visibility", "hidden" );
+            return true;
+        } 
+        return false;
+    }
+    
+    function slideShow(){
+        if (detectMob()==false){
+    if (count==elements.length-1) {
+         console.log('less');
+         backSlideShow();
+    } else { 
+    count++;
+    var leftTo = ($(window).width());
+    $("#aaa").animate({left: "-="+leftTo}, 3000);
+    for (var i = 1; i < elements.length; i++){
+         var x = elements[i-1].offsetLeft+$(window).width(); 
+        elements[i].style.left =  x+'px';
+        $("#"+elements[i].id).animate({left: "-="+leftTo}, 3000);
+    }
+    }   
+    orangeFill(); 
+    } else {
+        count++;
+        count%=elements.length; 
+        if (!isAppleProduct()) circle_selected(count);
+        else {
+            $("#"+elements[count].id).fadeOut("slow");
+            count++;
+            count%=elements.length;
+
+
+            for (var i = 0; i < elements.length; i++){
+                        $("#"+elements[i].id).stop( true, true ).fadeOut();
+                        if (i!=count) {
+                            elements[i].style = 'display:none';
+                        }
+                    }
+
+
+            $("#"+elements[count].id).stop( true, true ).fadeIn();
+            id1 = count;
+            orangeFill();
+        }
+   }
+   }
+    
+    
+    
+    function backSlideShow(){
+        elements[elements.length-1].style.left = "0px";  
+        var leftTo = ($(window).width())*(elements.length-1);
+        $("#aaa").animate({left: "+="+leftTo}, 3000);
+        for (var i = 1; i < elements.length; i++){
+         var x = elements[i-1].offsetLeft+$(window).width(); 
+         elements[i].style.left =  x+'px';
+         $("#"+elements[i].id).animate({left: "+="+leftTo}, 3000);
+        }  
+        count = 0;
+    }
+   
+     
+     function circle_selected(index){
+                //clearInterval(id);
+                //clearInterval(id1);
+                for (var i = 0; i < elements.length; i++){
+                    $("#"+elements[i].id).stop( true, true ).fadeIn();
+                    if (i!=index) {
+                        elements[i].style = 'display:none';
+                    }
+                }
+                elements[index].style.left = "0px";
+                elements[index].style = "display:block; position:absolute; margin-top: -16px;";
+                for (var i = 0; i < circles.length; i++){
+                    if (i==index)circles[i].style = 'background-color:orange;';
+                    else circles[i].style = 'background-color:white;';
+                }
+                id1 = index;
+    }
+    
+    function circle_selected_and_clear_interval(index){
+        circle_selected(index);
+        clearInterval(id);
+    }
+    
+    function orangeFill(){
+        id1%=(circles.length);
+        for (var i = 0; i < circles.length; i++){
+        if (i==id1)circles[i].style = 'background-color:orange;';
+        else circles[i].style = 'background-color:white;';
+        console.log(id1+', '+circles.length);
+    }
+    if (id1<circles.length-1) id1++;
+    else id1 = 0;
+    }
+    
+    function detectMob(){
+                if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                        return true;
+                    }
+                    return false;
+    }
+    
+    isAppleProduct();
+    id = setInterval(slideShow,6000);
+</script>
+<!--<c:TournamentsSearch home="true" showTournament="{!showTournamentId}"/>-->
+
+
+    <apex:includeLightning />
+
+    <div id = "lightning"/>
+    <script>
+        $Lightning.use("c:tournamentSearchApp", function () {
+            $Lightning.createComponent("c:tournamentSearch", {
+                        currentPlayerId : "{!currentPlayer.Id}",
+                        home: true,
+                        pageName: "Home"
+                    },
+                    "lightning",
+                    function (cmp) {
+                        //alert('Component created, do something cool here');
+                    });
+        });
+    </script>
+
+
+     <!--
+<apex:pageBlock rendered="{!tournamentsInProgressSize > 0}" mode="edit">
+          
+         <script>
+              function rerenderCurrentTournament()
+              {
+                  rerenderPageBlockForSelectedTournamentFunc();
+              }
+              function rerenderCurrentTournamentsType()
+              {
+                  rerenderPageBlockForSelectedTournamentTypeFunc();
+              }
+              
+                
+                </script>
+    
+     <apex:pageBlock tabStyle="Tournament__c" rendered="{!tournamentsInProgressSize > 0}" mode="maindetail">
+     
+         <apex:form >
+             <apex:inputHidden value="{!selectedTournament}" id="tournamentIdHidden"/>
+              <apex:actionFunction name="rerenderPageBlockForSelectedTournamentt" action="{!rerenderPageBlockForSelectedTournament}" reRender="cGrid8, cGrid, cGrid2, cGrid3, DetalInformationForSelectedTournament"/>  
+         </apex:form>
+         
+     
+         <apex:form >
+             <apex:actionFunction name="rerenderPageBlockForSelectedTournamentTypeFunc" action="{!rerenderPageBlockForSelectedTournamentsType}" reRender="cGrid, allTournamentsInProgressId"/>
+             
+             <apex:inputHidden value="{!selectedTournament}" id="deletePersonBlock"/>
+             <apex:actionFunction name="rerenderPageBlockForSelectedTournament" action="{!rerenderPageBlockForSelectedTournament}" reRender="cGrid8, cGrid, cGrid2, cGrid3, DetalInformationForSelectedTournament"/>
+             
+  
+            
+             
+             <apex:pageBlock title="All Current Tournament" mode="maindetail">
+                 <apex:pageBlockSection columns="2">   
+                     <apex:outputLabel style="font-size : 22px;">Type  &nbsp; &nbsp;<apex:selectList onchange="rerenderCurrentTournamentsType()" value="{!selectedTournamentType}" size="1" styleClass="styled-select">
+                         <apex:selectOptions value="{!tournamentTypeOptions}"></apex:selectOptions>
+                     </apex:selectList></apex:outputLabel>
+                     <apex:outputLabel style="font-size : 22px;">Format &nbsp; &nbsp;<apex:selectList onchange="rerenderCurrentTournamentsType()" value="{!selectedTournamentFormat}" size="1" styleClass="styled-select">
+                         <apex:selectOptions value="{!tournamentFormatOptions}"></apex:selectOptions>
+                     </apex:selectList></apex:outputLabel>
+                </apex:pageBlockSection>
+                <apex:pageBlockTable headerClass="headerByTableTournamentInProgress" value="{!tournamentsInProgress}" var="tournament" id="allTournamentsInProgressId" rowClasses="rowByTableTournamentInProgress">
+                    <apex:column value="{!tournament.Name}" onclick="rerenderTournament('{!tournament.Id}')"/>
+                    <apex:column value="{!tournament.StartDate__c}" onclick="rerenderTournament('{!tournament.Id}')"/>        
+                    <apex:column onclick="rerenderTournament('{!tournament.Id}')">
+                        <apex:facet name="header">Type</apex:facet>
+                        <apex:outputField value="{!tournament.Type__c}"/>
+                    </apex:column>
+                    <apex:column value="{!tournament.Format__c}" onclick="rerenderTournament('{!tournament.Id}')"/>
+                    <apex:column value="{!tournament.Status__c}" onclick="rerenderTournament('{!tournament.Id}')"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>      
+         </apex:form>
+         </apex:pageBlock>     
+     </apex:pageBlock>
+     
+     <apex:pageBlock mode="maindetail" rendered="{!tournamentsInProgressSize > 0 && tournamentsInProgress.size !=null && tournamentsInProgress.size > 0 && tournamentBySelectOption !=null}">     
+          <c:TournamentInformation id="cGrid" tournament="{!tournamentBySelectOption}"/>
+     </apex:pageBlock>    
+      
+     <apex:pageBlock tabStyle="Tournament__c" title="No Current Tournaments For Now" rendered="{!tournamentsInProgressSize == 0}"/>
+     
+   
+     
+        <script>
+            function rerenderTournament(id){
+                $('[id$=deletePersonBlock]').val(id);
+                rerenderPageBlockForSelectedTournament();
+            }
+        </script>-->
+    <c:Footer />
+
+    <script>
+    </script>
+
+</apex:page>

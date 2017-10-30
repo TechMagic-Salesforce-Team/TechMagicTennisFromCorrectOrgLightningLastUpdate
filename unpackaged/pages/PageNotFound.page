@@ -1,0 +1,5 @@
+<apex:page showHeader="false">
+        <c:Header />  
+<h1>Page not found</h1>
+<c:Footer />  
+</apex:page>

@@ -1,0 +1,47 @@
+<aura:component >
+    <aura:attribute name="playerId" type="Id"/>
+    <aura:attribute name="tournamentId" type="Id"/>
+    <aura:attribute name="tournamentType" type="String"/>
+    <aura:attribute name="pageName" type="String"/>
+    <aura:attribute name="tournamentName" type="String"/>
+
+    <style>
+
+        div.menuinfo {
+            white-space: nowrap;
+            background-color: #333;
+            width: 94%;
+            height: 200px;
+            margin: 0 auto;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            margin-top: 20px;
+        }
+
+        div.menuinfo a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+
+    </style>
+
+
+        <p style="display: block; margin: 30px auto; font-size: 20px; text-align: center;">{!v.tournamentName}</p>
+
+    <aura:if isTrue="{!v.tournamentType=='Single Elimination'}">
+        <c:singleEliminationGridCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.tournamentType=='Double Elimination'}">
+        <c:doubleEliminationGridCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+    </aura:if>
+
+
+    <aura:if isTrue="{!v.tournamentType=='Round Robin'}">
+        <c:roundRobinCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+    </aura:if>
+
+</aura:component>

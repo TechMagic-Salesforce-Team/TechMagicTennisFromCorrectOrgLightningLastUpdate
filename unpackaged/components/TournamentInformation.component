@@ -1,0 +1,102 @@
+<apex:component controller="TournamentController">
+    <style>
+        .thisLinks:link, .thisLinks:visited{ 
+            background-color: white;
+            color: black;
+            border: 2px solid #cc1e1e;
+            padding: 10px 20px;
+            margin-bottom: 5px;
+            margin-top:10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius : 20%;        
+        }
+        
+        .thisLinksNotEditable:link,.thisLinksNotEditable:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+            margin-bottom: 5px;
+            padding: 10px 20px;
+            margin-top:10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius : 20%;
+        }
+        
+        .thisLinksGameCompleted:link,.thisLinksGameCompleted:visited{
+            background-color: white;
+            color: black;
+            border: 2px solid limegreen;
+            margin-bottom: 5px;
+            padding: 10px 20px;
+            margin-top:10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius : 20%;
+        }
+
+        .thisLinksAcceptedByOnePlayer:link, .thisLinksAcceptedByOnePlayer:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid orange;
+            margin-bottom: 5px;
+            padding: 10px 20px;
+            margin-top:10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius : 20%;
+        }
+        .thisLinks:hover{
+            background-color: #cc1e1e;
+            color: white;
+         }
+         
+         .tournamentFields {
+             font-size: 17px;
+         }
+         .pdfLinkLikeButton:link, .pdfLinkLikeButton:visited{
+            background-color: white;
+            color: black;
+            border: 2px solid #cc1e1e;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius : 15%;
+            transition-duration: 0.7s;  
+         }
+         .pdfLinkLikeButton:hover{
+            background-color: #cc1e1e;
+            color: white;
+         }
+    </style>
+    
+    <apex:attribute type="Tournament__c" name="tournament" assignTo="{!currentTournament}" required="true" description="Value to pass into the controller"/>
+    <apex:attribute type="String[]" name="competitors" assignTo="{!competitorsNames}" required="false" description="Value to pass into the controller"/>
+
+    <apex:pageBlockSection title="Tournament Information" showHeader="false">
+                <apex:outputLabel value="Name {!currentTournament.Name}" styleClass="tournamentFields" />
+                <apex:outputLabel value="Status {!currentTournament.Status__c}" styleClass="tournamentFields" />
+                <apex:outputLabel value="Format {!currentTournament.Format__c}" styleClass="tournamentFields" />
+                <apex:outputLabel value="Type {!currentTournament.Type__c}" styleClass="tournamentFields" />
+                <apex:outputLabel value="Date {!currentTournament.StartDate__c}" styleClass="tournamentFields" />
+                <apex:outputLink target="_blank" styleClass="pdfLinkLikeButton" value="TournamentPDF?id={!currentTournament.Id}">Save as pdf</apex:outputLink>
+                <!-- <apex:outputField  value="{!currentTournament.Name}"/>
+                <apex:outputField value="{!currentTournament.Status__c}"/>
+                <apex:outputField value="{!currentTournament.Format__c}"/>
+                <apex:outputField value="{!currentTournament.Type__c}"/>
+                <apex:outputField value="{!currentTournament.StartDate__c}" />-->
+
+                <apex:repeat value="{!competitorsNames}" var="competitorName">
+                    <p>{!competitorName}</p>
+                </apex:repeat>
+    </apex:pageBlockSection>
+    <c:SingleElimination componentTournament="{!currentTournament}" rendered="{!currentTournament.Type__c=='Single Elimination' && currentTournament.Status__c!='Upcoming'}"/>
+    <c:DoubleEliminationTournament componentTournament="{!currentTournament}" rendered="{!currentTournament.Type__c=='Double Elimination' && currentTournament.Status__c!='Upcoming'}"/>
+    <c:RoundRobin componentTournament="{!currentTournament}" rendered="{!currentTournament.Type__c=='Round Robin' && currentTournament.Status__c!='Upcoming'}"/>
+</apex:component>

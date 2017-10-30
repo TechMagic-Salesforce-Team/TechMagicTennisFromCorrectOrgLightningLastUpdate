@@ -1,0 +1,27 @@
+<aura:component >
+    <aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>
+    <aura:attribute name="playerId" type="Id"/>
+    <aura:attribute name="player" type="Player__c"/>
+    <table class="slds-table slds-table--bordered slds-theme--default" style="width: 98%; margin: 36px auto 0;">
+        <thead>
+        <tr class="slds-text-heading--label">
+            <th class="slds-truncate" scope="row">Name</th>
+            <th class="slds-truncate" scope="row">Type</th>
+            <th class="slds-truncate" scope="row">Format</th>
+            <th class="slds-truncate" scope="row">Start date</th>
+            <th class="slds-truncate" scope="row">Status</th>
+            <aura:if isTrue="{!v.player.IsManager__c}">
+                <th class="slds-truncate" scope="row">Begin</th>
+                <th class="slds-truncate" scope="row">Delete</th>
+            </aura:if>
+        </tr>
+        </thead>
+        <tbody>
+        <aura:iteration items="{!v.tournaments}" var="t">
+            <aura:if isTrue="{!t != null}">
+              <c:TournamentItem tournament="{!t}" player="{!v.player}"/>
+            </aura:if>
+        </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

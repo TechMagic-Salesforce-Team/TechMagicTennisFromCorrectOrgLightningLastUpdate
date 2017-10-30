@@ -1,0 +1,24 @@
+<apex:page controller="PlayerTeamController" action="{!validatePageVisitor}" cache="false" showHeader="false">
+    <c:Header />
+    <apex:pageBlock rendered="{!currentTournament != null}">
+        <h2>Tournament information</h2>
+        <c:TournamentInformation tournament="{!currentTournament}"/>
+    </apex:pageBlock>
+    <apex:form >
+        <apex:pageBlock mode="edit">
+            <h2 style="margin-left: 1%">Your team</h2>
+            <apex:pageMessages />
+            <apex:pageBlockSection >
+                <apex:inputField value="{!team.Name}" required="true"/>
+                <apex:selectList value="{!selectedPlayer}" size="1" required="true" label="Second team member">
+                    <apex:selectOptions value="{!playersOptions}"></apex:selectOptions>
+                </apex:selectList>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!create}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    <c:Footer />
+</apex:page>

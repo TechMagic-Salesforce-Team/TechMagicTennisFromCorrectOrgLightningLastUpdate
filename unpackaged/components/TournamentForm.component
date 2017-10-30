@@ -1,0 +1,18 @@
+<apex:component controller="TournamentController" allowDML="true">
+    <apex:attribute type="Tournament__c" name="tournament" assignTo="{!currentTournament}" required="true" description="Value to pass into the controller"/>
+    <apex:form >
+        <apex:pageBlock mode="edit">
+            <apex:pageMessages />
+            <apex:pageBlockSection >
+                <apex:inputField value="{!currentTournament.Name}" required="true"/>
+                <apex:inputField value="{!currentTournament.Type__c}"/>
+                <apex:inputField value="{!currentTournament.Format__c}"/>
+                <apex:inputField value="{!currentTournament.StartDate__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:component>

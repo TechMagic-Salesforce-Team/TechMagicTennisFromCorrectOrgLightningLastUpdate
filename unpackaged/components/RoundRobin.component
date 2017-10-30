@@ -1,0 +1,31 @@
+<apex:component controller="RoundRobin">
+<apex:attribute name="componentTournament" type="Tournament__c" assignTo="{!tournament}" description="need to give this tournament for good work" required="true"/>
+        <table align="center">
+     <apex:repeat value="{!roundRobinMatrix}" var="row"> 
+      <tr>
+       <apex:repeat value="{!row}" var="column" id="myTable">
+                    <td id='id_{!column.playerId}' height='120' width='180' bgColor = '{!column.color}' 
+                    onmouseover="showTeamPlayers('id_{!column.idGameJSONUnique}','{!column.playerName}','{!column.player1OfTeam}','{!column.player2OfTeam}',true)"
+                    onmouseout="showTeamPlayers('id_{!column.idGameJSONUnique}','{!column.playerName}','{!column.player1OfTeam}','{!column.player2OfTeam}',false)">
+                        <a href="{!column.hrefTo}&redirectUrl={!$CurrentPage.Name+'?tournamentId='+tournament.Id}" style='text-decoration: none; display: block;'>
+                        <font id='font_id_{!column.idGameJSONUnique}' style="color: {!column.fontColor}">{!column.playerName}</font> <span style="display: block; width: 100%; height: 100%; font-size: 40px; vertical-align: middle; margin-left: 40%">{!column.score}</span> {!column.firstCompetitorId}
+                        </a>
+                    </td> 
+       </apex:repeat>
+      </tr>
+     </apex:repeat>
+     </table>
+
+    <script>
+        function showTeamPlayers(id,teamName,firstPlayerName,secondPlayerName,overTrue){
+            var format2x2 = "{!tournament.Format__c=='2 x 2'}";
+            if (format2x2=='true'){
+            if (overTrue){
+            document.getElementById('font_'+id).innerHTML=''+firstPlayerName+', '+secondPlayerName;
+        } else {
+             document.getElementById('font_'+id).innerHTML=''+teamName;
+           }
+          }
+        }
+    </script>
+</apex:component>

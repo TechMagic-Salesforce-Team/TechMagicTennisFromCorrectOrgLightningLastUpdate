@@ -1,0 +1,105 @@
+<apex:component controller="SingleEliminationTournament">
+    <head>   
+ <style>
+            .page-block-table-single-elimination .littleWindowsTeam{
+                height: auto;
+                width: auto;
+                min-width:200px;
+                background: white;
+                font-size: 14px;
+                position: absolute;
+                cursor: pointer;
+                border: 1px solid #383838;
+                display: none;
+                /*margin-left: 250px;*/
+                z-index: 10;
+                margin-top: -30px;
+                font-family: Arial Unicode MS !important;
+            }
+ 
+            .page-block-table-single-elimination .spansInfo {
+                visibility: visible;
+                cursor: pointer;
+                text-align: left;
+                font-family: Arial Unicode MS !important;
+            }
+        </style></head>
+<apex:attribute name="componentTournament" type="Tournament__c" assignTo="{!oneTournament}" description="need to give this tournament for good work" required="true"/>
+    <apex:pageBlock mode="maindetail" id="cGrid2" rendered="{!representSingleEliminationGrid.size !=0}">
+        <center><apex:pageBlockTable styleClass="page-block-table-single-elimination" value="{!ijz}" style="width : {!28*representSingleEliminationGrid.size}%; max-width : 100%;" var="thisStageGames" id="table1">
+            <apex:repeat value="{!representSingleEliminationGrid}" var="thisRows">
+                <apex:column width="{!100/representSingleEliminationGrid.size}%">
+                    <apex:repeat value="{!thisRows}" var="thisGame">
+                        <div style = "white-space: nowrap; text-align : center;">
+                        <apex:pageBlock rendered="{!thisGame.winningGroup= true}" tabStyle="Tournament__c">
+                            <apex:facet name="header">
+                                <apex:outputText rendered="{!thisGame.gameType ='Final'}"><h3 style="color:#aa142b;">Final</h3></apex:outputText>
+                            </apex:facet>
+                            <center>
+                             <span class="spansInfo" id="{!thisGame.gameId}_1_span" style="color: {!thisGame.firstCompetitorColor}; text-align: center;" onmouseout="outMouse()" onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_1')"><apex:outputText style="font-family: Arial Unicode MS;" value="{!competitorsName[thisGame.firstCompetitorId]}"/></span><p style='clear:left;'/>
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail">
+                                            <div class="littleWindowsTeam" id="{!thisGame.gameId}_1">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeamColor};font-family: Arial Unicode MS !important;">Player 1: {!thisGame.player1OfTeam}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeamColor};font-family: Arial Unicode MS !important;">Player 2: {!thisGame.player2OfTeam}</p>
+                            </div></apex:pageBlock>
+                            <apex:outputLink rendered="{!thisGame.editable}" styleClass="thisLinks" value="{!thisGame.hrefTo}&redirectUrl={!$CurrentPage.Name+'?tournamentId='+oneTournament.Id}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!!thisGame.editable}" styleClass="thisLinksNotEditable" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <p style='clear:left;'/>
+                            <span class="spansInfo" id="{!thisGame.gameId}_2_span" style="color: {!thisGame.secondCompetitorColor}; text-align: center;" onmouseout="outMouse()"  onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_2')"><apex:outputText style="font-family: Arial Unicode MS;" value="{!competitorsName[thisGame.secondCompetitorId]}"/></span> 
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail">
+                                        <div class="littleWindowsTeam" id="{!thisGame.gameId}_2">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeam2Color};font-family: Arial Unicode MS !important;">Player 1: {!thisGame.player1OfTeam2}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeam2Color};font-family: Arial Unicode MS !important;">Player 2: {!thisGame.player2OfTeam2}</p>
+                            </div></apex:pageBlock>
+                            </center>
+                        </apex:pageBlock>   
+                        <apex:pageBlock tabStyle="Game__c" rendered="{!thisGame.WinningGroup == false}"><center>
+                            <apex:facet name="header">
+                                <apex:outputText ><h3 style="color:#aa142b;">3rd Place Match</h3></apex:outputText>
+                            </apex:facet>
+                            <span class="spansInfo" id="{!thisGame.gameId}_1_span" style="color: {!thisGame.firstCompetitorColor}; text-align: center;" onmouseout="outMouse()" onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_1')"><apex:outputText style="font-family: Arial Unicode MS;" value="{!competitorsName[thisGame.firstCompetitorId]}"/></span><p style='clear:left;'/>
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail"><div class="littleWindowsTeam" id="{!thisGame.gameId}_1">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeamColor};font-family: Arial Unicode MS !important;">Player 1: {!thisGame.player1OfTeam}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeamColor};font-family: Arial Unicode MS !important;">Player 2: {!thisGame.player2OfTeam}</p>
+                            </div></apex:pageBlock>
+                            <apex:outputLink rendered="{!thisGame.editable}" styleClass="thisLinks" value="{!thisGame.hrefTo}&redirectUrl={!$CurrentPage.Name+'?tournamentId='+oneTournament.Id}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!!thisGame.editable}" styleClass="thisLinksNotEditable" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <p style='clear:left;'/>
+                            <span class="spansInfo" id="{!thisGame.gameId}_2_span" style="color: {!thisGame.secondCompetitorColor}; text-align: center;" onmouseout="outMouse()"  onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_2')"><apex:outputText style="font-family: Arial Unicode MS;" value="{!competitorsName[thisGame.secondCompetitorId]}"/></span> 
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail"><div class="littleWindowsTeam" id="{!thisGame.gameId}_2">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeam2Color};font-family: Arial Unicode MS !important;">Player 1: {!thisGame.player1OfTeam2}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeam2Color};font-family: Arial Unicode MS !important;">Player 2: {!thisGame.player2OfTeam2}</p>
+                            </div></apex:pageBlock>
+                            </center>
+                        </apex:pageBlock>
+                        </div>
+                    </apex:repeat>
+                </apex:column>
+            </apex:repeat>
+        </apex:pageBlockTable></center>
+        </apex:pageBlock>
+  
+    <script>
+        function mouseOverTeam(event,id){
+            //alert(id);
+            if ('{!oneTournament.Format__c}'=='2 x 2'){
+                var x = event.clientX;     // Get the horizontal coordinate
+                var y = event.clientY;     // Get the vertical coordinate
+                var coor = "X coords: " + x + ", Y coords: " + y;
+                $( "#"+id).css( "display", "block" );
+                var divElem =  document.getElementById(id);
+                y = $(document).height()-y;
+                y = document.getElementById(id+'_span').offsetTop;
+                y = $("#"+id+"_span").position().top+40;
+                x = $("#"+id+"_span").position().left+$("#"+id+"_span").width();
+                divElem.style.left = x+"px";
+                divElem.style.top = y+"px";
+                divElem.style.position="absolute";
+            }
+        }
+        
+        function outMouse(){
+            $( ".littleWindowsTeam" ).css( "display", "none" );
+        }
+    </script>
+    </apex:component>

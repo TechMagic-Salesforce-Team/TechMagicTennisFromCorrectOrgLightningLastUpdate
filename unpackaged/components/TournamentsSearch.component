@@ -1,0 +1,94 @@
+<apex:component controller="TournamentController" allowDML="true">
+
+        <style>
+        .styled-select {
+        background: white;
+        font-size: 17px;
+        height: 30px;
+        padding: 5px;
+        width: 268px;
+    }
+        </style>
+
+
+    <apex:attribute type="Player__c" name="player" assignTo="{!currentPlayer2}" description="Value to pass into the controller"/>
+    <apex:attribute type="String" name="home" assignTo="{!isHome}" description="Value to pass into the controller"/>
+    <apex:attribute type="String" name="showTournament" description="Tournament that must be shown after submitting score of game" required="false" assignTo="{!idTournamentToShow}"/>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:inputField value="{!searchTournament.Name}" required="false" styleClass="styled-select" onkeyup="searchTournaments()" rendered="{!isHome != 'true'}"/>
+                <apex:inputField value="{!searchTournament.Type__c}" required="false" styleClass="styled-select" onchange="searchTournaments()"/>
+                <apex:inputField value="{!searchTournament.Format__c}" required="false" styleClass="styled-select" onchange="searchTournaments()"/>
+                <apex:inputField value="{!searchTournament.Status__c}" required="false" styleClass="styled-select" onchange="searchTournaments()" rendered="{!isHome != 'true'}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Search" action="{!search}" rerender="allTournamentsTable" rendered="false"/>
+                <apex:actionFunction name="searchAction" action="{!search}" rerender="allTournamentsTable"/>
+                <apex:commandButton value="New tournament" action="{!create}" rendered="{!isManager && isHome != 'true'}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock id="allTournamentsTable">
+            <apex:pageMessages />
+            <apex:pageBlockSection rendered="{!allTournaments == null}">
+                <p>Search for the tournaments you are interested in...</p>
+            </apex:pageBlockSection>
+            <apex:pageBlockTable value="{!allTournaments}" var="t" rendered="{!allTournaments != null && allTournaments.size > 0}" id="allTournamentsGeneral">
+                <apex:column headerValue="Name"><a href="/Tournament?tournamentId={!t.tournament.Id}" style="text-decoration: none;">{!t.tournament.Name}</a></apex:column>
+                <apex:column value="{!t.tournament.Type__c}"/>
+                <apex:column value="{!t.tournament.Format__c}"/>Î
+                <apex:column value="{!t.tournament.StartDate__c}"/>
+                <apex:column headerValue="Status">
+                    <apex:outputText value="{!t.tournament.Status__c}" rendered="{!isManager && t.tournament.Status__c != 'Upcoming' || !isManager}"/>
+                    <apex:commandButton value="Start" action="{!start}" rendered="{!isManager && t.tournament.Status__c == 'Upcoming'}" rerender="allTournamentsTable">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                </apex:column>
+                <apex:column headerValue="View">
+                    <apex:commandButton value="View" action="{!view}" rerender="allTournamentsTable" rendered="{!!t.isShowed}">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                    <apex:commandButton value="Hide" action="{!view}" rerender="allTournamentsTable" rendered="{!t.isShowed}">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                </apex:column>
+                <apex:column headerValue="Apply" rendered="{!isLoggedIn}">
+                    <apex:outputText value="Applied" rendered="{!t.isApplied && t.tournament.Status__c != 'Upcoming'}"/>
+                    <apex:outputText value="Not applied" rendered="{!!t.isApplied && t.tournament.Status__c != 'Upcoming'}"/>
+                    <apex:commandButton value="Apply" action="{!apply}" rendered="{!!t.isApplied && t.tournament.Status__c == 'Upcoming'}" rerender="allTournamentsTable">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                    <apex:commandButton value="Disapply" action="{!disapply}" rendered="{!t.isApplied && t.tournament.Status__c == 'Upcoming'}" rerender="allTournamentsTable">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                </apex:column>           
+                <apex:column headerValue="Edit" rendered="{!isManager}">
+                    <apex:commandButton value="Edit" action="{!editUpcoming}" rerender="allTournamentsTable">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                </apex:column>
+                <apex:column headerValue="Delete" rendered="{!isManager}">
+                    <apex:commandButton value="Delete" action="{!deleteUpcoming}" rerender="allTournamentsTable">
+                        <apex:param name="currentTournamentId" value="{!t.tournament.Id}" assignTo="{!currentTournamentId}"/>
+                    </apex:commandButton>
+                </apex:column>                
+                <apex:column breakBefore="true" colspan="9" rendered="{!t.isShowed}" onmousemove="this.style.backgroundColor='white'" onmouseout="this.style.backgroundColor =''">
+                    <apex:pageBlock onmousemove="this.style.backgroundColor=''" onmouseout="this.style.backgroundColor =''">
+                        <c:TournamentInformation tournament="{!t.tournament}" competitors="{!competitorsNames}"/>
+                    </apex:pageBlock>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:pageBlockSection rendered="{!allTournaments != null && allTournaments.size == 0}">
+                <p>No tournaments found</p>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+        <script>
+                function searchTournaments(){
+                    searchAction();
+                }
+                searchTournaments();
+        </script>    
+            
+</apex:component>

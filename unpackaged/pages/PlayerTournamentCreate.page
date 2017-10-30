@@ -1,0 +1,16 @@
+<apex:page controller="PlayerTournamentController" action="{!apply}" showHeader="false" cache="false">
+  <c:Header />
+  <apex:pageBlock rendered="{!isAlreadyApplied && isValidParameter}">
+    <h2>You are already applied for this tournament!</h2>
+  </apex:pageBlock>
+  <apex:pageBlock rendered="{!!isAlreadyApplied && isValidParameter && currentTournament.Status__c == 'Upcoming'}">
+    <h2>Congratulations!!! You have applied for this tournament!</h2>
+  </apex:pageBlock>
+  <apex:pageBlock rendered="{!!isAlreadyApplied && isValidParameter && currentTournament.Status__c != 'Upcoming'}">
+    <h2>You can not apply for this tournament as it is either in progres or finished!</h2>
+  </apex:pageBlock>
+  <apex:pageBlock >
+    <c:TournamentInformation tournament="{!currentTournament}"/>
+  </apex:pageBlock>
+  <c:Footer />
+</apex:page>

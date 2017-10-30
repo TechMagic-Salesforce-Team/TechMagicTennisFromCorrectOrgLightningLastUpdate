@@ -1,0 +1,186 @@
+<apex:page controller="TournamentPDF" renderAs="pdf" showHeader="false" applyHtmlTag="false">
+    <head>
+        <style>
+            .bPageBlock{
+                width: 100%;    
+                margin-bottom : 10px;  
+                margin-top : 10px;
+            }
+            .bPageBlock .pbTitle {
+                width: 100%;    
+                text-align: center;
+            }
+            .bPageBlock .custom1{
+                text-align: center;
+                vertical-align: middle;
+                line-height: 35px;
+                margin: auto;
+                width: 50%;
+            }
+            .thisLinks:link, thisLinks:visited{ 
+                background-color: white;
+                color: black;
+                border: 2px solid #cc1e1e;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                border-radius : 20%; 
+                white-space: nowrap;
+            }
+            
+            .thisLinks:hover{
+                background-color: #cc1e1e;
+                color: white;
+             }
+
+             .tournamentFields{
+                 font-size : 17px;
+             }
+             .divComponents{
+                 display : inline-block; 
+                 width : 100%;
+                 font-family: Arial Unicode MS !important;
+             }
+             .divComponents p{
+                 font-family: Arial Unicode MS;
+             }
+             .divComponents span{
+                 font-family: Arial Unicode MS;
+             }
+             .divComponentsLinks{
+                 display : inline-block; 
+                 width : 100%;
+             }
+             .LINKKKS{
+                background-color: white;
+                color: black;
+                border: 2px solid #c9fffc;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                border-radius : 20%;
+                min-width:90px; 
+                margin : 5px;
+                margin-left : 12px;  
+             }
+             .LINKKKSsite{
+             
+                text-align: center;
+                text-decoration: none;
+                border-radius : 50%;
+                background-color: white;
+                color: black;
+                height : 50px;
+                line-height: 50px;
+                vertical-align: middle;
+                
+                border: 2px solid #c9fffc;
+                display: block;
+                margin: 15px;
+                padding: 3px;
+                width:133px;
+                margin: 15px;
+
+             }
+             .outputTextInCustom2{
+                 font-family: Arial Unicode MS;
+                 text-align : center;
+             }
+             .outputTextInCustom2Header{
+                 font : italic bold 22px/30px Georgia, serif;
+                 text-align : center;
+             }
+             .thisLinks{
+                 border : 1px solid;
+                 white-space: nowrap;
+             }
+             .thisLinksNotEditable:link,.thisLinksNotEditable:visited {
+                background-color: white;
+                color: black;
+                border: 2px solid black;
+                margin-bottom: 5px;
+                padding: 10px 20px;
+                margin-top:10px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                border-radius : 20%;
+                white-space: nowrap;
+            }
+        </style>        
+    </head>
+    <apex:pageBlock rendered="{!NOT(ISNULL(pdfCurrentTournament.Name))}">
+        <apex:pageBlock rendered="{!pdfCurrentTournament !=null}" title="Tournament - {!pdfCurrentTournament.Name}" id="firstBlock">
+            <apex:outputPanel layout="block" styleClass="custom1">
+    
+                <apex:pageBlockSection showHeader="false" columns="1">
+                    <apex:outputLabel value="Status : {!pdfCurrentTournament.Status__c}" styleClass="tournamentFields" />
+                    <apex:outputLabel value="Format : {!pdfCurrentTournament.Format__c}" styleClass="tournamentFields" />
+                    <apex:outputLabel value="Type : {!pdfCurrentTournament.Type__c}" styleClass="tournamentFields" />
+                    <apex:outputLabel value="Start Date : {!pdfCurrentTournament.StartDate__c}" styleClass="tournamentFields" />
+                </apex:pageBlockSection>    
+            
+            </apex:outputPanel>
+        </apex:pageBlock><br/>
+        <apex:outputText rendered="{!competitorsName.size>0 && pdfCurrentTournament.Status__c =='Upcoming'}" styleClass="hYellowBackground" value="All Competetitors Who Take Part At This Tournament :"/>
+        <apex:outputText rendered="{!competitorsName.size>0 && pdfCurrentTournament.Status__c =='Current'}" styleClass="hYellowBackground" value="This tournament hasn't finished yet. It's not final result."/><br/><br/>        
+        <apex:pageblock rendered="{!pdfCurrentTournament !=null && playerStatistic!=null && playerStatistic.size > 0}">
+            <apex:pageblockTable value="{!playerStatistic}" var="competitor" style="width : 100%;">
+                
+                <apex:column headerClass="outputTextInCustom2Header" styleClass="outputTextInCustom2" headerValue="Team" rendered="{!pdfCurrentTournament.Format__c = '2 x 2'}">
+                
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c !='Completed' || (teamNameLinkedToPlayer[competitor.Player__r.Id] != teamNameLinkedToPlayer[goldId] &&  
+                                                teamNameLinkedToPlayer[competitor.Player__r.Id] != teamNameLinkedToPlayer[silverId] &&  teamNameLinkedToPlayer[competitor.Player__r.Id] != teamNameLinkedToPlayer[bronzeId])}" 
+                                                value="{!teamNameLinkedToPlayer[competitor.Player__r.Id]}"></apex:outputText>
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c =='Completed' && teamNameLinkedToPlayer[competitor.Player__r.Id] == teamNameLinkedToPlayer[goldId]}" style="background : #FFD700;" value="{!teamNameLinkedToPlayer[competitor.Player__r.Id]}"></apex:outputText>   
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c =='Completed' && teamNameLinkedToPlayer[competitor.Player__r.Id] == teamNameLinkedToPlayer[silverId]}" style="background : #C0C0C0;" value="{!teamNameLinkedToPlayer[competitor.Player__r.Id]}"></apex:outputText>   
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c =='Completed' && teamNameLinkedToPlayer[competitor.Player__r.Id] == teamNameLinkedToPlayer[bronzeId]}" style="background : #cd7f32;" value="{!teamNameLinkedToPlayer[competitor.Player__r.Id]}"></apex:outputText>
+               
+                </apex:column>
+
+                <apex:column headerClass="outputTextInCustom2Header" styleClass="outputTextInCustom2" headerValue="Player Name">
+                
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c !='Completed' || (competitor.Player__r.Id != goldId && competitor.Player__r.Id != silverId && competitor.Player__r.Id != bronzeId)}" value="{!competitor.Player__r.Name}"></apex:outputText>
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c =='Completed' && competitor.Player__r.Id == goldId}" style="background : #FFD700;" value="{!competitor.Player__r.Name}"></apex:outputText>
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c =='Completed' && competitor.Player__r.Id == silverId}" style="background : #C0C0C0;" value="{!competitor.Player__r.Name}"></apex:outputText>
+                    <apex:outputText rendered="{!pdfCurrentTournament.Status__c =='Completed' && competitor.Player__r.Id == bronzeId}" style="background : #cd7f32;" value="{!competitor.Player__r.Name}"></apex:outputText>
+                    
+                </apex:column>
+                
+                <apex:column headerClass="outputTextInCustom2Header" styleClass="outputTextInCustom2" Value="{!competitor.CountWonGames__c}" headerValue="Won Games"/>
+                <apex:column headerClass="outputTextInCustom2Header" styleClass="outputTextInCustom2" Value="{!competitor.CountWonSets__c}" headerValue="Won Sets"/>
+                <apex:column headerClass="outputTextInCustom2Header" styleClass="outputTextInCustom2" Value="{!competitor.CountLostGames__c}" headerValue="Lost Games"/>
+                <apex:column headerClass="outputTextInCustom2Header" styleClass="outputTextInCustom2" Value="{!competitor.CountLostSets__c}" headerValue="Lost Sets"/>
+            </apex:pageblockTable>
+        </apex:pageblock>
+        <apex:pageblockTable value="{!competitorsName}" var="competitor" rendered="{!pdfCurrentTournament.Status__c =='Upcoming' && competitorsName.size>0}">
+            <apex:column style="font-family: Arial Unicode MS;" value="{!competitor}" headerValue="Player"/>
+        </apex:pageblockTable> 
+        <apex:outputText style="font-family: Arial Unicode MS;" value="Noone has registered at this tournament" rendered="{!competitorsName.size == 0}"></apex:outputText>
+        <br/><br/>
+        
+        <div class ="divComponents" style="font-family: Arial Unicode MS !important;"><c:SingleElimination componentTournament="{!pdfCurrentTournament}" rendered="{!pdfCurrentTournament.Type__c=='Single Elimination' && pdfCurrentTournament.Status__c!='Upcoming'}"/></div>
+        <!--
+        <div class ="divComponents" style="font-family: Arial Unicode MS !important;">
+        <c:DoubleEliminationTournament componentTournament="{!pdfCurrentTournament}" rendered="{!pdfCurrentTournament.Type__c=='Double Elimination' && pdfCurrentTournament.Status__c!='Upcoming'}"/>
+        </div>-->
+        <div class ="divComponents" style="font-family: Arial Unicode MS;"><c:RoundRobin componentTournament="{!pdfCurrentTournament}" rendered="{!pdfCurrentTournament.Type__c=='Round Robin' && pdfCurrentTournament.Status__c!='Upcoming'}"/></div>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!ISNULL(pdfCurrentTournament.Name)}">
+        <apex:outputText ><h1>Ooooooops... This Tournament Doesn't Exist, Sorry...</h1></apex:outputText>
+    </apex:pageBlock>    
+    <apex:pageBlock title="Follow us">
+            <div class ="divComponentsLinks">
+            <apex:pageBlockSection columns="4">
+                <apex:outputLink value="{!myURL}" styleClass="LINKKKSsite"><apex:outputText value="Visit Our Site"/></apex:outputLink>
+                <apex:outputLink value="http://www.techmagic.co/" styleClass="LINKKKSsite"><apex:outputText value="TechMagic"/></apex:outputLink>
+                <apex:outputLink value="https://www.facebook.com/TechMagic.co" styleClass="LINKKKSsite"><apex:outputText value="Facebook"/></apex:outputLink>
+                <apex:outputLink value="https://www.linkedin.com/company/5276965" styleClass="LINKKKSsite"><apex:outputText value="Linkedin"/></apex:outputLink>
+                <apex:outputLink value="https://github.com/techmagic-team" styleClass="LINKKKSsite"><apex:outputText value="Github"/></apex:outputLink>
+                <apex:outputLink value="https://twitter.com/TechMagic_inc" styleClass="LINKKKSsite"><apex:outputText value="Twitter"/></apex:outputLink>
+                <apex:outputLink value="https://www.instagram.com/techmagic/" styleClass="LINKKKSsite"><apex:outputText value="Instagram"/></apex:outputLink>
+            </apex:pageBlockSection></div>
+    </apex:pageBlock>
+</apex:page>

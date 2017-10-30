@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>40.0</apiVersion>
+    <description>Lighting tutorial from https://trailhead.salesforce.com/trails/lex_dev/modules/lex_dev_lc_basics/units/lex_dev_lc_basics_intro
+UNITS:
+https://trailhead.salesforce.com/trails/lex_dev/modules/lex_dev_lc_basics</description>
+</AuraDefinitionBundle>

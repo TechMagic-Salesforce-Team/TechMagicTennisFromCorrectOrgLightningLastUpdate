@@ -1,0 +1,50 @@
+<apex:component controller="PlayerTeamController" allowDML="true">
+    <apex:attribute type="Player__c" name="player" assignTo="{!currentPlayer2}" description="Value to pass into the controller"/>
+        <div style="float:left;width:100%;">
+    <apex:pageBlock id="invites">
+        <apex:pageBlockSection rendered="{!currentPlayer2.Id == currentPlayer.Id}">
+            <h2>Your team invitations</h2> 
+        </apex:pageBlockSection>
+        <apex:pageBlockSection rendered="{!((teamInvitations == null || teamInvitations.size == 0) && currentPlayer2.Id == currentPlayer.Id)}">
+            <div style='width:200px; height:auto;'><p>No invitations for now...</p></div>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection rendered="{!((teamInvitations == null || teamInvitations.size == 0) && currentPlayer2.Id != currentPlayer.Id)}">
+                         <div style='width:200px;'></div>
+        </apex:pageBlockSection>
+        
+        
+        <apex:pageBlockSection rendered="{!((teamInvitations == null || teamInvitations.size != 0) && currentPlayer2.Id != currentPlayer.Id)}">
+                         <div style='width:200px;'></div>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection rendered="{!teamInvitations != null && teamInvitations.size > 0 && currentPlayer2.Id == currentPlayer.Id}">
+            <apex:form >
+                <apex:pageBlockTable value="{!teamInvitations}" var="oneTeamInvitation">
+                    <apex:column value="{!oneTeamInvitation.tournamentName}" headerValue="Tournament name"/>
+                    <apex:column value="{!oneTeamInvitation.teamName}" headerValue="Team name"/>
+                    <apex:column value="{!oneTeamInvitation.playerName}" headerValue="Invitation from"/>
+                    <apex:column headerValue="Accept">
+                        <apex:commandButton value="Accept" action="{!acceptInvitation}" rerender="invites">
+                            <apex:param name="invitationTournamentId" value="{!oneTeamInvitation.tournamentId}" assignTo="{!invitationTournamentId}"/>
+                            <apex:param name="invitationTeamId" value="{!oneTeamInvitation.teamId}" assignTo="{!invitationTeamId}"/>
+                            <apex:param name="invitationPlayerId" value="{!oneTeamInvitation.playerId}" assignTo="{!invitationPlayerId}"/>
+                        </apex:commandButton>
+                    </apex:column>
+                    <apex:column headerValue="Decline">
+                        <apex:commandButton value="Decline" action="{!declineInvitation}" rerender="invites">
+                            <apex:param name="invitationTournamentId" value="{!oneTeamInvitation.tournamentId}" assignTo="{!invitationTournamentId}"/>
+                            <apex:param name="invitationTeamId" value="{!oneTeamInvitation.teamId}" assignTo="{!invitationTeamId}"/>
+                            <apex:param name="invitationPlayerId" value="{!oneTeamInvitation.playerId}" assignTo="{!invitationPlayerId}"/>
+                        </apex:commandButton>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:form>
+        </apex:pageBlockSection>
+    </apex:pageBlock></div>
+    
+        <script>
+            //alert('{!currentPlayer2.Id}'+'...'+'{!currentPlayer.Id}');
+        
+        </script>
+</apex:component>

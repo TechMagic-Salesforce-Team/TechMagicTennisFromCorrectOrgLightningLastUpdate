@@ -1,0 +1,35 @@
+<apex:component controller="PlayerCookie">
+
+        <div style = 'width:100%; height:100px; background-color:#333'>
+            <!--<a href='GoogleAuthEmptyRedirect' id='googlePlusHref' style="float:left;">-->
+            <!--<img src="{!URLFOR($Resource.SiteSamples,
+                          'img/google.png')}" width="200px;" style="float:left;"/>
+            -->
+            
+            <!--
+            <img 
+            src=
+             "https://camo.githubusercontent.com/da18dfde046310c33010757e0b1d2a1f6c95b5d7/68747470733a2f2f646576656c6f706572732e676f6f676c652e636f6d2f6163636f756e74732f696d616765732f7369676e2d696e2d776974682d676f6f676c652e706e67"
+            width="200px;" style="float:left;"/>  
+            <!--</a>-->
+            <div style='float:right; margin-left: 60%; margin-top: 1px;'>
+                <a href='https://www.facebook.com/TechMagic.co' style="float: left;">
+                    <img src="http://www.iconninja.com/ico/128/facebook-899630.ico" style="width:40px; height: 40px;"/>
+                </a>
+                <a href='https://www.instagram.com/techmagic/' style="float: left; margin-left: 10px;">
+                    <img src="http://gitelarochesuryon.fr/wp-content/uploads/2016/11/Instagram-logo-1-300x300.png" style="width:40px; height: 40px;"/>
+                </a>       
+                <a href='https://twitter.com/TechMagic_inc' style="float: left; margin-left: 10px;">
+                    <img src="https://www.pi-expertises.com/wp-content/uploads/2016/10/twitter-bird-white-on-blue.png" style="width:40px; height: 40px;"/>
+                </a>
+            </div>
+        </div>
+
+     <script type="text/javascript">
+         function setVisibilityGooglePlusHref() {
+             var isLoggedIn = '{!isLoggedIn}';
+             document.getElementById('googlePlusHref').style.visibility = isLoggedIn=='false'?'visible':'hidden';
+         }
+         setVisibilityGooglePlusHref();
+     </script>
+</apex:component>

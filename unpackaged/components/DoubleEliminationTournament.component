@@ -1,0 +1,185 @@
+<apex:component controller="DoubleEliminationTournament">
+<head>
+ <style>
+            .page-block-table-double-elimination .littleWindowsTeam{
+                height: auto;
+                min-width:200px;
+                width: auto;
+                background: white;
+                font-size: 14px;
+                position: absolute;
+                cursor: pointer;
+                border: 1px solid #383838;
+                display: none;
+                /*margin-left: 250px;*/
+                z-index: 10;
+                margin-top: -30px;
+            }
+ 
+            .page-block-table-double-elimination .spansInfo{
+                visibility: visible;
+                cursor: pointer;
+                text-align: left;
+            }
+        </style></head>   
+
+<apex:attribute name="componentTournament" type="Tournament__c" assignTo="{!oneTournament}" description="need to give this tournament for good work" required="true"/>
+
+
+        <apex:pageBlock title="Winners basket">
+         <apex:pageBlockTable styleClass="page-block-table-double-elimination" value="{!ijz}" var="thisStageGames" title="Winners" id="myTable1" style="width:100">
+
+            <apex:repeat value="{!representDoubleEliminationGridJSON}" var="thisRows">
+                <apex:column width="{!100/representDoubleEliminationGridJSON.size}%">
+                    <apex:repeat value="{!thisRows}" var="thisGame">
+                        <div>
+                        <apex:pageBlock rendered="{!thisGame.winningGroup== true}" tabStyle="Tournament__c"><center>
+                             <span class="spansInfo" id="{!thisGame.gameId}_1_span" style="color: {!thisGame.firstCompetitorColor}; text-align: center;" onmouseout="outMouse()" onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_1', '{!competitorsName[thisGame.firstCompetitorId]}')"><apex:outputText value="{!competitorsName[thisGame.firstCompetitorId]}"/></span><p style='clear:left;'/>
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail">
+                                            <div class="littleWindowsTeam" id="{!thisGame.gameId}_1">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeamColor}">Player 1: {!thisGame.player1OfTeam}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeamColor}">Player 2: {!thisGame.player2OfTeam}</p>
+                                            </div>
+                            </apex:pageBlock>
+
+                            <apex:outputLink rendered="{!thisGame.editable}" styleClass="thisLinks" value="{!thisGame.hrefTo}&redirectUrl={!$CurrentPage.Name+'?tournamentId='+oneTournament.Id}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!!thisGame.editable && !thisGame.acceptedBy2Players && !thisGame.acceptedBy1Player}" styleClass="thisLinksNotEditable" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!!thisGame.editable && thisGame.acceptedBy2Players}" styleClass="thisLinksGameCompleted" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!thisGame.acceptedBy1Player && !thisGame.editable}" styleClass="thisLinksAcceptedByOnePlayer" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <p style='clear:left;'/>
+                            <span class="spansInfo" id="{!thisGame.gameId}_2_span" style="color: {!thisGame.secondCompetitorColor}; text-align: center;" onmouseout="outMouse()"  onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_2', '{!competitorsName[thisGame.secondCompetitorId]}')"><apex:outputText value="{!competitorsName[thisGame.secondCompetitorId]}"/></span>
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail">
+                                        <div class="littleWindowsTeam" id="{!thisGame.gameId}_2">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeam2Color}">Player 1: {!thisGame.player1OfTeam2}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeam2Color}">Player 2: {!thisGame.player2OfTeam2}</p>
+                            </div></apex:pageBlock>
+                            </center>
+                        </apex:pageBlock>
+                        </div>
+
+
+
+                        <apex:pageBlock rendered="{!oneTournament.Format__c=='1 x 1'}" mode="maindetail">
+                            <div class="littleWindowsTeam" id="{!thisGame.gameId}_1" style="height: auto;">
+                                <p style="text-align: center; color: black">{!competitorsName[thisGame.firstCompetitorId]}</p>
+                                <img src="{!thisGame.firstPlayerImage}" height="200"/>
+                                <script>
+                                    var countWonGames = {!thisGame.countWonGamesOfFirstPlayer};
+                                    var countLostGames = {!thisGame.countLostGamesOfFirstPlayer};
+                                    var greenLine;
+                                    if (countWonGames==0 && countLostGames==0) {
+                                        greenLine = 0.5;
+                                    } else {
+                                        greenLine = countWonGames / (countWonGames+countLostGames);
+                                    }
+                                    greenLine*=100;
+                                    var greenLineInt = parseInt(greenLine);
+                                    if ('{!competitorsName[thisGame.firstCompetitorId]}' != '?') {
+                                        $("#{!thisGame.gameId}_1").append(
+                                                "<p style='text-align: center;'>Win rate</p>" +
+                                                "<p style='text-align: center;'>"+greenLineInt+"%"+" ("+countWonGames+":"+countLostGames+")</p>"+
+                                                "<div style='width: 100%; height: 20px; background-color: red'>" +
+                                                "<div style='width: "+greenLine+"%; height: 100%; background-color: limegreen; float: left;'>" +
+                                                "</div>" +
+                                                "</div>"
+                                        );
+                                    }
+                                </script>
+                            </div>
+                        </apex:pageBlock>
+
+
+                        <apex:pageBlock rendered="{!oneTournament.Format__c=='1 x 1'}" mode="maindetail">
+                            <div class="littleWindowsTeam" id="{!thisGame.gameId}_2" style="height: auto;">
+                                <p style="text-align: center; color: black">{!competitorsName[thisGame.secondCompetitorId]}</p>
+                                <img src="{!thisGame.secondPlayerImage}" height="200"/>
+                                <script>
+                                    var countWonGames = {!thisGame.countWonGamesOfSecondPlayer};
+                                    var countLostGames = {!thisGame.countLostGamesOfSecondPlayer};
+                                    var greenLine;
+                                    if (countWonGames==0 && countLostGames==0) {
+                                        greenLine = 0.5;
+                                    } else {
+                                        greenLine = countWonGames / (countWonGames+countLostGames);
+                                    }
+                                    greenLine*=100;
+                                    var greenLineInt = parseInt(greenLine);
+                                    if ('{!competitorsName[thisGame.secondCompetitorId]}' != '?') {
+                                        $("#{!thisGame.gameId}_2").append(
+                                                "<p style='text-align: center;'>Win rate</p>" +
+                                                "<p style='text-align: center;'>"+greenLineInt+"%"+" ("+countWonGames+":"+countLostGames+")</p>"+
+                                                "<div style='width: 100%; height: 20px; background-color: red'>" +
+                                                "<div style='width: "+greenLine+"%; height: 100%; background-color: limegreen; float: left;'>" +
+                                                "</div>" +
+                                                "</div>"
+                                        );
+                                    }
+                                </script>
+                            </div>
+                        </apex:pageBlock>
+                    </apex:repeat>
+                </apex:column>
+            </apex:repeat>
+        </apex:pageBlockTable>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Losers basket">
+        <apex:pageBlockTable styleClass="page-block-table-double-elimination" value="{!ijz}" var="thisStageGames" title="Losers" id="myTable2"> 
+            <apex:repeat value="{!representDoubleEliminationGridJSON}" var="thisRows">
+                <apex:column width="{!100/representDoubleEliminationGridJSON.size}%">
+                    <apex:repeat value="{!thisRows}" var="thisGame">
+                        <apex:pageBlock rendered="{!thisGame.winningGroup==false}"><center>
+                              <span class="spansInfo" id="{!thisGame.gameId}_1_span" style="color: {!thisGame.firstCompetitorColor}; text-align: center;" onmouseout="outMouse()" onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_1','{!competitorsName[thisGame.firstCompetitorId]}')"><apex:outputText value="{!competitorsName[thisGame.firstCompetitorId]}"/></span><p style='clear:left;'/>
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail"><div class="littleWindowsTeam" id="{!thisGame.gameId}_1">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeamColor}">Player 1: {!thisGame.player1OfTeam}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeamColor}">Player 2: {!thisGame.player2OfTeam}</p>
+                            </div></apex:pageBlock>
+
+
+                            <apex:outputLink rendered="{!thisGame.editable}" styleClass="thisLinks" value="{!thisGame.hrefTo}&redirectUrl={!$CurrentPage.Name+'?tournamentId='+oneTournament.Id}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!!thisGame.editable && !thisGame.acceptedBy2Players && !thisGame.acceptedBy1Player}" styleClass="thisLinksNotEditable" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!!thisGame.editable && thisGame.acceptedBy2Players}" styleClass="thisLinksGameCompleted" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <apex:outputLink rendered="{!thisGame.acceptedBy1Player && !thisGame.editable}" styleClass="thisLinksAcceptedByOnePlayer" value="{!thisGame.hrefTo}">{!thisGame.firstCompetitorScore} : {!thisGame.secondCompetitorScore}</apex:outputLink>
+                            <p style='clear:left;'/>
+                            <span class="spansInfo" id="{!thisGame.gameId}_2_span" style="color: {!thisGame.secondCompetitorColor}; text-align: center;" onmouseout="outMouse()"  onmouseover="mouseOverTeam(event,'{!thisGame.gameId}_2','{!competitorsName[thisGame.secondCompetitorId]}')"><apex:outputText value="{!competitorsName[thisGame.secondCompetitorId]}"/></span>
+                            <apex:pageBlock rendered="{!oneTournament.Format__c=='2 x 2'}" mode="maindetail"><div class="littleWindowsTeam" id="{!thisGame.gameId}_2">
+                                            <p style="text-align: center; color: {!thisGame.player1OfTeam2Color}">Player 1: {!thisGame.player1OfTeam2}</p> 
+                                            <p style="text-align: center; color: {!thisGame.player2OfTeam2Color}">Player 2: {!thisGame.player2OfTeam2}</p>
+                            </div></apex:pageBlock> </center> </apex:pageBlock>
+                    </apex:repeat>
+                </apex:column>
+            </apex:repeat>
+        </apex:pageBlockTable>
+        </apex:pageBlock>
+
+    
+    
+    <script>
+        function mouseOverTeam(event,id,competitor){
+            //alert(id);
+            if (competitor != '?') {
+                if ('{!oneTournament.Format__c}' == '1 x 1') {
+                    var divElem = document.getElementById(id);
+                    divElem.style.height = 'auto';
+                }
+                var x = event.clientX;     // Get the horizontal coordinate
+                var y = event.clientY;     // Get the vertical coordinate
+                var coor = "X coords: " + x + ", Y coords: " + y;
+                $("#" + id).css("display", "block");
+                var divElem = document.getElementById(id);
+                y = $(document).height() - y;
+                y = document.getElementById(id + '_span').offsetTop;
+                y = $("#" + id + "_span").position().top + 40;
+                x = $("#" + id + "_span").position().left + $("#" + id + "_span").width();
+                divElem.style.left = x + "px";
+                divElem.style.top = y + "px";
+                divElem.style.position = "absolute";
+            }
+        }
+        
+        function outMouse(){
+            $( ".littleWindowsTeam" ).css( "display", "none" );
+        }
+    </script>
+    
+</apex:component>

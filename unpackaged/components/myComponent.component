@@ -1,0 +1,4 @@
+<apex:component >
+    <a href = "LoginRegister?pageType=registration">Registration</a>
+    <a href = "LoginRegister?pageType=login">Login</a>
+</apex:component>

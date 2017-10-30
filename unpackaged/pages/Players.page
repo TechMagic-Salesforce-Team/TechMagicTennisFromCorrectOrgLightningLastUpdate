@@ -1,0 +1,53 @@
+<apex:page id="Players" controller="PlayerController" action="{!findAllPlayers}" cache="false" showHeader="false">
+        <head>
+        <c:Header />
+        </head>
+        <apex:includeLightning />
+        
+        <body>
+        <div id = "lightning"/>
+        <!--<div style="position: fixed; z-index: 1000; width: auto; height: auto; background-color: ; right: 1%; top: 40%;">-->
+            <!--<apex:pageBlock title="Search">-->
+                <!--<apex:form >-->
+                    <!--<apex:pageMessages />-->
+                    <!--<apex:actionFunction id="searchPlayer" name="searchPlayer" action="{!findAllPlayersByParams}" reRender="allPlayers"/>-->
+                    <!--<apex:inputField value="{!searchPlayer.Name}"  html-placeholder="Name" onkeyup="searchPlayer()" style="width:60%; margin-left:20%;"/>-->
+                    <!--<p style="clear: left"/>-->
+                    <!--<apex:inputText value="{!ratingFrom}"  html-placeholder="Rating from" onkeyup="searchPlayer()" style="width:25%; margin-left:20%;"/>-->
+                    <!--<apex:inputText value="{!ratingTo}"  html-placeholder="Rating to" onkeyup="searchPlayer()" style="margin-left:10%; width:25%;"/>-->
+                    <!--<p style="clear: left"/>-->
+                <!--</apex:form>-->
+            <!--</apex:pageBlock>-->
+        <!--</div>-->
+        <!--<apex:pageBlock rendered="true" id="allPlayers">-->
+             <!--<apex:pageBlockTable value="{!players}" var="player">-->
+                 <!--<apex:column width="23%" onclick="player('{!player.Id}')" style="cursor:pointer;"/>-->
+                 <!--<apex:column rendered="{!player.Name != '-'}" onClick="player('{!player.Id}')" headerValue="" style="cursor:pointer;">-->
+                     <!--<div style="margin-left: 20%;">-->
+                     <!--<img src="{!playerImages[player.Id]}" height="100" style="float: left;"/>-->
+                     <!--<p style="float: left; margin-left: 10px;"> {!player.Name}</p>-->
+                     <!--</div>-->
+                 <!--</apex:column>-->
+                 <!--<apex:column width="43%" onclick="player('{!player.Id}')" style="cursor:pointer;"/>-->
+            <!--</apex:pageBlockTable>-->
+        <!--</apex:pageBlock>-->
+        <script>
+            $Lightning.use("c:table_tennis_app", function () {
+                $Lightning.createComponent("c:table_tennis_players", {
+
+                        },
+                        "lightning",
+                        function (cmp) {
+                            //alert('Component created, do something cool here');
+                        });
+            });
+        </script>
+        </body>
+        
+        <script>
+            function player(id){
+                location.href = 'player?playerId='+id;
+            }   
+        </script>
+        <c:Footer />
+</apex:page>
