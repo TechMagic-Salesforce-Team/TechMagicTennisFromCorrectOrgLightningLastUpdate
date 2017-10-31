@@ -29,5 +29,13 @@
 
     showSpinner: function (component, event, helper) {
 
+    },
+
+    setScrollWinners: function (component) {
+        component.set("v.scrollX__OfWinnersBasket", $("#winBasket").scrollLeft());
+    },
+
+    scriptsLoaded: function (component) {
+        console.log('jquery was loaded');
     }
 })
