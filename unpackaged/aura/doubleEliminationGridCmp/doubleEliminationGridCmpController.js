@@ -35,9 +35,23 @@
             }
         })
         $A.enqueueAction(action);
+        // var scrollDiv = component.find("loseBasket").getElement();
+        // alert(scrollDiv);
     },
 
     showSpinner: function (component, event, helper) {
 
+    },
+    
+    scriptsLoaded: function (component) {
+        console.log('jquery was loaded');
+    },
+    
+    setScrollLosers: function (component) {
+        component.set("v.scrollX__OfLosersBasket", $("#loseBasket").scrollLeft());
+    },
+
+    setScrollWinners: function (component) {
+        component.set("v.scrollX__OfWinnersBasket", $("#winBasket").scrollLeft());
     }
 })

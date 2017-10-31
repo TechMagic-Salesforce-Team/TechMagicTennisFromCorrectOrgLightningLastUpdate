@@ -1,0 +1,101 @@
+<aura:component controller="AURA_PlayerController">
+    <aura:attribute name="game" type="GameJSON"/>
+    <aura:attribute name="firstCompetitorId" type="Id"/>
+    <aura:attribute name="secondCompetitorId" type="Id"/>
+    <aura:attribute name="playerImage" type="String" default=""/>
+    <aura:attribute name="countWongames" type="Decimal"/>
+    <aura:attribute name="countLostgames" type="Decimal"/>
+    <aura:attribute name="player1Name" type="String" default=""/>
+    <aura:attribute name="player2Name" type="String" default=""/>
+    <aura:attribute name="isOpenFirstCompetitor" type="Boolean"/>
+    <aura:attribute name="isOpenSecondCompetitor" type="Boolean"/>
+    <aura:attribute name="tournamentId" type="Id"/>
+    <aura:attribute name="scrollX" type="Double" default="0"/>
+    <style>
+        .game {
+            width: 250px;
+            height: 125px;
+            display: inline-block;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border: 2px solid whitesmoke;
+            border-radius: 15%;
+            margin: 5px 15px;
+        }
+
+        .gameInfo {
+            border: 1px solid #333;
+            height: 33.3%;
+            width: 100%;
+            font-size: 17px;
+        }
+
+        .gameInfo > p {
+            margin-top: 9px;
+            margin-left: 20px;
+            margin-right: 20px;
+            font-style: italic;
+        }
+
+        .game_link {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: 2px solid white;
+            border-radius: 15%;
+            text-decoration: none;
+        }
+
+        .game_link:hover {
+            color: black;
+            background-color: white;
+        }
+    </style>
+    <div class="game">
+        <div class="gameInfo" style="text-align: right;">
+            <p onmouseover="{!c.showWindowForFirstCompetitor}" onmouseout="{!c.hideWindowFirstCompetitor}" style="cursor: pointer;">{!v.game.firstCompetitorName}</p>
+            <aura:if isTrue="{!v.isOpenFirstCompetitor}">
+                <aura:if isTrue="{!v.playerImage != ''}">
+                    <div style="{!'position: absolute; z-index: 20000; background-color: white; width: auto; height: auto; margin-top: -180px; visibility: visible; margin-left: '+(230-v.scrollX)+'px'}">
+                                <img src="{!v.playerImage}" style="height: 200px;"/>
+                                <p style="margin-top: 20px; text-align: center; color: black;">{!v.game.firstCompetitorName}</p>
+                                <p style='text-align: center; color: black;'>Win rate</p>
+                                <p style='text-align: center; color: black;'>{!v.countWongames} : {!v.countLostgames}</p>
+                                <div style='width: 100%; height: 20px; background-color: red'>
+                                    <div style="{! 'width: '+(100*(v.countWongames / (v.countLostgames+v.countWongames)))+'%; height: 100%; background-color: limegreen; float: left;'}">
+                                    </div>
+                                </div>
+                    </div>
+                </aura:if>
+            </aura:if>
+        </div>
+        <div class="gameInfo" style="width: 40%; margin-left: 30%;">
+            <a class="game_link" href="{!v.game.hrefTo}">
+                <p style="margin-top: -7px;">
+                {!v.game.firstCompetitorScore} : {!v.game.secondCompetitorScore}
+                </p>
+            </a>
+        </div>
+        <div class="gameInfo" style="text-align: right;">
+            <p onmouseover="{!c.showWindowForSecondCompetitor}" onmouseout="{!c.hideWindowSecondCompetitor}" style="cursor: pointer;">{!v.game.secondCompetitorName}</p>
+            <aura:if isTrue="{!v.isOpenSecondCompetitor}">
+                <aura:if isTrue="{!v.playerImage != ''}">
+                    <div style="{!'position: absolute; z-index: 20000; background-color: white; width: auto; height: auto; margin-top: -180px; visibility: visible; margin-left: auto; margin-left: '+(230-v.scrollX)+'px'}">
+                        <img src="{!v.playerImage}" style="height: 200px;"/>
+                        <p style="margin-top: 20px; text-align: center; color: black;">{!v.game.secondCompetitorName}</p>
+                        <p style='text-align: center; color: black;'>Win rate</p>
+                        <p style='text-align: center; color: black;'>{!v.countWongames} : {!v.countLostgames}</p>
+                        <div style='width: 100%; height: 20px; background-color: red'>
+                            <div style="{! 'width: '+(100*(v.countWongames / (v.countLostgames+v.countWongames)))+'%; height: 100%; background-color: limegreen; float: left;'}">
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </aura:if>
+            <div style="position: relative; z-index: 100; background-color: white; width: auto; height: auto;  margin-left: 90%; margin-top: 0px; visibility: visible; display: block">
+            </div>
+        </div>
+
+    </div>
+</aura:component>

@@ -5,7 +5,14 @@
     <aura:attribute name="winGamesSize" type="Integer"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="pageName" type="String"/>
+    <aura:attribute name="scrollX__OfWinnersBasket" type="Double" default="0"/>
 
+
+    <head>
+        <ltng:require
+                scripts="{!$Resource.jqueryLib + '/jquery-3.2.1.min.js'}"
+                afterScriptsLoaded="{!c.scriptsLoaded}" />
+    </head>
 
     <style>
         div.scrollmenu {
@@ -118,28 +125,30 @@
         <aura:if isTrue="{!v.games.length != 0}">
             <div class="headerBasket">
             </div>
-            <div class="scrollmenu">
+            <div id = "winBasket" class="scrollmenu" onscroll="{!c.setScrollWinners}">
                 <table id="winnersBasket">
                     <tr>
                         <aura:iteration items="{!v.games}" var="game">
                             <td>
                                 <aura:iteration items="{!game}" var="g">
                                     <aura:if isTrue="true">
-                                        <div class="game">
-                                            <div class="gameInfo" style="text-align: left;">
-                                                <p>{!g.firstCompetitorName}</p>
-                                            </div>
-                                            <div class="gameInfo" style="width: 40%; margin-left: 30%;">
-                                                <a class="game_link" href="{!g.hrefTo}">
-                                                    <p style="margin-top: -7px;">
-                                                    {!g.firstCompetitorScore} : {!g.secondCompetitorScore}
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <div class="gameInfo" style="text-align: right;">
-                                                <p>{!g.secondCompetitorName}</p>
-                                            </div>
-                                        </div>
+                                        <!--<div class="game">-->
+                                            <!--<div class="gameInfo" style="text-align: left;">-->
+                                                <!--<p>{!g.firstCompetitorName}</p>-->
+                                            <!--</div>-->
+                                            <!--<div class="gameInfo" style="width: 40%; margin-left: 30%;">-->
+                                                <!--<a class="game_link" href="{!g.hrefTo}">-->
+                                                    <!--<p style="margin-top: -7px;">-->
+                                                    <!--{!g.firstCompetitorScore} : {!g.secondCompetitorScore}-->
+                                                    <!--</p>-->
+                                                <!--</a>-->
+                                            <!--</div>-->
+                                            <!--<div class="gameInfo" style="text-align: right;">-->
+                                                <!--<p>{!g.secondCompetitorName}</p>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <c:set_game_layout game="{!g}" tournamentId="{!v.tournamentId}" firstCompetitorId="{!g.firstCompetitorId}"
+                                                           secondCompetitorId="{!g.secondCompetitorId}" scrollX="{!v.scrollX__OfWinnersBasket}"/>
                                         <p style="clear: left"/>
                                     </aura:if>
                                 </aura:iteration>
