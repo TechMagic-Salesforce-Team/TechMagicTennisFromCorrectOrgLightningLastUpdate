@@ -308,6 +308,8 @@ public with sharing class SingleEliminationTournament implements ISingleEliminat
                             else gamejs.hrefTo = '#table1';
                             
                             if (currentTournament.Format__c=='2 x 2'){
+                                gamejs.firstCompetitorName = gamejs.firstCompetitorId != '?' ? teams.get(gamejs.firstCompetitorId).Name : '?';
+                                gamejs.secondCompetitorName = gamejs.secondCompetitorId != '?' ?  teams.get(gamejs.secondCompetitorId).Name : '?';
                                 gamejs.player1OfTeam = gamejs.firstCompetitorId!='?'?teams.get(gamejs.firstCompetitorId).PlayerTeams__r.get(0).Player__r.Name:'?';
                                 gamejs.player2OfTeam = gamejs.firstCompetitorId!='?'?teams.get(gamejs.firstCompetitorId).PlayerTeams__r.get(1).Player__r.Name:'?';
                                 gamejs.player1OfTeam2 = gamejs.secondCompetitorId!='?'?teams.get(gamejs.secondCompetitorId).PlayerTeams__r.get(0).Player__r.Name:'?';
