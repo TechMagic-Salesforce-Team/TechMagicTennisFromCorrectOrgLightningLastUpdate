@@ -60,5 +60,23 @@
 
     dontRefreshTournamentAndRedirectPage: function (component, event, helper) {
         component.set("v.refreshTournament", false);
-    }
+    },
+    
+    applyFunc: function (component, event, helper) {
+        var action = component.get("c.applyForTournament");
+        action.setParams({
+            "tournamentId": component.get("v.tournament").Id,
+            "playerId": component.get("v.player").Id
+        });
+        action.setCallback(component, function (response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                component.set("v.isApplied", !component.get("v.isApplied"));
+            }
+        })
+        $A.enqueueAction(action);
+    },
+    
+    
+    
 })

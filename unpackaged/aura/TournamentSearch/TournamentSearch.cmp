@@ -1,6 +1,7 @@
 <aura:component controller="AURA_TournamentController">
 
     <aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>
+    <aura:attribute name="tournamentsWrapper" type="TournamentController.TournamentWrapper[]"/>
     <aura:attribute name="tournament" type="Tournament__c" default="{}"/>
     <aura:attribute name="tournamentToDisplay" type="Tournament__c"/>
     <aura:attribute name="currentPlayerId" type="Id"/>
@@ -14,6 +15,7 @@
     <aura:attribute name="tournamentCreate" type="Tournament__c" default="{}"/>
     <aura:attribute name="tournamentCreated" type="Boolean" default="false"/>
     <aura:attribute name="message" type="String"/>
+    <!--<aura:attribute name="tw" type="TournamentController.TournamentWrapper[]"/>-->
 
     <body>
     <fieldset style="width: 100%; margin: 10px auto">
@@ -208,12 +210,13 @@
 
 
 
-    <c:TournamentsTable tournaments="{!v.tournaments}" player="{!v.currentPlayer}"/>
+    <c:TournamentsTable tournaments="{!v.tournaments}" tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}"/>
 
 
         <aura:if isTrue="{!v.tournamentToDisplay != null}">
             <aura:if isTrue="{!v.tournamentToDisplay.Status__c != 'Upcoming'}">
-                <c:TournamentInformation tournamentId="{!v.tournamentToDisplay.Id}" playerId="{!v.currentPlayerId}" tournamentType="{!v.tournamentToDisplay.Type__c}" pageName="{!v.pageName}" tournamentName="{!v.tournamentToDisplay.Name}"/>
+                <c:TournamentInformation tournamentId="{!v.tournamentToDisplay.Id}" playerId="{!v.currentPlayerId}"
+                                         tournamentType="{!v.tournamentToDisplay.Type__c}" pageName="{!v.pageName}" tournamentName="{!v.tournamentToDisplay.Name}"/>
             </aura:if>
         </aura:if>
     </body>

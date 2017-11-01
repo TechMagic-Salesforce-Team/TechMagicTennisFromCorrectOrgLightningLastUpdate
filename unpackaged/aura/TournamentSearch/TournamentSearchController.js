@@ -2,18 +2,27 @@
     search: function (component, event, helper) {
         //alert(component.get("v.home"));
         var action = component.get("c.findAll");
+            
         action.setParams({
-            "searchTournament": component.get("v.tournament"),
-            "home": component.get("v.home")
-        });
-        action.setCallback(component, function (response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                var tournaments = response.getReturnValue();
-                component.set("v.tournaments", tournaments);
-            }
-        })
-        $A.enqueueAction(action);
+                "searchTournament": component.get("v.tournament"),
+                "home": component.get("v.home"),
+                "currentPlayerId" : component.get("v.currentPlayerId")
+            });
+            action.setCallback(component, function (response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    var tournaments = response.getReturnValue();
+                    var tournamentsJSON = JSON.parse(tournaments);
+                    //alert(JSON.parse(tournaments));
+                    //component.set("v.tournaments", tournaments);
+                    for (var i = 0; i < tournamentsJSON.length; i++) {
+                        //alert(tournamentsJSON[i].tournament.Name + ', '+tournamentsJSON[i].isApplied);
+                        component.set("v.tournamentsWrapper", tournamentsJSON);
+                    }
+                }
+            })
+            $A.enqueueAction(action);
+        
 
         if (component.get("v.tournamentToDisplay") == null) {
             helper.loadFirstIfHomePage(component);
@@ -113,5 +122,7 @@
             })
             $A.enqueueAction(action);
         }
-    }
+    },
+    
+    
 })
