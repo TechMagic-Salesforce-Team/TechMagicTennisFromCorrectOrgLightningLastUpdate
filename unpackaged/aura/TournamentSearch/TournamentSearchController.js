@@ -69,18 +69,21 @@
     },
 
     handleDeletedTournament: function (component, event, helper) {
-        var tournaments = component.get("v.tournaments");
+        var tournaments = component.get("v.tournamentsWrapper");
         for (var i = 0; i < tournaments.length; i++){
             if (tournaments[i] != null) {
-                if (tournaments[i].Id == event.getParam("tournament").Id) {
+                if (tournaments[i].tournament.Id == event.getParam("tournament").Id) {
                     //alert(tournaments[i].Name);
                     delete tournaments[i];
                     break;
                 }
             }
         }
-        component.set("v.tournaments", null);
-        component.set("v.tournaments", tournaments);
+        //component.set("v.tournaments", null);
+        //component.set("v.tournaments", tournaments);
+        
+        component.set("v.tournamentsWrapper", null);
+        component.set("v.tournamentsWrapper", tournaments);
     },
 
 
@@ -106,9 +109,12 @@
                     component.set("v.message", "Tournament " + component.get("v.tournamentCreate").Name + " was successfully created");
                     //component.set("v.tournamentCreate", tw.tournament);
                     component.set("v.tournamentCreated", true);
-                    var tournaments = component.get("v.tournaments");
-                    tournaments.push(tw.tournament);
-                    component.set("v.tournaments", tournaments);
+                    // var tournaments = component.get("v.tournaments");
+                    // tournaments.push(tw.tournament);
+                    // component.set("v.tournaments", tournaments);
+                    var tournamentsWrapper = component.get("v.tournamentsWrapper");
+                    tournamentsWrapper.push(tw);
+                    component.set("v.tournamentsWrapper", tournamentsWrapper);
                     var tournamentCreated = component.get("v.tournamentCreate");
                     tournamentCreated.Name = '';
                     tournamentCreated.StartDate__c = '';

@@ -6,6 +6,9 @@
     <aura:attribute name="isShowed" type="Boolean" default="false"/>
     <aura:registerEvent name="tournamentSelector" type="c:TournamentSelectedEvent"/>
     <aura:registerEvent name="tournamentUpdate" type="c:UpdateTournamentsTableOnDelete"/>
+    <aura:attribute name="teamName" type="String"/>
+    <aura:attribute name="idPlayerSelected" type="String"/>
+    <aura:attribute name="createTeamWindow" type="Boolean"/>
     <tr style="cursor: pointer; height: 50px;" onclick="{!c.clickOntournament}">
         <td class="slds-truncate" scope="row"><a href="{! '/Tournament?tournamentId='+v.tournament.Id}" onclick="{!c.dontRefreshTournamentAndRedirectPage}"><ui:outputText value="{!v.tournament.Name}"/></a> </td>
         <td class="slds-truncate" scope="row"><ui:outputText value="{!v.tournament.Type__c}"/></td>
@@ -39,5 +42,67 @@
             </aura:if>
         </aura:if>
     </tr>
+
+
+    <aura:if isTrue="{!v.createTeamWindow}">
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeTeamWindow}">
+                        X
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium">Create team</h2>
+                </div>
+
+                <!--###### MODAL BOX BODY Part Start From Here ######-->
+                <div class="slds-modal__content slds-p-around--medium">
+                    <fieldset style="width: 100%; margin: 20px auto">
+                        <form class="slds-form--compound">
+                            <div class=" slds-grid slds-wrap ">
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                                    <label class="slds-form-element__label" for="name">Name</label>
+                                    <div class="slds-form-element__control">
+                                        <ui:inputText class="slds-input" value="{!v.teamName}" required="true"/>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                                    <label class="slds-form-element__label" for="name1">Type</label>
+                                    <div class="slds-form-element__control">
+                                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.idPlayerSelected}" aura:id="TeamMatesSelect"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+                                <div style="margin: 20px auto">
+                                    <lightning:button variant="neutral" label="Create" iconName="utility:new" iconPosition="left" onclick="{! c.createTeamFunc }"/>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closeTeamWindow}" >Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+
+
 
 </aura:component>

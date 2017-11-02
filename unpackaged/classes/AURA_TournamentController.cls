@@ -105,13 +105,15 @@ public class AURA_TournamentController {
 
 	@AuraEnabled
 	public static String create(Tournament__c tournament) {
-		TournamentWrap tw = new TournamentWrap();
+		TournamentController.TournamentWrapper tw = new TournamentController.TournamentWrapper();
 		tw.tournament = new Tournament__c();
 		try {
 			tournament.Status__c = 'Upcoming';
 			insert tournament;
 			tw.message = 'SUCCESS';
 			tw.tournament = tournament;
+			tw.isShowed = true;
+			tw.isApplied = false;
 		} catch (Exception ex){
 			tw.message = 'FAIL';
 		}
@@ -152,9 +154,77 @@ public class AURA_TournamentController {
 				playerTournament.Tournament__c = tournament.Id;
 				playerTournament.Player__c = player.Id;
 				insert playerTournament;
+			} else {
+
+
 			}
 		}
 		return 'success';
+	}
+
+	@AuraEnabled
+	public static String playersToInviteForTeam(Id tournamentId) {
+		Tournament__c tournament = [select Id, Name, Format__c, Status__c from Tournament__c where Id=:tournamentId];
+		List<PlayerWrapper> playerWrapperList = new List<PlayerWrapper>();
+		List<Id> playersInvitedIds = new List<Id>();
+		if (tournament.Status__c=='Upcoming' && tournament.Format__c == '2 x 2') {
+			List<Team__c> teams = [select Id, Name, (select Player__c, Player__r.Name from PlayerTeams__r) from Team__c where Tournament__c =: tournament.Id and IsComplete__c = true];
+			for (Team__c team: teams) {
+				for (PlayerTeam__c pt: team.PlayerTeams__r) {
+					PlayerWrapper pw = new PlayerWrapper();
+					pw.playerId =  pt.Player__c;
+					pw.playerName = pt.Player__r.Name;
+					pw.enabled = false;
+					pw.teamName = team.Name;
+					playersInvitedIds.add(pt.Player__c);
+					playerWrapperList.add(pw);
+				}
+			}
+			List<Player__c> players = [select Id, Name from Player__c where Status__c = 'Active' and Id not in: playersInvitedIds];
+			for (Player__c player: players) {
+				PlayerWrapper pw = new PlayerWrapper();
+				pw.playerId =  player.Id;
+				pw.playerName = player.Name;
+				pw.enabled = true;
+				playerWrapperList.add(pw);
+			}
+		}
+		return JSON.serialize(playerWrapperList);
+	}
+
+	@AuraEnabled
+	public static String createTeam(String playerCookieId, String teamName, String idPlayerSelected, String tournamentId){
+
+		Team__c team = new Team__c();
+		team.Tournament__c = tournamentId;
+		team.Name = teamName;
+		insert team;
+
+		PlayerTeam__c playerTeam1 = new PlayerTeam__c();
+		playerTeam1.Team__c = team.Id;
+		playerTeam1.Player__c = playerCookieId;
+		insert playerTeam1;
+
+		PlayerTeam__c playerTeam2 = new PlayerTeam__c();
+		playerTeam2.Team__c = team.Id;
+		playerTeam2.Player__c = idPlayerSelected;
+		insert playerTeam2;
+
+		try {
+			PlayerTeamController.sendInvitationEmail(playerCookieId, idPlayerSelected, team.Id);
+		} catch(Exception e) {
+			System.debug(e);
+		}
+
+		return 'message';
+	}
+
+
+	public class PlayerWrapper {
+		String playerId;
+		String playerName;
+		Boolean enabled;
+		String teamName;
 	}
 
 

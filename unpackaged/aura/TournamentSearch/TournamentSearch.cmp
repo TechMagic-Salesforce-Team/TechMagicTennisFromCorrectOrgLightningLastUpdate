@@ -1,6 +1,6 @@
 <aura:component controller="AURA_TournamentController">
 
-    <aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>
+    <!--<aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>-->
     <aura:attribute name="tournamentsWrapper" type="TournamentController.TournamentWrapper[]"/>
     <aura:attribute name="tournament" type="Tournament__c" default="{}"/>
     <aura:attribute name="tournamentToDisplay" type="Tournament__c"/>
@@ -210,7 +210,7 @@
 
 
 
-    <c:TournamentsTable tournaments="{!v.tournaments}" tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}"/>
+    <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}"/>
 
 
         <aura:if isTrue="{!v.tournamentToDisplay != null}">
