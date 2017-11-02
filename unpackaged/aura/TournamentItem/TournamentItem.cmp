@@ -9,6 +9,7 @@
     <aura:attribute name="teamName" type="String"/>
     <aura:attribute name="idPlayerSelected" type="String"/>
     <aura:attribute name="createTeamWindow" type="Boolean"/>
+    <aura:attribute name="message" type="String" default="Create your team for tournament"/>
     <tr style="cursor: pointer; height: 50px;" onclick="{!c.clickOntournament}">
         <td class="slds-truncate" scope="row"><a href="{! '/Tournament?tournamentId='+v.tournament.Id}" onclick="{!c.dontRefreshTournamentAndRedirectPage}"><ui:outputText value="{!v.tournament.Name}"/></a> </td>
         <td class="slds-truncate" scope="row"><ui:outputText value="{!v.tournament.Type__c}"/></td>
@@ -61,6 +62,13 @@
                     <fieldset style="width: 100%; margin: 20px auto">
                         <form class="slds-form--compound">
                             <div class=" slds-grid slds-wrap ">
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
+                                </div>
+
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--6-of-7 slds-large-size--6-of-7" style="height: 30px;">
+                                    <span style="color: green; font-size: 15px;">{!v.message}</span>
+                                    <p style="clear: left;"/>
+                                </div>
 
                                 <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
                                 </div>

@@ -133,6 +133,7 @@
                 if (state === "SUCCESS") {
                     component.set("v.teamName", "");
                     component.set("v.idPlayerSelected", "");
+                    component.set("v.message", "Team was successfully created");
                 }
             })
             $A.enqueueAction(action);
