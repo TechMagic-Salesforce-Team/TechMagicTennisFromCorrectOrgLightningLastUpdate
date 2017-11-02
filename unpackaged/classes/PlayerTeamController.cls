@@ -125,7 +125,7 @@ public with sharing class PlayerTeamController extends PlayerCookie{
     }
     
     @future(callout=true)
-    private static void sendInvitationEmail(String fromPlayerId, String toPlayerId, String teamId) {
+    public static void sendInvitationEmail(String fromPlayerId, String toPlayerId, String teamId) {
         Player__c fromPlayer = [SELECT Id, Name FROM Player__c WHERE Id = :fromPlayerId];
         Player__c toPlayer = [SELECT Id, Name, Email__c FROM Player__c WHERE Id = :toPlayerId];
         Team__c team = [SELECT Id, Name, Tournament__r.Name FROM Team__c WHERE Id = :teamId];

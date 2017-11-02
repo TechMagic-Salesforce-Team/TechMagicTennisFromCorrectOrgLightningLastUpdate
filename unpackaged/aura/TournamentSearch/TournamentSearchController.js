@@ -2,18 +2,27 @@
     search: function (component, event, helper) {
         //alert(component.get("v.home"));
         var action = component.get("c.findAll");
+            
         action.setParams({
-            "searchTournament": component.get("v.tournament"),
-            "home": component.get("v.home")
-        });
-        action.setCallback(component, function (response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                var tournaments = response.getReturnValue();
-                component.set("v.tournaments", tournaments);
-            }
-        })
-        $A.enqueueAction(action);
+                "searchTournament": component.get("v.tournament"),
+                "home": component.get("v.home"),
+                "currentPlayerId" : component.get("v.currentPlayerId")
+            });
+            action.setCallback(component, function (response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    var tournaments = response.getReturnValue();
+                    var tournamentsJSON = JSON.parse(tournaments);
+                    //alert(JSON.parse(tournaments));
+                    //component.set("v.tournaments", tournaments);
+                    for (var i = 0; i < tournamentsJSON.length; i++) {
+                        //alert(tournamentsJSON[i].tournament.Name + ', '+tournamentsJSON[i].isApplied);
+                        component.set("v.tournamentsWrapper", tournamentsJSON);
+                    }
+                }
+            })
+            $A.enqueueAction(action);
+        
 
         if (component.get("v.tournamentToDisplay") == null) {
             helper.loadFirstIfHomePage(component);
@@ -60,18 +69,21 @@
     },
 
     handleDeletedTournament: function (component, event, helper) {
-        var tournaments = component.get("v.tournaments");
+        var tournaments = component.get("v.tournamentsWrapper");
         for (var i = 0; i < tournaments.length; i++){
             if (tournaments[i] != null) {
-                if (tournaments[i].Id == event.getParam("tournament").Id) {
+                if (tournaments[i].tournament.Id == event.getParam("tournament").Id) {
                     //alert(tournaments[i].Name);
                     delete tournaments[i];
                     break;
                 }
             }
         }
-        component.set("v.tournaments", null);
-        component.set("v.tournaments", tournaments);
+        //component.set("v.tournaments", null);
+        //component.set("v.tournaments", tournaments);
+        
+        component.set("v.tournamentsWrapper", null);
+        component.set("v.tournamentsWrapper", tournaments);
     },
 
 
@@ -97,9 +109,12 @@
                     component.set("v.message", "Tournament " + component.get("v.tournamentCreate").Name + " was successfully created");
                     //component.set("v.tournamentCreate", tw.tournament);
                     component.set("v.tournamentCreated", true);
-                    var tournaments = component.get("v.tournaments");
-                    tournaments.push(tw.tournament);
-                    component.set("v.tournaments", tournaments);
+                    // var tournaments = component.get("v.tournaments");
+                    // tournaments.push(tw.tournament);
+                    // component.set("v.tournaments", tournaments);
+                    var tournamentsWrapper = component.get("v.tournamentsWrapper");
+                    tournamentsWrapper.push(tw);
+                    component.set("v.tournamentsWrapper", tournamentsWrapper);
                     var tournamentCreated = component.get("v.tournamentCreate");
                     tournamentCreated.Name = '';
                     tournamentCreated.StartDate__c = '';
@@ -113,5 +128,7 @@
             })
             $A.enqueueAction(action);
         }
-    }
+    },
+    
+    
 })

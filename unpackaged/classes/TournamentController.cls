@@ -349,6 +349,7 @@ public with sharing virtual class TournamentController extends PlayerCookie{
         public Tournament__c tournament {get; set;}
         public Boolean isShowed {get; set;}
         public Boolean isApplied {get; set;}
+        public String message {get;set;}
     }
 
 	public void competitorsOfTournament(){

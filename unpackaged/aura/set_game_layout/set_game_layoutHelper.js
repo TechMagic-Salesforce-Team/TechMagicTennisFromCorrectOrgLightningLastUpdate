@@ -25,6 +25,11 @@
             }
         })
         $A.enqueueAction(action);
+    },
+
+    updateAttributes: function (component) {
+        component.set("v.playerImage", '');
+        component.set("v.player1Name", '');
+        component.set("v.player2Name", '');
     }
-    
 })

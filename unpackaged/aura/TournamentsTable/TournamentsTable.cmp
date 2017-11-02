@@ -1,5 +1,5 @@
 <aura:component >
-    <aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>
+    <aura:attribute name="tournamentsWrapper" type="TournamentController.TournamentWrapper[]" default="[]"/>
     <aura:attribute name="playerId" type="Id"/>
     <aura:attribute name="player" type="Player__c"/>
     <table class="slds-table slds-table--bordered slds-theme--default" style="width: 98%; margin: 36px auto 0;">
@@ -17,9 +17,9 @@
         </tr>
         </thead>
         <tbody>
-        <aura:iteration items="{!v.tournaments}" var="t">
+        <aura:iteration items="{!v.tournamentsWrapper}" var="t">
             <aura:if isTrue="{!t != null}">
-              <c:TournamentItem tournament="{!t}" player="{!v.player}"/>
+              <c:TournamentItem tournament="{!t.tournament}" player="{!v.player}" isApplied="{!t.isApplied}" isShowed="{!t.isShowed}"/>
             </aura:if>
         </aura:iteration>
         </tbody>
