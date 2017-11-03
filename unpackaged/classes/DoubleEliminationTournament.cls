@@ -117,9 +117,9 @@ public with sharing class DoubleEliminationTournament {
                         if (playerOrTeamRelatedToPlayerFromCookie!=null) break;
                     }
                 } else {
-                    playerOrTeamRelatedToPlayerFromCookie = currentPlayer.Id;
+                    playerOrTeamRelatedToPlayerFromCookie = null;
                 }
-                }
+              }
             //}
 
             System.debug('I am here'+teamsOrPlayers.size());
