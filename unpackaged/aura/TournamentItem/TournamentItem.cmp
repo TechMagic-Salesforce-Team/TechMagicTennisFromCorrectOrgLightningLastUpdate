@@ -10,6 +10,9 @@
     <aura:attribute name="idPlayerSelected" type="String"/>
     <aura:attribute name="createTeamWindow" type="Boolean"/>
     <aura:attribute name="message" type="String" default="Create your team for tournament"/>
+    <aura:attribute name="teamToDelete" type="Team__c"/>
+    <aura:attribute name="deleteTeam" type="Boolean" default="false"/>
+
     <tr style="cursor: pointer; height: 50px;" onclick="{!c.clickOntournament}">
         <td class="slds-truncate" scope="row"><a href="{! '/Tournament?tournamentId='+v.tournament.Id}" onclick="{!c.dontRefreshTournamentAndRedirectPage}"><ui:outputText value="{!v.tournament.Name}"/></a> </td>
         <td class="slds-truncate" scope="row"><ui:outputText value="{!v.tournament.Type__c}"/></td>
@@ -54,7 +57,7 @@
                         X
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h2 id="header99" class="slds-text-heading--medium">Create team</h2>
+                    <h2 id="header99" class="slds-text-heading--medium">{!v.deleteTeam ? 'Delete team' : 'Create team'}</h2>
                 </div>
 
                 <!--###### MODAL BOX BODY Part Start From Here ######-->
@@ -65,8 +68,8 @@
                                 <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
                                 </div>
 
-                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--6-of-7 slds-large-size--6-of-7" style="height: 30px;">
-                                    <span style="color: green; font-size: 15px;">{!v.message}</span>
+                                <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--6-of-7 slds-large-size--6-of-7">
+                                    <span style="{! 'color: '+ (v.deleteTeam ? 'red;' : 'green;') +'font-size: 12px;'}">{!v.message}</span>
                                     <p style="clear: left;"/>
                                 </div>
 
@@ -76,7 +79,13 @@
                                 <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
                                     <label class="slds-form-element__label" for="name">Name</label>
                                     <div class="slds-form-element__control">
-                                        <ui:inputText class="slds-input" value="{!v.teamName}" required="true"/>
+                                        <aura:if isTrue="{!v.deleteTeam}">
+                                            <ui:inputText class="slds-input" value="{!v.teamToDelete.Name}" required="true" disabled="true"/>
+                                        </aura:if>
+
+                                        <aura:if isTrue="{!!v.deleteTeam}">
+                                            <ui:inputText class="slds-input" value="{!v.teamName}" required="true" disabled="false"/>
+                                        </aura:if>
                                     </div>
                                 </div>
 
@@ -86,9 +95,14 @@
                                 </div>
 
                                 <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
-                                    <label class="slds-form-element__label" for="name1">Type</label>
+                                    <label class="slds-form-element__label" for="name1">Teammate</label>
                                     <div class="slds-form-element__control">
-                                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.idPlayerSelected}" aura:id="TeamMatesSelect"/>
+                                        <ui:inputSelect multiple="false" class="slds-input" value="{!v.idPlayerSelected}" aura:id="TeamMatesSelect" disabled="{!v.deleteTeam}">
+                                            <aura:if isTrue="{!v.deleteTeam}">
+                                                <ui:inputSelectOption disabled="true" label="{!v.teamToDelete.PlayerTeams__r[0].Player__c == v.player.Id ?
+                                                        v.teamToDelete.PlayerTeams__r[1].Player__r.Name :  v.teamToDelete.PlayerTeams__r[0].Player__r.Name}"/>
+                                            </aura:if>
+                                        </ui:inputSelect>
                                     </div>
                                 </div>
 
@@ -96,7 +110,14 @@
                                 <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--1-of-7 slds-large-size--1-of-7">
                                 </div>
                                 <div style="margin: 20px auto">
-                                    <lightning:button variant="neutral" label="Create" iconName="utility:new" iconPosition="left" onclick="{! c.createTeamFunc }"/>
+                                    <aura:if isTrue="{!!v.deleteTeam}">
+                                        <lightning:button variant="neutral" label="Create" iconName="utility:new" iconPosition="left" onclick="{! c.createTeamFunc }"/>
+                                    </aura:if>
+
+                                    <aura:if isTrue="{!v.deleteTeam}">
+                                        <lightning:button variant="neutral" label="Delete" iconName="utility:delete" iconPosition="left" onclick="{! c.deleteTeamFunc }"/>
+                                    </aura:if>
+
                                 </div>
                             </div>
                         </form>

@@ -220,6 +220,31 @@ public class AURA_TournamentController {
 	}
 
 
+	@AuraEnabled
+	public static Team__c deleteTeamDialog(String playerCookieId, String tournamentId){
+		List<Team__c> teams = [select Id, Name, (select Player__r.Name, Player__c from PlayerTeams__r) from Team__c where Tournament__c=:tournamentId and IsComplete__c=true];
+		for (Team__c t: teams){
+			List<PlayerTeam__c> pt = t.PlayerTeams__r;
+			if (String.valueOf(pt.get(0).Player__c).contains(playerCookieId) ||
+				String.valueOf(pt.get(1).Player__c).contains(playerCookieId)
+			) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	@AuraEnabled
+	public static String deleteTeam(String teamId) {
+		try {
+			delete [select Id from Team__c where Id=: teamId];
+			return 'Deleted';
+		} catch (Exception ex) {
+			return 'Exception occured while team deleting process';
+		}
+	}
+
+
 	public class PlayerWrapper {
 		String playerId;
 		String playerName;
