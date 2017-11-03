@@ -227,5 +227,4 @@ public class AURA_TournamentController {
 		String teamName;
 	}
 
-
 }

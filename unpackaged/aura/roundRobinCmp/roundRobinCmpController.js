@@ -23,4 +23,7 @@
         $A.enqueueAction(action);
     },
 
+    setScroll: function (component) {
+            component.set("v.scrollX", $("#rrscroll").scrollLeft());
+    }
 })

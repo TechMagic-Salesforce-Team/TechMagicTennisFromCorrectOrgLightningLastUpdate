@@ -16,6 +16,9 @@ public class AURA_DoubleElimination {
 			System.debug('String exception');
 			de.playerIdLightning = null;
 		}
+
+		if (String.isBlank(playerId)) de.playerIdLightning = null;
+
 		de.lightningPageName = pageName;
         System.debug('de:'+de.playerIdLightning);
         System.debug('de:'+de.oneTournament);
