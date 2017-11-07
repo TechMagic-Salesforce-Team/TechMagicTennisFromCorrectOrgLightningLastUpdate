@@ -25,7 +25,7 @@
             $A.enqueueAction(action);
         
 
-        if (component.get("v.tournamentToDisplay") == null) {
+        if (component.get("v.tournamentToDisplay") == null && component.get("v.playerPage") == false) {
             helper.loadFirstIfHomePage(component);
         }
 
@@ -57,8 +57,6 @@
         //
         //     }
         // );
-
-
     },
 
 
@@ -130,6 +128,10 @@
             $A.enqueueAction(action);
         }
     },
-    
+
+
+    hideSpinner: function (component, event, handler) {
+        component.set("v.doneWaitingBollean", true);
+    }
     
 })

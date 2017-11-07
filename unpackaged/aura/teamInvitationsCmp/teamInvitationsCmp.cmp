@@ -7,13 +7,30 @@
 
 
     <aura:if isTrue="{!v.currentPlayer == v.playerFromCookie}">
-        <c:teamInvitationTable teamInvitations="{!v.teamInvitations}" currentPlayerId="{!v.playerFromCookie}"/>
+        <aura:if isTrue="{!v.teamInvitations.length > 0}">
+            <c:teamInvitationTable teamInvitations="{!v.teamInvitations}" currentPlayerId="{!v.playerFromCookie}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.teamInvitations.length == 0}">
+            <div class="slds-page-header" role="banner" style="background-color: white;">
+                <div class="slds-grid">
+                    <div class="slds-col">
+                        <p class="slds-text-heading--label"></p>
+                        <h1 class="slds-text-heading--medium slds-text-align--center">
+                            No current team invitations
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+
+
     </aura:if>
 
 
     <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--7-of-7 slds-large-size--7-of-7">
         <div style="margin-top: 100px;">
-            <c:TournamentSearch playerId="{!v.currentPlayer}" home="false" currentPlayerId="{!v.playerFromCookie}" justAcceptedTournament="{!v.tournamentJustAccepted}"/>
+            <c:TournamentSearch playerId="{!v.currentPlayer}" home="false" currentPlayerId="{!v.playerFromCookie}" justAcceptedTournament="{!v.tournamentJustAccepted}" playerPage="true"/>
         </div>
     </div>
 </aura:component>

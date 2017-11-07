@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class=" slds-grid slds-wrap ">
-            <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--4-of-7 slds-medium-size--large--3-of-7 slds-large-size--2-of-7"
+            <div class="slds-form-element slds-col slds-size--1-of-2 slds-medium-size--3-of-7 slds-medium-size--large--2-of-7 slds-large-size--1-of-7"
                  style="margin: 30px 30px;">
 
                 <aura:if isTrue="{!v.loadingNewImage}">
@@ -42,7 +42,7 @@
 
 
                 <aura:if isTrue="{!!v.loadingNewImage}">
-                    <img src="{!v.player.Image__c}" style="width: 100%; height: auto"/>
+                    <img src="{! v.player.Image__c != null ? v.player.Image__c : 'https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png'}" style="width: 100%; height: auto"/>
                 </aura:if>
             </div>
 
@@ -85,6 +85,6 @@
             <lightning:input type="file" label="Upload new image"
                              name="file" multiple="false" accept=".png, .jpg, .zip" onchange="{! c.handleUploadFinished }"/>
         </div>
-        <c:teamInvitationsCmp currentPlayer="{!v.idCurrentPlayer}" playerFromCookie="{!v.idPlayerFromCookie}" teamInvitations="{!v.teamInvitations}"/>
     </aura:if>
+    <c:teamInvitationsCmp currentPlayer="{!v.idCurrentPlayer}" playerFromCookie="{!v.idPlayerFromCookie}" teamInvitations="{!v.teamInvitations}"/>
 </aura:component>

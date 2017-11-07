@@ -18,10 +18,13 @@
     <aura:attribute name="playerPage" type="Boolean" default="false"/>
     <aura:attribute name="playerId" type="String"/>
     <aura:attribute name="justAcceptedTournament" type="TournamentController.TournamentWrapper"/>
-
+    <aura:handler event="aura:doneRendering" action="{!c.hideSpinner}"/>
+    <aura:attribute name="doneWaitingBollean" type="Boolean" default="false"/>
     <!--<aura:attribute name="tw" type="TournamentController.TournamentWrapper[]"/>-->
 
     <body>
+
+    <aura:if isTrue="{!v.tournamentsWrapper.length!=0}">
     <fieldset style="width: 100%; margin: 10px auto">
         <div class="slds-page-header" role="banner" style="background-color: white;">
             <div class="slds-grid">
@@ -109,6 +112,7 @@
             </div>
         </form>
     </fieldset>
+
 
 
     <aura:if isTrue="{!v.createTournamentWindow}">
@@ -209,12 +213,9 @@
 
     <div class="slds-backdrop slds-backdrop--open"></div>
     </aura:if>
+    </aura:if>
 
-
-
-
-    <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
-
+        <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
 
         <aura:if isTrue="{!v.tournamentToDisplay != null}">
             <aura:if isTrue="{!v.tournamentToDisplay.Status__c != 'Upcoming'}">
@@ -222,5 +223,21 @@
                                          tournamentType="{!v.tournamentToDisplay.Type__c}" pageName="{!v.pageName}" tournamentName="{!v.tournamentToDisplay.Name}"/>
             </aura:if>
         </aura:if>
+
+    <aura:if isTrue="{!v.tournamentsWrapper.length==0}">
+        <!--<aura:if isTrue="{!v.doneWaitingBollean}">-->
+            <!--<div class="slds-page-header" role="banner" style="background-color: white;">-->
+                <!--<div class="slds-grid">-->
+                    <!--<div class="slds-col">-->
+                        <!--<p class="slds-text-heading&#45;&#45;label"></p>-->
+                        <!--<h1 class="slds-text-heading&#45;&#45;medium slds-text-align&#45;&#45;center">-->
+                            <!--No tournaments found-->
+                        <!--</h1>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</aura:if>-->
+    </aura:if>
+
     </body>
 </aura:component>

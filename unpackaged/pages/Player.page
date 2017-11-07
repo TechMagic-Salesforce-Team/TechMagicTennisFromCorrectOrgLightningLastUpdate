@@ -11,224 +11,141 @@ html {
 }
         </style>
     <body>
-        <!--
-        <apex:pageBlock rendered="true" title="All tournaments of current player">
-                <apex:pageBlockTable value="{!tournamentsOfPlayer}" var="tournament">
-                    <apex:column value="{!tournament.Name}"/>
-                    <apex:column value="{!tournament.StartDate__c}"/>
-                    <apex:column value="{!tournament.Status__c}"/>
-                    <apex:column value="{!tournament.Format__c}"/>
-                    <apex:column value="{!tournament.Type__c}"/>
-                </apex:pageBlockTable>
-        </apex:pageBlock>...
-        -->
-        
-                <script>
-                var count = 0;
-                </script>
-      
-       <apex:pageBlock id="mainBlock">
-         <div id = "imageUrlDiv" style="margin: 20px 20px 20px 20px; float: left; height: 220px;">
-                        <img src="{!imageUrl}" id='playerAvatar' alt="Image" style="max-width: 370px; height: 100%; background-size: contain; float: left;"/>
-                        <script>
-                            if ($("#playerAvatar").attr('src')=='null'){
-                                $("#playerAvatar").attr('src', 'https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png');
-                            }
-                        </script>
-                        
-         </div>                
-                        <apex:form >
-                            <apex:actionFunction name="updateRating" action="{!updatePlayer}" id="func1" rerender="mainBlock"/>
-                        </apex:form>
-    
-                <!--<apex:pageBlock id="pIdd" title="Selected tournament">-->
-                <div style = "float:left; width:60%; margin-top: 20px;">
-                        <div style = "float:left; width: 100%; margin-left: 3%;">
-                        <p style="font-size:15px;">Name: {!player.Name}</p>
-                        </div>
-                        <div style = "float:left; width:100%;">
-                        <p style="font-size:15px; margin-left: 3%;">Won statistics of {!nameTournamentForWonStatistics}</p>
-                        <script>
-                            var hasTournaments = '{!hasCurrentTournaments}';
-                            //if (hasTournaments=='true'){
-                                //$('#statistics-div').append("<p style='font-size:20px'>Statistics</p>");
-                            //}
-                        </script>
-                        <p style="font-size:15px; margin-left: 3%;" id="myField">Count won games {!countWonGames}</p>
-                        <p style="font-size:15px; margin-left: 3%;">Count lost games {!countLostGames}</p>
-                        <p style="clear: left; visibility: hidden;"/>
+     <apex:includeLightning/>
+     <div id = "lightning"/>
 
-                            <apex:form style="font-size:15px; margin-left: 3%;">
-                                <apex:outputLabel value="Rating "/>
-                                <apex:inputText value="{!rating}" label="Rating" id="rate" style="width:100px;" rendered="{!currentPlayer.IsManager__c}"/>
-                                <apex:outputText value="{!rating}" rendered="{!currentPlayer==null || currentPlayer.IsManager__c==false}"/>
-                                <!--<button onclick="checkText()">Submit</button>-->
-                                <apex:commandButton value="Submit" action="{!updatePlayer}" rendered="{!currentPlayer.IsManager__c}"/>
-                            </apex:form>
-                        
-                         
-                         <div style = 'width:100%; height: 20px;'></div>
-                         
-                                                
-                        <div style="float:left; margin-left: 3%;">
-                            <p style='font-size:15px;'>Statistics of</p>
-                         </div>
-                         
-                         <div style="float:left; margin-top: 20px;">
-                          <apex:form >
-                            <apex:pageMessages />
-                                <apex:selectList value="{!currentOrCompletedTournamentId}" size="1" style="margin-left:3%; height:30px; text-align:center; font-size:15px;">
-                                    <apex:actionSupport event="onchange" action="{!getCurrentOrCompletedTournament}" rerender="mainBlock" />    
-                                    <apex:selectOptions value="{!completedAndCurrentTournamentsOfPlayerOptions}"/>
-                                </apex:selectList>
-                          </apex:form>
-                          </div>
-                          
-                           <div class="w3-container" style="float:left; width:80%; margin-bottom: 20px;">                       
-                            <div class="w3-red" id="bar">
-                                    <div id="myBar" class="w3-container w3-green w3-center" style="width:100%; min-width: 0%; height: 30px; margin-top: 20px;">20%</div>
-                                        <script>
-                                            var countWonGames = '{!countWonGames}';
-                                            var countLoseGames = '{!countLostGames}';
-                                            var percentWon = 0.0;                                        
-                                            if (countWonGames==0 && countLoseGames==0) {
-                                                percentWon = 50.0;
-                                                $("#bar").css('visibility','hidden');
-                                            }
-                                            else if (countLoseGames!=0)percentWon = countWonGames*100.0/(parseFloat(parseFloat(countWonGames)+parseFloat(countLoseGames)));
-                                            else percentWon = 100.0;
-                                            $("#myBar").css('width',percentWon+'%');
-                                            $("#myBar").html(''+(Math.round(percentWon * 100) / 100)+'%');
-                                            </script>
-                             </div>
-                         </div>
-                </div>        
-                    </div>
-                    <div style="float:left; margin-top:50px;">
-                     <!--<apex:pageBlock  rendered="true">
-                                                <div style="float:left;width:300px;; height:30px;"></div>
-                     </apex:pageBlock>-->
-                    
-                     </div>
-                    
-                     </apex:pageBlock>
-                <c:TeamInvitations player="{!player}" rendered="true"/> <!--rendered="{!currentPlayer != null && player.Id == currentPlayer.Id}"/> --> 
-                     
-                <div style = "float:left; width:100%;">
-                         <apex:form enctype="multipart/form-data" rendered="{!playerCookieIsCurrentPlayer}">
-                            <apex:pageMessages />
-                             <apex:pageBlock >
-                                <apex:pageBlockButtons location="bottom">       
-                             <apex:commandButton action="{!uploadNewImage}" value="Save" style="background-color:yellow;"/>
-                            </apex:pageBlockButtons>
-                            <apex:pageBlockSection >
-                            <apex:pageBlockSectionItem >
-                                <apex:outputLabel value="Upload image" for="file" style="font-size:15px;"/>
-                                <apex:inputFile value="{!document.body}" filename="{!document.name}" id="file"/>
-                            </apex:pageBlockSectionItem>
-                            </apex:pageBlockSection>
-                            </apex:pageBlock>
-                            </apex:form>
-                 </div>      
-        
-        <c:TournamentsSearch player="{!player}"/>
-        
-              
-        
-        
-        
-        <!--
-        <apex:form >
-            <apex:pageMessages />
-                <apex:pageBlock title="Select current tournament" rendered="true">
-                    <apex:selectList value="{!currentTournamentId}" size="1" style="margin-left:18%;" required="true">
-                        <apex:actionSupport event="onchange" action="{!getCurrentTournamentById}" rerender="currentTournamentSelected" />    
-                        <apex:selectOptions value="{!currentTournamentsOptions}"/>
-                </apex:selectList>
-                </apex:pageBlock>
-        </apex:form>
-        -->
-        <!--
-        <apex:pageBlock id="currentTournamentSelected" title="Selected tournament">
-            <apex:pageBlockSection title="Opportunity Information">
-                <apex:outputField value="{!currentTournament.Name}"/>
-                <apex:outputField value="{!currentTournament.Status__c}"/>
-                <apex:outputField value="{!currentTournament.Format__c}"/>
-                <apex:outputField value="{!currentTournament.Type__c}"/>
-                <p style = "clear:left;"/>
-               
-               <apex:pageBlockSection title="Inner page block section">
-                
-               </apex:pageBlockSection>
-            </apex:pageBlockSection>
-        </apex:pageBlock>
-        -->
-        
-     
-        
-        <script>
-            var valueBeforeChanges = '';
-                function firstOptionSelected(){
-                    setFirstOptionSelected();
-                }
-                firstOptionSelected();
 
-                /*
-         function checkTextBefore(element) {
-             valueBeforeChanges = element.value;
-         }
+     <script>
+         $Lightning.use("c:playerPageApp", function () {
+             $Lightning.createComponent("c:playerUpperInfo", {
+                         idPlayerFromCookie : "{!currentPlayer.Id}",
+                         idCurrentPlayer: "{!player.Id}"
+                     },
+                     "lightning",
+                     function (cmp) {
+                         //alert('Component created, do something cool here');
+                     });
+         });
+     </script>
+        
+                <!--<script>-->
+                <!--var count = 0;-->
+                <!--</script>-->
+      <!---->
+       <!--<apex:pageBlock id="mainBlock">-->
+         <!--<div id = "imageUrlDiv" style="margin: 20px 20px 20px 20px; float: left; height: 220px;">-->
+                        <!--<img src="{!imageUrl}" id='playerAvatar' alt="Image" style="max-width: 370px; height: 100%; background-size: contain; float: left;"/>-->
+                        <!--<script>-->
+                            <!--if ($("#playerAvatar").attr('src')=='null'){-->
+                                <!--$("#playerAvatar").attr('src', 'https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png');-->
+                            <!--}-->
+                        <!--</script>-->
+                        <!---->
+         <!--</div>                -->
+                        <!--<apex:form >-->
+                            <!--<apex:actionFunction name="updateRating" action="{!updatePlayer}" id="func1" rerender="mainBlock"/>-->
+                        <!--</apex:form>-->
+    <!---->
+                <!--&lt;!&ndash;<apex:pageBlock id="pIdd" title="Selected tournament">&ndash;&gt;-->
+                <!--<div style = "float:left; width:60%; margin-top: 20px;">-->
+                        <!--<div style = "float:left; width: 100%; margin-left: 3%;">-->
+                        <!--<p style="font-size:15px;">Name: {!player.Name}</p>-->
+                        <!--</div>-->
+                        <!--<div style = "float:left; width:100%;">-->
+                        <!--<p style="font-size:15px; margin-left: 3%;">Won statistics of {!nameTournamentForWonStatistics}</p>-->
+                        <!--<script>-->
+                            <!--var hasTournaments = '{!hasCurrentTournaments}';-->
+                        <!--</script>-->
+                        <!--<p style="font-size:15px; margin-left: 3%;" id="myField">Count won games {!countWonGames}</p>-->
+                        <!--<p style="font-size:15px; margin-left: 3%;">Count lost games {!countLostGames}</p>-->
+                        <!--<p style="clear: left; visibility: hidden;"/>-->
 
-         function checkTextNow(element) {
-             if (element.value.split('.').length==2){
-                 var realDigit = element.value.split('.')[0];
-                 var decimalDigit = element.value.split('.')[1];
-                 if (decimalDigit != ''){
-                    if (!(/^\d+$/.test(realDigit) && /^\d+$/.test(decimalDigit))){
-                        element.value = valueBeforeChanges;
-                    }
-                 } else {
-                        if (!(/^\d+$/.test(realDigit))){
-                            element.value = valueBeforeChanges;
-                        }
-                    }
-             } else {
-
-             }
-         }
-                function checkText() {
-                    //
-                    //return;
-                    alert(valueBeforeChanges);
-                    if (valueBeforeChanges.split('.').length == 2) {
-                        var realDigit = valueBeforeChanges.split('.')[0];
-                        var decimalDigit = valueBeforeChanges.split('.')[1];
-                        if (decimalDigit != '') {
-                            if (!(/^\d+$/.test(realDigit) && /^\d+$/.test(decimalDigit))) {
-                                alert('no no no');
-                                return;
-                            }
-                        } else {
-                            if (!(/^\d+$/.test(realDigit))){
-                                alert('no no no');
-                                return;
-                            }
-                        }
-                    } else if (valueBeforeChanges.split('.').length == 1){
-                        if (!(/^\d+$/.test(valueBeforeChanges))){
-                            alert('no no no');
-                            return;
-                        }
-                    }
-
-                    updateRating();
-
-                }
-
-                function changedRating(element) {
-                    valueBeforeChanges = element.value;
-                }
-                         */
-        </script>
+                            <!--<apex:form style="font-size:15px; margin-left: 3%;">-->
+                                <!--<apex:outputLabel value="Rating "/>-->
+                                <!--<apex:inputText value="{!rating}" label="Rating" id="rate" style="width:100px;" rendered="{!currentPlayer.IsManager__c}"/>-->
+                                <!--<apex:outputText value="{!rating}" rendered="{!currentPlayer==null || currentPlayer.IsManager__c==false}"/>-->
+                                <!--&lt;!&ndash;<button onclick="checkText()">Submit</button>&ndash;&gt;-->
+                                <!--<apex:commandButton value="Submit" action="{!updatePlayer}" rendered="{!currentPlayer.IsManager__c}"/>-->
+                            <!--</apex:form>-->
+                        <!---->
+                         <!---->
+                         <!--<div style = 'width:100%; height: 20px;'></div>-->
+                         <!---->
+                                                <!---->
+                        <!--<div style="float:left; margin-left: 3%;">-->
+                            <!--<p style='font-size:15px;'>Statistics of</p>-->
+                         <!--</div>-->
+                         <!---->
+                         <!--<div style="float:left; margin-top: 20px;">-->
+                          <!--<apex:form >-->
+                            <!--<apex:pageMessages />-->
+                                <!--<apex:selectList value="{!currentOrCompletedTournamentId}" size="1" style="margin-left:3%; height:30px; text-align:center; font-size:15px;">-->
+                                    <!--<apex:actionSupport event="onchange" action="{!getCurrentOrCompletedTournament}" rerender="mainBlock" />    -->
+                                    <!--<apex:selectOptions value="{!completedAndCurrentTournamentsOfPlayerOptions}"/>-->
+                                <!--</apex:selectList>-->
+                          <!--</apex:form>-->
+                          <!--</div>-->
+                          <!---->
+                           <!--<div class="w3-container" style="float:left; width:80%; margin-bottom: 20px;">                       -->
+                            <!--<div class="w3-red" id="bar">-->
+                                    <!--<div id="myBar" class="w3-container w3-green w3-center" style="width:100%; min-width: 0%; height: 30px; margin-top: 20px;">20%</div>-->
+                                        <!--<script>-->
+                                            <!--var countWonGames = '{!countWonGames}';-->
+                                            <!--var countLoseGames = '{!countLostGames}';-->
+                                            <!--var percentWon = 0.0;                                        -->
+                                            <!--if (countWonGames==0 && countLoseGames==0) {-->
+                                                <!--percentWon = 50.0;-->
+                                                <!--$("#bar").css('visibility','hidden');-->
+                                            <!--}-->
+                                            <!--else if (countLoseGames!=0)percentWon = countWonGames*100.0/(parseFloat(parseFloat(countWonGames)+parseFloat(countLoseGames)));-->
+                                            <!--else percentWon = 100.0;-->
+                                            <!--$("#myBar").css('width',percentWon+'%');-->
+                                            <!--$("#myBar").html(''+(Math.round(percentWon * 100) / 100)+'%');-->
+                                            <!--</script>-->
+                             <!--</div>-->
+                         <!--</div>-->
+                <!--</div>        -->
+                    <!--</div>-->
+                    <!--<div style="float:left; margin-top:50px;">-->
+                    <!---->
+                     <!--</div>-->
+                    <!---->
+                     <!--</apex:pageBlock>-->
+                <!--<c:TeamInvitations player="{!player}" rendered="true"/> &lt;!&ndash;rendered="{!currentPlayer != null && player.Id == currentPlayer.Id}"/> &ndash;&gt; -->
+                     <!---->
+                <!--<div style = "float:left; width:100%;">-->
+                         <!--<apex:form enctype="multipart/form-data" rendered="{!playerCookieIsCurrentPlayer}">-->
+                            <!--<apex:pageMessages />-->
+                             <!--<apex:pageBlock >-->
+                                <!--<apex:pageBlockButtons location="bottom">       -->
+                             <!--<apex:commandButton action="{!uploadNewImage}" value="Save" style="background-color:yellow;"/>-->
+                            <!--</apex:pageBlockButtons>-->
+                            <!--<apex:pageBlockSection >-->
+                            <!--<apex:pageBlockSectionItem >-->
+                                <!--<apex:outputLabel value="Upload image" for="file" style="font-size:15px;"/>-->
+                                <!--<apex:inputFile value="{!document.body}" filename="{!document.name}" id="file"/>-->
+                            <!--</apex:pageBlockSectionItem>-->
+                            <!--</apex:pageBlockSection>-->
+                            <!--</apex:pageBlock>-->
+                            <!--</apex:form>-->
+                 <!--</div>      -->
+        <!---->
+        <!--<c:TournamentsSearch player="{!player}"/>-->
+        <!---->
+              <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+     <!---->
+        <!---->
+        <!--<script>-->
+            <!--var valueBeforeChanges = '';-->
+                <!--function firstOptionSelected(){-->
+                    <!--setFirstOptionSelected();-->
+                <!--}-->
+                <!--firstOptionSelected();-->
+        <!--</script>-->
     </body> 
     
 <c:Footer />         

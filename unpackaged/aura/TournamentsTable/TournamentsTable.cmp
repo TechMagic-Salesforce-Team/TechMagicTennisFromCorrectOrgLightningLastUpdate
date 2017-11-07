@@ -7,6 +7,7 @@
     <aura:handler name="change" value="{!v.justAcceptedTournament}" action="{!c.newAcceptedTournament}"/>
     <table class="slds-table slds-table--bordered slds-theme--default" style="width: 98%; margin: 36px auto 0;">
         <thead>
+        <aura:if isTrue="{!v.tournamentsWrapper.length>0}">
         <tr class="slds-text-heading--label">
             <th class="slds-truncate" scope="row">Name</th>
             <th class="slds-truncate" scope="row">Type</th>
@@ -18,6 +19,7 @@
                 <th class="slds-truncate" scope="row">Delete</th>
             </aura:if>
         </tr>
+        </aura:if>
         </thead>
         <tbody>
         <aura:iteration items="{!v.tournamentsWrapper}" var="t">
