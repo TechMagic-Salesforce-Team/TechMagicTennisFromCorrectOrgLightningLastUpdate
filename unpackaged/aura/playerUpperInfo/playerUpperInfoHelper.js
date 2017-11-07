@@ -80,6 +80,23 @@
             }
         });
         $A.enqueueAction(action);
+    },
+    
+    
+    loadTeamInvitations: function (component) {
+        var action = component.get("c.getAllInvitations");
+        action.setParams({
+            "playerId" : component.get("v.idPlayerFromCookie")
+        });
+        action.setCallback(component, function (response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var data = response.getReturnValue();
+                var jsonData = JSON.parse(data);
+                for (var i = 0; i < jsonData.length; i++) component.set("v.teamInvitations", jsonData);
+            }
+        })
+        $A.enqueueAction(action);
     }
     
 })

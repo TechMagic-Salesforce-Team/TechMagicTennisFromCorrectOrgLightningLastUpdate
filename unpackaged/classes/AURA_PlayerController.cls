@@ -74,6 +74,15 @@ public class AURA_PlayerController {
     public static Player__c getPlayer(String idPlayer) {
         return [select Id, Name, Image__c, Rating__c, IsManager__c, Status__c from Player__c where Id=:idPlayer limit 1];
     }
+
+
+    @AuraEnabled
+    public static String getAllInvitations(String playerId){
+        Player__c player = [select Id, Name, Status__c, Rating__c, Image__c from Player__c where Id =: playerId];
+        PlayerTeamController ptc = new PlayerTeamController();
+        ptc.currentPlayer2 = player;
+        return JSON.serialize(ptc.teamInvitations);
+    }
     
     
 	@AuraEnabled

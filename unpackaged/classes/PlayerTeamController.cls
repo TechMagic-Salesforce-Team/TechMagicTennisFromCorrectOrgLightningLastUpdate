@@ -52,11 +52,14 @@ public with sharing class PlayerTeamController extends PlayerCookie{
         } set; }
     
     public PlayerTeamController() {
-        tournamentId = ApexPages.currentPage().getParameters().get('tournamentId');
-        currentPlayerId = getCurrentPlayer().Id;
-        players = [SELECT Id, Name FROM Player__c WHERE Id != :currentPlayerId AND Status__c = 'Active'];
-        team = new Team__c();
-        
+        try {
+            tournamentId = ApexPages.currentPage().getParameters().get('tournamentId');
+            currentPlayerId = getCurrentPlayer().Id;
+            players = [SELECT Id, Name FROM Player__c WHERE Id != :currentPlayerId AND Status__c = 'Active'];
+            team = new Team__c();
+        } catch (Exception ex) {
+            System.debug('It is lightning');
+        }
     }
     
     public PageReference cancel() {

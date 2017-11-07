@@ -1,0 +1,19 @@
+<aura:component controller="AURA_TeamController">
+    <aura:attribute name="playerFromCookie" type="String"/>
+    <aura:attribute name="currentPlayer" type="String"/>
+    <aura:attribute name="teamInvitations" type="PlayerTeamController.TeamInvitation[]" default="[]"/>
+    <aura:handler name="teamInvitationEvent" event="c:teamInvitationAccepted" action="{!c.handleTournamentByAccepting}"/>
+    <aura:attribute name="tournamentJustAccepted" type="TournamentController.TournamentWrapper"/>
+
+
+    <aura:if isTrue="{!v.currentPlayer == v.playerFromCookie}">
+        <c:teamInvitationTable teamInvitations="{!v.teamInvitations}" currentPlayerId="{!v.playerFromCookie}"/>
+    </aura:if>
+
+
+    <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--7-of-7 slds-large-size--7-of-7">
+        <div style="margin-top: 100px;">
+            <c:TournamentSearch playerId="{!v.currentPlayer}" home="false" currentPlayerId="{!v.playerFromCookie}" justAcceptedTournament="{!v.tournamentJustAccepted}"/>
+        </div>
+    </div>
+</aura:component>

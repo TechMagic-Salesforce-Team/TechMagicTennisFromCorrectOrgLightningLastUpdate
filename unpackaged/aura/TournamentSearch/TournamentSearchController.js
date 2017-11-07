@@ -6,7 +6,8 @@
         action.setParams({
                 "searchTournament": component.get("v.tournament"),
                 "home": component.get("v.home"),
-                "currentPlayerId" : component.get("v.currentPlayerId")
+                "currentPlayerId" : component.get("v.currentPlayerId"),
+                "playerId" : component.get("v.playerId")    
             });
             action.setCallback(component, function (response) {
                 var state = response.getState();

@@ -15,6 +15,10 @@
     <aura:attribute name="tournamentCreate" type="Tournament__c" default="{}"/>
     <aura:attribute name="tournamentCreated" type="Boolean" default="false"/>
     <aura:attribute name="message" type="String"/>
+    <aura:attribute name="playerPage" type="Boolean" default="false"/>
+    <aura:attribute name="playerId" type="String"/>
+    <aura:attribute name="justAcceptedTournament" type="TournamentController.TournamentWrapper"/>
+
     <!--<aura:attribute name="tw" type="TournamentController.TournamentWrapper[]"/>-->
 
     <body>
@@ -24,7 +28,6 @@
                 <div class="slds-col">
                     <p class="slds-text-heading--label">Tournaments</p>
                     <h1 class="slds-text-heading--medium">
-                        <aura:if isTrue="{!v.home}">All current tournaments</aura:if>
                         <aura:if isTrue="{!!v.home}">All tournaments</aura:if>
                     </h1>
                 </div>
@@ -210,7 +213,7 @@
 
 
 
-    <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}"/>
+    <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
 
 
         <aura:if isTrue="{!v.tournamentToDisplay != null}">

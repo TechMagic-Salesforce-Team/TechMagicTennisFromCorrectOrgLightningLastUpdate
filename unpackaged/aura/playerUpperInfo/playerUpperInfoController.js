@@ -65,6 +65,7 @@
             helper.initStatisticsOfPlayer(component);
             helper.getCurrentAndCompletedTournamentsOfPlayerForOptions(component);
         }
+        helper.loadTeamInvitations(component);
     },
 
     selectTournament: function (component, event, helper) {

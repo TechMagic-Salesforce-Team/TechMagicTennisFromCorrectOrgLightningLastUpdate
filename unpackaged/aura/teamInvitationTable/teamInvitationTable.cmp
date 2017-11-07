@@ -1,0 +1,31 @@
+<aura:component>
+    <aura:attribute name="teamInvitations" type="PlayerTeamController.TeamInvitation[]"/>
+    <aura:attribute name="currentPlayerId" type="String"/>
+    <div class="slds-page-header" role="banner" style="background-color: white; margin-top: 20px;">
+        <div class="slds-grid">
+            <div class="slds-col">
+                <p class="slds-text-heading--label"></p>
+                <h1 class="slds-text-heading--medium">
+                    All team invitations
+                </h1>
+            </div>
+        </div>
+    </div>
+    <table class="slds-table slds-table--bordered slds-theme--default" style="width: 98%; margin: 36px auto 0;">
+        <thead>
+        <tr class="slds-text-heading--label">
+            <th class="slds-truncate" scope="row">Name of team</th>
+            <th class="slds-truncate" scope="row">Invitation from</th>
+            <th class="slds-truncate" scope="row">Tournament name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.teamInvitations}" var="t">
+                <aura:if isTrue="{!t != null}">
+                    <c:teamInvitationItem item="{!t}" currentPlayerId="{!v.currentPlayerId}"/>
+                </aura:if>
+            </aura:iteration>
+        </tbody>
+    </table>
+
+</aura:component>
