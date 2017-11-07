@@ -4,7 +4,8 @@
 public class AURA_TournamentController {
 
 	@AuraEnabled
-	public static String findAll(Tournament__c searchTournament, Boolean home, String currentPlayerId){
+	public static String findAll(Tournament__c searchTournament, Boolean home, String currentPlayerId, String playerId){
+
 		String tName = String.isBlank(searchTournament.Name) ? '%' : '%' + searchTournament.Name + '%';
 		String tType = String.isBlank(searchTournament.Type__c) ? '%' : searchTournament.Type__c;
 		String tFormat = String.isBlank(searchTournament.Format__c) ? '%' : searchTournament.Format__c;
@@ -16,7 +17,12 @@ public class AURA_TournamentController {
 				FROM Tournament__c WHERE Name LIKE :tName AND Type__c LIKE :tType AND Format__c LIKE :tFormat AND Status__c LIKE :tStatus]);
 
 
+
 		List<Id> idsOfAppliedTournaments = new List<Id>();
+		if (!String.isBlank(playerId)) {
+			currentPlayerId = playerId;
+		}
+
 
 		if (!String.isBlank(currentPlayerId)) {
 			if (tFormat == '1 x 1' || tFormat == '%') {
@@ -31,13 +37,15 @@ public class AURA_TournamentController {
 				List<Team__c> teams =
 				[select Id, Tournament__c, (select Player__c from PlayerTeams__r) from Team__c where Tournament__c in: tournaments.keySet() and IsComplete__c = true];
 				for (Team__c t: teams) {
-					if (currentPlayerId.contains(t.PlayerTeams__r.get(0).Player__c) ||
-							currentPlayerId.contains(t.PlayerTeams__r.get(1).Player__c)) {
+					if ((''+t.PlayerTeams__r.get(0).Player__c).contains(currentPlayerId) ||
+							(''+t.PlayerTeams__r.get(1).Player__c).contains(currentPlayerId)) {
 						idsOfAppliedTournaments.add(t.Tournament__c);
 					}
 				}
 			}
 		}
+
+
 
 		List<TournamentController.TournamentWrapper> twrapperList = new List<TournamentController.TournamentWrapper>();
 		Boolean found = false;
@@ -58,6 +66,9 @@ public class AURA_TournamentController {
 				}
 			}
 			if (!found && !String.isBlank(currentPlayerId)) {
+				//because in this case we are on the player page and only applied tournaments must be shown =>
+				//without a possibility to apply for them
+				if (playerId != null) continue;
 				if (tournaments.get(tournamentAllId).Status__c == 'Upcoming') {
 					tw.isShowed = true;
 				}
@@ -208,6 +219,7 @@ public class AURA_TournamentController {
 		PlayerTeam__c playerTeam2 = new PlayerTeam__c();
 		playerTeam2.Team__c = team.Id;
 		playerTeam2.Player__c = idPlayerSelected;
+		playerTeam2.IsInvited__c = true;
 		insert playerTeam2;
 
 		try {
@@ -217,6 +229,31 @@ public class AURA_TournamentController {
 		}
 
 		return 'message';
+	}
+
+
+	@AuraEnabled
+	public static Team__c deleteTeamDialog(String playerCookieId, String tournamentId){
+		List<Team__c> teams = [select Id, Name, (select Player__r.Name, Player__c from PlayerTeams__r) from Team__c where Tournament__c=:tournamentId and IsComplete__c=true];
+		for (Team__c t: teams){
+			List<PlayerTeam__c> pt = t.PlayerTeams__r;
+			if (String.valueOf(pt.get(0).Player__c).contains(playerCookieId) ||
+				String.valueOf(pt.get(1).Player__c).contains(playerCookieId)
+			) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	@AuraEnabled
+	public static String deleteTeam(String teamId) {
+		try {
+			delete [select Id from Team__c where Id=: teamId];
+			return 'Deleted';
+		} catch (Exception ex) {
+			return 'Exception occured while team deleting process';
+		}
 	}
 
 

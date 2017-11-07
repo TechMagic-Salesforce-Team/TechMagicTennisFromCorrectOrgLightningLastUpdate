@@ -10,8 +10,7 @@
     <aura:attribute name="scrollX__OfWinnersBasket" type="Double" default="0"/>
     <aura:attribute name="scrollX__OfLosersBasket" type="Double" default="0"/>
     <head>
-        <ltng:require
-                scripts="{!$Resource.jqueryLib + '/jquery-3.2.1.min.js'}"
+        <ltng:require scripts="{!$Resource.jqueryLib + '/jquery-3.2.1.min.js'}"
                 afterScriptsLoaded="{!c.scriptsLoaded}" />
     </head>
 

@@ -5,142 +5,12 @@
       <entry key="sf_com_apps" value="RETRIEVED" />
     </managedPackages>
     <type2Names>
-      <SFMetaTypeNamesState type="LIGHTNING_BUNDLE" setAll="true">
-        <option name="myNames">
-          <set>
-            <option value="Component1" />
-            <option value="MyFirstLightingApp" />
-            <option value="TournamentInformation" />
-            <option value="TournamentInformationApp" />
-            <option value="TournamentItem" />
-            <option value="TournamentSearch" />
-            <option value="TournamentSelectedEvent" />
-            <option value="TournamentsTable" />
-            <option value="doubleEliminationGrid" />
-            <option value="doubleEliminationGridCmp" />
-            <option value="findPlayersByNameEvent" />
-            <option value="myFirstLightningApp" />
-            <option value="newApp" />
-            <option value="popupWindowApp" />
-            <option value="popupWindowCmp" />
-            <option value="roundRobinApp" />
-            <option value="roundRobinCmp" />
-            <option value="roundRobinPlayerName" />
-            <option value="singleEliminationGridCmp" />
-            <option value="table_tennis_app" />
-            <option value="table_tennis_player_item" />
-            <option value="table_tennis_players" />
-            <option value="table_tennis_players_all_by_input" />
-            <option value="table_tennis_players_find_form" />
-            <option value="tournamentSearchApp" />
-          </set>
-        </option>
-      </SFMetaTypeNamesState>
-      <SFMetaTypeNamesState type="APEX_TRIGGER" setAll="true">
-        <option name="myNames">
-          <set>
-            <option value="AfterUpdateGameTrigger" />
-            <option value="BeforeInsertTeamTrigger" />
-            <option value="GeneratePlayersStatisticsOfTournament" />
-            <option value="PlayerUpdateTrigger" />
-          </set>
-        </option>
-      </SFMetaTypeNamesState>
-      <SFMetaTypeNamesState type="INSTALLED_PACKAGE" setAll="true">
-        <option name="myNames">
-          <set>
-            <option value="sf_com_apps" />
-          </set>
-        </option>
-      </SFMetaTypeNamesState>
-      <SFMetaTypeNamesState type="CUSTOM_OBJECT" setAll="true">
-        <option name="myNames">
-          <set>
-            <option value="Account" />
-            <option value="AccountCleanInfo" />
-            <option value="AccountContactRole" />
-            <option value="Activity" />
-            <option value="Asset" />
-            <option value="AssetRelationship" />
-            <option value="AssistantProgress" />
-            <option value="Campaign" />
-            <option value="CampaignMember" />
-            <option value="Case" />
-            <option value="CaseContactRole" />
-            <option value="Contact" />
-            <option value="ContactCleanInfo" />
-            <option value="ContentVersion" />
-            <option value="Contract" />
-            <option value="ContractContactRole" />
-            <option value="DandBCompany" />
-            <option value="DuplicateRecordItem" />
-            <option value="DuplicateRecordSet" />
-            <option value="EmailMessage" />
-            <option value="Event" />
-            <option value="ExchangeUserMapping" />
-            <option value="FeedItem" />
-            <option value="ForecastingCategoryMapping" />
-            <option value="Game__c" />
-            <option value="Idea" />
-            <option value="Lead" />
-            <option value="LeadCleanInfo" />
-            <option value="Macro" />
-            <option value="MacroAction" />
-            <option value="MacroInstruction" />
-            <option value="Opportunity" />
-            <option value="OpportunityCompetitor" />
-            <option value="OpportunityContactRole" />
-            <option value="OpportunityLineItem" />
-            <option value="Order" />
-            <option value="OrderItem" />
-            <option value="PartnerRole" />
-            <option value="PlayerStatistics__c" />
-            <option value="PlayerTeam__c" />
-            <option value="PlayerTournament__c" />
-            <option value="Player__c" />
-            <option value="Pricebook2" />
-            <option value="PricebookEntry" />
-            <option value="Product2" />
-            <option value="Scorecard" />
-            <option value="ScorecardMetric" />
-            <option value="Site" />
-            <option value="SocialPersona" />
-            <option value="Solution" />
-            <option value="StreamingChannel" />
-            <option value="Task" />
-            <option value="Team__c" />
-            <option value="Tournament__c" />
-            <option value="User" />
-            <option value="UserProvisioningRequest" />
-          </set>
-        </option>
-      </SFMetaTypeNamesState>
-      <SFMetaTypeNamesState type="APEX_COMPONENT" setAll="true">
-        <option name="myNames">
-          <set>
-            <option value="DoubleEliminationTournament" />
-            <option value="Footer" />
-            <option value="Header" />
-            <option value="HomePage" />
-            <option value="RoundRobin" />
-            <option value="SingleElimination" />
-            <option value="SiteFooter" />
-            <option value="SiteHeader" />
-            <option value="SiteLogin" />
-            <option value="SitePoweredBy" />
-            <option value="TeamInvitations" />
-            <option value="TournamentForm" />
-            <option value="TournamentInformation" />
-            <option value="TournamentsSearch" />
-            <option value="myComponent" />
-          </set>
-        </option>
-      </SFMetaTypeNamesState>
       <SFMetaTypeNamesState type="STATIC_RESOURCE" setAll="true">
         <option name="myNames">
           <set>
             <option value="Name" />
             <option value="SiteSamples" />
+            <option value="jqueryLib" />
             <option value="login_css" />
             <option value="login_css_1" />
             <option value="style_resources" />
@@ -217,6 +87,86 @@
           </set>
         </option>
       </SFMetaTypeNamesState>
+      <SFMetaTypeNamesState type="LIGHTNING_BUNDLE" setAll="true">
+        <option name="myNames">
+          <set>
+            <option value="Component1" />
+            <option value="MyFirstLightingApp" />
+            <option value="TournamentInformation" />
+            <option value="TournamentInformationApp" />
+            <option value="TournamentItem" />
+            <option value="TournamentSearch" />
+            <option value="TournamentSearchAppWithoutSharing" />
+            <option value="TournamentSelectedEvent" />
+            <option value="TournamentsTable" />
+            <option value="UpdateTournamentsTableOnDelete" />
+            <option value="doubleEliminationGrid" />
+            <option value="doubleEliminationGridCmp" />
+            <option value="findPlayersByNameEvent" />
+            <option value="myFirstLightningApp" />
+            <option value="newApp" />
+            <option value="playerPageApp" />
+            <option value="playerUpperInfo" />
+            <option value="popupWindowApp" />
+            <option value="popupWindowCmp" />
+            <option value="roundRobinApp" />
+            <option value="roundRobinCmp" />
+            <option value="roundRobinPlayerName" />
+            <option value="set_game_layout" />
+            <option value="singleEliminationGridCmp" />
+            <option value="table_tennis_app" />
+            <option value="table_tennis_player_item" />
+            <option value="table_tennis_players" />
+            <option value="table_tennis_players_all_by_input" />
+            <option value="table_tennis_players_find_form" />
+            <option value="tournamentSearchApp" />
+          </set>
+        </option>
+      </SFMetaTypeNamesState>
+      <SFMetaTypeNamesState type="APEX_TRIGGER" setAll="true">
+        <option name="myNames">
+          <set>
+            <option value="AfterUpdateGameTrigger" />
+            <option value="BeforeInsertTeamTrigger" />
+            <option value="GeneratePlayersStatisticsOfTournament" />
+            <option value="PlayerUpdateTrigger" />
+          </set>
+        </option>
+      </SFMetaTypeNamesState>
+      <SFMetaTypeNamesState type="APEX_PAGE" setAll="true">
+        <option name="myNames">
+          <set>
+            <option value="CommunitiesLanding" />
+            <option value="CommunitiesLogin" />
+            <option value="CommunitiesSelfReg" />
+            <option value="CommunitiesSelfRegConfirm" />
+            <option value="CommunitiesTemplate" />
+            <option value="ConfirmRegistration" />
+            <option value="CreateTournament" />
+            <option value="EditTournament" />
+            <option value="ForgotPassword" />
+            <option value="Game" />
+            <option value="GoogleAuthEmptyRedirect" />
+            <option value="GoogleAuthPage" />
+            <option value="Home" />
+            <option value="HomePage" />
+            <option value="LoginRegister" />
+            <option value="LogoutPage" />
+            <option value="PageNotFound" />
+            <option value="Player" />
+            <option value="PlayerPage" />
+            <option value="PlayerTeamCreate" />
+            <option value="PlayerTournamentCreate" />
+            <option value="Players" />
+            <option value="SiteTemplate" />
+            <option value="Test" />
+            <option value="Tournament" />
+            <option value="TournamentPDF" />
+            <option value="Tournaments" />
+            <option value="Unauthorized" />
+          </set>
+        </option>
+      </SFMetaTypeNamesState>
       <SFMetaTypeNamesState type="WORKFLOW" setAll="true">
         <option name="myNames">
           <set>
@@ -265,37 +215,93 @@
           </set>
         </option>
       </SFMetaTypeNamesState>
-      <SFMetaTypeNamesState type="APEX_PAGE" setAll="true">
+      <SFMetaTypeNamesState type="INSTALLED_PACKAGE" setAll="true">
         <option name="myNames">
           <set>
-            <option value="CommunitiesLanding" />
-            <option value="CommunitiesLogin" />
-            <option value="CommunitiesSelfReg" />
-            <option value="CommunitiesSelfRegConfirm" />
-            <option value="CommunitiesTemplate" />
-            <option value="ConfirmRegistration" />
-            <option value="CreateTournament" />
-            <option value="EditTournament" />
-            <option value="ForgotPassword" />
-            <option value="Game" />
-            <option value="GoogleAuthEmptyRedirect" />
-            <option value="GoogleAuthPage" />
-            <option value="Home" />
+            <option value="sf_com_apps" />
+          </set>
+        </option>
+      </SFMetaTypeNamesState>
+      <SFMetaTypeNamesState type="APEX_COMPONENT" setAll="true">
+        <option name="myNames">
+          <set>
+            <option value="DoubleEliminationTournament" />
+            <option value="Footer" />
+            <option value="Header" />
             <option value="HomePage" />
-            <option value="LoginRegister" />
-            <option value="LogoutPage" />
-            <option value="PageNotFound" />
-            <option value="Player" />
-            <option value="PlayerPage" />
-            <option value="PlayerTeamCreate" />
-            <option value="PlayerTournamentCreate" />
-            <option value="Players" />
-            <option value="SiteTemplate" />
-            <option value="Test" />
-            <option value="Tournament" />
-            <option value="TournamentPDF" />
-            <option value="Tournaments" />
-            <option value="Unauthorized" />
+            <option value="RoundRobin" />
+            <option value="SingleElimination" />
+            <option value="SiteFooter" />
+            <option value="SiteHeader" />
+            <option value="SiteLogin" />
+            <option value="SitePoweredBy" />
+            <option value="TeamInvitations" />
+            <option value="TournamentForm" />
+            <option value="TournamentInformation" />
+            <option value="TournamentsSearch" />
+            <option value="myComponent" />
+          </set>
+        </option>
+      </SFMetaTypeNamesState>
+      <SFMetaTypeNamesState type="CUSTOM_OBJECT" setAll="true">
+        <option name="myNames">
+          <set>
+            <option value="Account" />
+            <option value="AccountCleanInfo" />
+            <option value="AccountContactRole" />
+            <option value="Activity" />
+            <option value="Asset" />
+            <option value="AssetRelationship" />
+            <option value="AssistantProgress" />
+            <option value="Campaign" />
+            <option value="CampaignMember" />
+            <option value="Case" />
+            <option value="CaseContactRole" />
+            <option value="Contact" />
+            <option value="ContactCleanInfo" />
+            <option value="ContentVersion" />
+            <option value="Contract" />
+            <option value="ContractContactRole" />
+            <option value="DandBCompany" />
+            <option value="DuplicateRecordItem" />
+            <option value="DuplicateRecordSet" />
+            <option value="EmailMessage" />
+            <option value="Event" />
+            <option value="ExchangeUserMapping" />
+            <option value="FeedItem" />
+            <option value="ForecastingCategoryMapping" />
+            <option value="Game__c" />
+            <option value="Idea" />
+            <option value="Lead" />
+            <option value="LeadCleanInfo" />
+            <option value="Macro" />
+            <option value="MacroAction" />
+            <option value="MacroInstruction" />
+            <option value="Opportunity" />
+            <option value="OpportunityCompetitor" />
+            <option value="OpportunityContactRole" />
+            <option value="OpportunityLineItem" />
+            <option value="Order" />
+            <option value="OrderItem" />
+            <option value="PartnerRole" />
+            <option value="PlayerStatistics__c" />
+            <option value="PlayerTeam__c" />
+            <option value="PlayerTournament__c" />
+            <option value="Player__c" />
+            <option value="Pricebook2" />
+            <option value="PricebookEntry" />
+            <option value="Product2" />
+            <option value="Scorecard" />
+            <option value="ScorecardMetric" />
+            <option value="Site" />
+            <option value="SocialPersona" />
+            <option value="Solution" />
+            <option value="StreamingChannel" />
+            <option value="Task" />
+            <option value="Team__c" />
+            <option value="Tournament__c" />
+            <option value="User" />
+            <option value="UserProvisioningRequest" />
           </set>
         </option>
       </SFMetaTypeNamesState>
@@ -365,64 +371,64 @@
       </SFMetaTypeNamesState>
     </type2Names>
     <builtIn>
+      <type value="CUSTOM_OBJECT" />
       <type value="CUSTOM_FIELD" />
       <type value="WEB_LINK" />
-      <type value="CUSTOM_OBJECT" />
     </builtIn>
     <unmananged>
-      <type value="CUSTOM_SITE" />
-      <type value="POST_TEMPLATE" />
-      <type value="GLOBAL_VALUE_SET" />
-      <type value="CUSTOM_METADATA" />
-      <type value="ROLE" />
-      <type value="CUSTOM_FIELD" />
-      <type value="GROUP" />
-      <type value="PERMISSION_SET" />
-      <type value="CUSTOM_PERMISSION" />
-      <type value="LIGHTNING_BUNDLE" />
-      <type value="PLATFORM_CACHE_PARTITION" />
-      <type value="QUEUE" />
-      <type value="COMMUNITY" />
-      <type value="PORTAL" />
-      <type value="APEX_TRIGGER" />
-      <type value="SHARING_RULES" />
-      <type value="INSTALLED_PACKAGE" />
-      <type value="WEB_LINK" />
-      <type value="TRANSLATIONS" />
-      <type value="CUSTOM_OBJECT" />
-      <type value="REPORT" />
-      <type value="HOME_PAGE_LAYOUT" />
-      <type value="REPORT_TYPE" />
-      <type value="APEX_COMPONENT" />
-      <type value="SHARING_SET" />
-      <type value="CALL_CENTER" />
-      <type value="PROFILE" />
-      <type value="APPROVAL_PROCESS" />
       <type value="STATIC_RESOURCE" />
-      <type value="HOME_PAGE_COMPONENT" />
+      <type value="GROUP" />
+      <type value="REPORT" />
       <type value="APEX_CLASS" />
-      <type value="SITE_DOT_COM" />
-      <type value="CUSTOM_LABELS" />
-      <type value="CUSTOM_APPLICATION" />
-      <type value="WORKFLOW" />
-      <type value="COMMUNITY_THEME_DEFINITION" />
-      <type value="CUSTOM_OBJECT_TRANSLATION" />
-      <type value="COMMUNITY_TEMPLATE_DEFINITION" />
-      <type value="APEX_TEST_SUITE" />
-      <type value="CUSTOM_TAB" />
-      <type value="FLOW" />
-      <type value="SETTINGS" />
-      <type value="APEX_PAGE" />
-      <type value="FLOW_DEFINITION" />
-      <type value="LAYOUT" />
+      <type value="LIGHTNING_BUNDLE" />
+      <type value="APEX_TRIGGER" />
       <type value="QUICK_ACTION" />
+      <type value="WEB_LINK" />
+      <type value="APPROVAL_PROCESS" />
+      <type value="APEX_PAGE" />
+      <type value="CUSTOM_TAB" />
+      <type value="WORKFLOW" />
+      <type value="SETTINGS" />
+      <type value="QUEUE" />
+      <type value="HOME_PAGE_LAYOUT" />
+      <type value="SITE_DOT_COM" />
+      <type value="CUSTOM_APPLICATION" />
+      <type value="REPORT_TYPE" />
+      <type value="CALL_CENTER" />
+      <type value="CUSTOM_LABELS" />
+      <type value="CUSTOM_SITE" />
+      <type value="PROFILE" />
+      <type value="CUSTOM_PERMISSION" />
+      <type value="PLATFORM_CACHE_PARTITION" />
+      <type value="INSTALLED_PACKAGE" />
+      <type value="PORTAL" />
+      <type value="HOME_PAGE_COMPONENT" />
+      <type value="POST_TEMPLATE" />
+      <type value="PERMISSION_SET" />
+      <type value="COMMUNITY_TEMPLATE_DEFINITION" />
+      <type value="COMMUNITY" />
+      <type value="CUSTOM_FIELD" />
+      <type value="APEX_COMPONENT" />
+      <type value="APEX_TEST_SUITE" />
+      <type value="FLOW_DEFINITION" />
+      <type value="SHARING_RULES" />
+      <type value="SHARING_SET" />
       <type value="ASSIGNMENT_RULES" />
+      <type value="COMMUNITY_THEME_DEFINITION" />
+      <type value="CUSTOM_OBJECT" />
+      <type value="TRANSLATIONS" />
+      <type value="GLOBAL_VALUE_SET" />
+      <type value="ROLE" />
+      <type value="FLOW" />
+      <type value="LAYOUT" />
+      <type value="CUSTOM_OBJECT_TRANSLATION" />
+      <type value="CUSTOM_METADATA" />
     </unmananged>
     <managed>
+      <type value="CUSTOM_OBJECT" />
+      <type value="APEX_CLASS" />
       <type value="CUSTOM_FIELD" />
       <type value="WEB_LINK" />
-      <type value="APEX_CLASS" />
-      <type value="CUSTOM_OBJECT" />
     </managed>
     <components>
       <SFMetaComponentState type="ApexClass" chosen="true" isMajor="true" />

@@ -1,0 +1,90 @@
+<aura:component controller="AURA_PlayerController">
+    <style>
+        .fontSize {
+            font-size: 16px;
+        }
+
+    </style>
+    
+    
+    <aura:attribute name="idPlayerFromCookie" type="Id"/>
+    <aura:attribute name="idCurrentPlayer" type="Id"/>
+    <aura:attribute name="player" type="Player__c"/>
+    <aura:attribute name="currentOrCompletedTournaments" type="Tournament__c[]"/>
+    <aura:handler action="{!c.initPlayer}" name="init" value="{!this}"/>
+    <aura:attribute name="loadingNewImage" type="Boolean" default="false"/>
+    <aura:attribute name="wonGames" type="Double"/>
+    <aura:attribute name="lostGames" type="Double"/>
+    <aura:attribute name="percent" type="Double"/>
+    <aura:attribute name="idTournamentSelected" type="String"/>
+    <aura:attribute name="teamInvitations" type="PlayerTeamController.TeamInvitation[]"/>
+
+
+    <div class="slds-page-header" role="banner" style="background-color: white; margin-top: 10px;">
+        <div class="slds-grid">
+            <div class="slds-col">
+                <p class="slds-text-heading--label">Player page</p>
+                <h1 class="slds-text-heading--medium">
+                    Player
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class=" slds-grid slds-wrap ">
+            <div class="slds-form-element slds-col slds-size--1-of-2 slds-medium-size--3-of-7 slds-medium-size--large--2-of-7 slds-large-size--1-of-7"
+                 style="margin: 30px 30px;">
+
+                <aura:if isTrue="{!v.loadingNewImage}">
+                    <div style="margin: 0 auto">
+                        <lightning:spinner variant="brand" size="medium"/>
+                    </div>
+                </aura:if>
+
+
+                <aura:if isTrue="{!!v.loadingNewImage}">
+                    <img src="{! v.player.Image__c != null ? v.player.Image__c : 'https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png'}" style="width: 100%; height: auto"/>
+                </aura:if>
+            </div>
+
+
+        <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--4-of-7 slds-medium-size--large--4-of-7 slds-large-size--4-of-7"
+             style="margin: auto 30px; height: 200px;">
+            <p class="fontSize">Name : {!v.player.Name}</p>
+            <p class="fontSize">Won statistics of</p>
+            <p class="fontSize">Count won games {!v.wonGames}</p>
+            <p class="fontSize">Count lost games {!v.lostGames}</p>
+            <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--7-of-7 slds-large-size--4-of-7">
+                <label class="slds-form-element__label fontSize" for="name">Rating</label>
+                <div class="slds-form-element__control">
+                    <ui:inputText class="slds-input" value="{!v.player.Rating__c}"/>
+                </div>
+            </div>
+
+            <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--7-of-7 slds-large-size--4-of-7">
+                <label class="slds-form-element__label fontSize" for="name1">Statistics of</label>
+                <div class="slds-form-element__control">
+                    <ui:inputSelect multiple="false" class="slds-input" value="{!v.idTournamentSelected}" aura:id="TournamentsOfPlayer" change="{!c.selectTournament}"/>
+                </div>
+            </div>
+
+
+            <aura:if isTrue="{!v.percent != null}">
+            <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--7-of-7 slds-large-size--4-of-7" style="margin-top: 20px;">
+                <div style="width: 100%; height: 30px; background-color: indianred">
+                    <div style="{! 'width: '+v.percent+'%; height: 100%; background-color: limegreen'}">
+                        <span style="text-align: center; position: relative; z-index: 100; margin-left: 40%;">{!v.percent}%</span>
+                    </div>
+                </div>
+            </div>
+            </aura:if>
+        </div>
+    </div>
+
+    <aura:if isTrue="{!v.idPlayerFromCookie == v.idCurrentPlayer}">
+        <div style = "margin-top:50px; margin-left:30px;" class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--4-of-7 slds-large-size--2-of-7">
+            <lightning:input type="file" label="Upload new image"
+                             name="file" multiple="false" accept=".png, .jpg, .zip" onchange="{! c.handleUploadFinished }"/>
+        </div>
+    </aura:if>
+    <c:teamInvitationsCmp currentPlayer="{!v.idCurrentPlayer}" playerFromCookie="{!v.idPlayerFromCookie}" teamInvitations="{!v.teamInvitations}"/>
+</aura:component>

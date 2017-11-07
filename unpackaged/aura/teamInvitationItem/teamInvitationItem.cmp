@@ -1,0 +1,22 @@
+<aura:component controller="AURA_TeamController">
+
+    <aura:attribute name="item" type="PlayerTeamController.TeamInvitation" default="{}"/>
+    <aura:attribute name="currentPlayerId" type="String"/>
+    <aura:registerEvent name="teamInvitationEvent" type="c:teamInvitationAccepted"/>
+    <!--public String tournamentId { get; set; }-->
+    <!--public String tournamentName { get; set; }-->
+    <!--public String teamName { get; set; }-->
+    <!--public String teamId { get; set; }-->
+    <!--public String playerName { get; set; }-->
+    <!--public String playerId { get; set; }-->
+
+    <tr style="cursor: pointer; height: 50px;" >
+        <td class="slds-truncate" scope="row"><ui:outputText value="{!v.item.teamName}"/></td>
+        <td class="slds-truncate" scope="row"><ui:outputText value="{!v.item.playerName}"/></td>
+        <td class="slds-truncate" scope="row"><ui:outputDate value="{!v.item.tournamentName}"/></td>
+        <aura:if isTrue="{!v.item != null}">
+            <td class="slds-truncate" scope="row"><Lightning:button label="Apply" onclick="{!c.acceptTeamInvitationFunc}"/></td>
+            <td class="slds-truncate" scope="row"><Lightning:button label="Decline" onclick="{!c.declineTeamInvitationFunc}"/></td>
+        </aura:if>
+    </tr>
+</aura:component>

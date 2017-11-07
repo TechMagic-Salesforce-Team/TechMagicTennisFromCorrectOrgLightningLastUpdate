@@ -6,7 +6,8 @@
         action.setParams({
                 "searchTournament": component.get("v.tournament"),
                 "home": component.get("v.home"),
-                "currentPlayerId" : component.get("v.currentPlayerId")
+                "currentPlayerId" : component.get("v.currentPlayerId"),
+                "playerId" : component.get("v.playerId")    
             });
             action.setCallback(component, function (response) {
                 var state = response.getState();
@@ -24,7 +25,7 @@
             $A.enqueueAction(action);
         
 
-        if (component.get("v.tournamentToDisplay") == null) {
+        if (component.get("v.tournamentToDisplay") == null && component.get("v.playerPage") == false) {
             helper.loadFirstIfHomePage(component);
         }
 
@@ -56,8 +57,6 @@
         //
         //     }
         // );
-
-
     },
 
 
@@ -129,6 +128,10 @@
             $A.enqueueAction(action);
         }
     },
-    
+
+
+    hideSpinner: function (component, event, handler) {
+        component.set("v.doneWaitingBollean", true);
+    }
     
 })

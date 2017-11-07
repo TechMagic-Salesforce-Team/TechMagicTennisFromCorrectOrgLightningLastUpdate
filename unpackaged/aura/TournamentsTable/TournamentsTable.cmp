@@ -1,9 +1,13 @@
 <aura:component >
     <aura:attribute name="tournamentsWrapper" type="TournamentController.TournamentWrapper[]" default="[]"/>
+    <aura:attribute name="teamInvitations" type="PlayerTeamController.TeamInvitation[]" default="[]"/>
     <aura:attribute name="playerId" type="Id"/>
     <aura:attribute name="player" type="Player__c"/>
+    <aura:attribute name="justAcceptedTournament" type="TournamentController.TournamentWrapper"/>
+    <aura:handler name="change" value="{!v.justAcceptedTournament}" action="{!c.newAcceptedTournament}"/>
     <table class="slds-table slds-table--bordered slds-theme--default" style="width: 98%; margin: 36px auto 0;">
         <thead>
+        <aura:if isTrue="{!v.tournamentsWrapper.length>0}">
         <tr class="slds-text-heading--label">
             <th class="slds-truncate" scope="row">Name</th>
             <th class="slds-truncate" scope="row">Type</th>
@@ -15,6 +19,7 @@
                 <th class="slds-truncate" scope="row">Delete</th>
             </aura:if>
         </tr>
+        </aura:if>
         </thead>
         <tbody>
         <aura:iteration items="{!v.tournamentsWrapper}" var="t">
