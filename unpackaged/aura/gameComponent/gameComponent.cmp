@@ -1,0 +1,87 @@
+<aura:component controller="AURA_GameController">
+    <aura:attribute name="gameId" type="Id"/>
+    <aura:attribute name="playerFromCookie" type="String"/>
+    <aura:attribute name="existsInCurrentGame" type="Boolean"/>
+    <aura:attribute name="tournamentId" type="Id"/>
+    <aura:attribute name="game" type="Game__c"/>
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+    <aura:attribute name="canSubmit" type="Boolean" default="false"/>
+    <aura:attribute name="isUndefined" type="Boolean" default="false"/>
+
+    <aura:if isTrue="{!v.existsInCurrentGame}">
+        <fieldset style="width: 100%; margin: 10px auto">
+            <div class="slds-page-header" role="banner" style="background-color: white;">
+                <div class="slds-grid">
+                    <div class="slds-col">
+                        <p class="slds-text-heading--label">Inserting score of the game</p>
+                        <h1 class="slds-text-heading--medium">
+                            Game
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <form class="slds-form--compound">
+                <div class=" slds-grid slds-wrap">
+
+                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+                    </div>
+
+                    <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                        <label class="slds-form-element__label" for="name">First competitor score</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputText class="slds-input" value="{!v.game.FirstCompetitorScore__c}"/>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element slds-col slds-size--1-of-2 slds-medium-size--5-of-7 slds-large-size--5-of-7">
+                    </div>
+
+                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+                    </div>
+
+                    <div class="slds-form-element slds-col-size--1-of-1 slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                        <label class="slds-form-element__label" for="name">Second competitor score</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputText class="slds-input" value="{!v.game.SecondCompetitorScore__c}"/>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--5-of-7 slds-large-size--5-of-7">
+                    </div>
+
+                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                            <lightning:button label="Input Score" onclick="{!c.inputScoreFunc}"/>
+                    </div>
+
+
+                    <aura:if isTrue="{!v.canSubmit}">
+                        <div style="margin-top: 10px; margin-left: 10px">
+                            <lightning:button label="Submit Score"/>
+                        </div>
+                    </aura:if>
+                </div>
+            </form>
+        </fieldset>
+    </aura:if>
+
+    <aura:if isTrue="{!!v.existsInCurrentGame}">
+        <h1 class="slds-text-heading--medium slds-text-align--center">
+            You have no access to this game
+        </h1>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.game.FirstCompetitorAccept__c}">
+        <aura:if isTrue="{!v.game.SecondCompetitorAccept__c}">
+            <p style="font-size: 30px; text-align: center;"> Game has already been played </p>
+        </aura:if>
+    </aura:if>
+
+
+    <aura:if isTrue="{!v.isUndefined}">
+            <p style="font-size: 30px; text-align: center;"> You have not acess to achieve this game </p>
+    </aura:if>
+
+</aura:component>

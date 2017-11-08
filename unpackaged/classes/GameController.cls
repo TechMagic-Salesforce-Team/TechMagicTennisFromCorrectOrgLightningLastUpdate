@@ -27,7 +27,7 @@ public with sharing class GameController extends PlayerCookie{
         if(currentGames.size() == 0 || currentPlayer ==null) return;
         currentGame = currentGames.get(0);
         
-        tournament = [Select id,Format__c 
+        tournament = [Select id,Name,Format__c,Type__c
                       from tournament__c 
                       where id = :currentGame.Tournament__c];
         
