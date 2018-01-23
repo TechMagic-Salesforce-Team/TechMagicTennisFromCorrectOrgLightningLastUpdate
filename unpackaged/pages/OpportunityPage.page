@@ -1,0 +1,4 @@
+<apex:page standardController="Opportunity">
+    <p>This is the custom opportunity page</p>
+    <p>{!opportunity.Name}</p>
+</apex:page>

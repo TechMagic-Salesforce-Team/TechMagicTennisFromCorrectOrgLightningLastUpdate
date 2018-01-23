@@ -106,8 +106,15 @@ public class AURA_TournamentController {
 		if (tournamentId != null) {
 			Tournament__c tournament = [select Id, Name, Status__c, Format__c, StartDate__c, Type__c from Tournament__c where Id=:tournamentId];
 			if (tournament.Status__c == 'Upcoming') {
-				TournamentStarter tStarter = new TournamentStarter();
-				tStarter.start(tournament);
+				//TournamentStarter tStarter = new TournamentStarter();
+				//tStarter.start(tournament);
+
+//				try{
+//					System.schedule('Notify players about games to play', '0 10 * * * ?', new GamesToPLayNotifier());
+//				} catch(Exception ex) {
+//					System.debug('An exception occured while creating new schedule(if it exists)');
+//				}
+
 				return tournament;
 			}
 		}
@@ -125,11 +132,27 @@ public class AURA_TournamentController {
 			tw.tournament = tournament;
 			tw.isShowed = true;
 			tw.isApplied = false;
+			sendNotificationsAboutNewTournament(tournament);
 		} catch (Exception ex){
 			tw.message = 'FAIL';
 		}
 		return JSON.serialize(tw);
 	}
+
+
+	public static void sendNotificationsAboutNewTournament(Tournament__c tournament){
+		//List<Player__c> playersForEmails = [SELECT Id, Email__c FROM Player__c WHERE Status__c = 'Active' and Id='a000Y00000FJJzA'];
+		List<Player__c> playersForEmails = [SELECT Id, Email__c FROM Player__c WHERE Status__c = 'Active'];
+		List<String> ids = new List<String>();
+		List<String> emails = new List<String>();
+		for (Player__c p : playersForEmails) {
+			ids.add(p.Id);
+			emails.add(p.Email__c);
+		}
+		System.debug('Tournament created '+tournament.Id);
+		TournamentController.sendNotification(ids, emails, tournament.Id, tournament.Name, tournament.Type__c, tournament.Format__c);
+	}
+
 
 	public class TournamentWrap {
 		Tournament__c tournament;

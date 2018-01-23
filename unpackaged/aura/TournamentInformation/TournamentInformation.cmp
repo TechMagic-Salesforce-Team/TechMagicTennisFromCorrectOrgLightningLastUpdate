@@ -1,9 +1,10 @@
-<aura:component >
+<aura:component>
     <aura:attribute name="playerId" type="Id"/>
     <aura:attribute name="tournamentId" type="Id"/>
     <aura:attribute name="tournamentType" type="String"/>
     <aura:attribute name="pageName" type="String"/>
     <aura:attribute name="tournamentName" type="String"/>
+    <aura:attribute name="tournamentStatus" type="String" default="Current"/>
 
     <style>
 
@@ -31,17 +32,24 @@
 
         <p style="display: block; margin: 30px auto; font-size: 20px; text-align: center;">{!v.tournamentName}</p>
 
-    <aura:if isTrue="{!v.tournamentType=='Single Elimination'}">
-        <c:singleEliminationGridCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+
+    <aura:if isTrue="{!v.tournamentStatus != 'Upcoming'}">
+        <aura:if isTrue="{!v.tournamentType=='Single Elimination'}">
+            <c:singleEliminationGridCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.tournamentType=='Double Elimination'}">
+            <c:doubleEliminationGridCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+        </aura:if>
+
+
+        <aura:if isTrue="{!v.tournamentType=='Round Robin'}">
+            <c:roundRobinCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+        </aura:if>
     </aura:if>
 
-    <aura:if isTrue="{!v.tournamentType=='Double Elimination'}">
-        <c:doubleEliminationGridCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
-    </aura:if>
-
-
-    <aura:if isTrue="{!v.tournamentType=='Round Robin'}">
-        <c:roundRobinCmp playerId="{!v.playerId}" tournamentId="{!v.tournamentId}" pageName="{!v.pageName}"/>
+    <aura:if isTrue="{!v.tournamentStatus == 'Upcoming'}">
+        <c:playersAppliedCmp upcomingTournamentId="{!v.tournamentId}" tournamentName="{!v.tournamentName}"/>
     </aura:if>
 
 </aura:component>

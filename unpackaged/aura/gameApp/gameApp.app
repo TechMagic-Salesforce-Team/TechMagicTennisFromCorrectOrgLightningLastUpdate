@@ -1,3 +1,3 @@
 <aura:application extends="ltng:outApp" access="global" implements="ltng:allowGuestAccess">
-    <c:gameComponent/>
+    <c:gameComponent />
 </aura:application>

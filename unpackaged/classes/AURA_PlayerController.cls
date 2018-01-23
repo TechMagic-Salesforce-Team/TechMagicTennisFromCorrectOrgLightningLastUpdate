@@ -8,6 +8,45 @@ public class AURA_PlayerController {
         return players;
     }
 
+    @AuraEnabled
+    public static String getAppliedPlayersByTournament(String tournamentId){
+		List<Tournament__c> tournaments = [select Id, Name, Status__c, Format__c, Type__c from Tournament__c where Id=:tournamentId];
+		Tournament__c tournament = null;
+
+		if (tournaments.size()>0) tournament = tournaments.get(0);
+		else return null;
+
+        List<sObject> competitorsWithAllDataNeeded = null;
+		List<StatisticsOfPlayer> competitorsData = new List<StatisticsOfPlayer>();
+		System.debug('Tournament: '+tournament);
+        if (tournament.Format__c == '1 x 1'){
+            competitorsWithAllDataNeeded = [Select Id,Name,Image__c,(select CountWonGames__c, CountLostGames__c from PlayersStatistics__r)
+                    From Player__c Where Id IN (Select Player__c From PlayerTournament__c Where Tournament__c =:tournament.id)];
+
+			List<Player__c> players = (List<Player__c>) competitorsWithAllDataNeeded;
+
+			for (Player__c player : players) {
+				StatisticsOfPlayer statisticsOfCurrentPlayer = new StatisticsOfPlayer();
+				statisticsOfCurrentPlayer.playerName = player.Name;
+				statisticsOfCurrentPlayer.urlImage = player.Image__c;
+				statisticsOfCurrentPlayer.tournamentFormat = tournament.Format__c;
+				statisticsOfCurrentPlayer.countWonGames = 0;
+				statisticsOfCurrentPlayer.countLostGames = 0;
+
+				for (PlayerStatistics__c ps : player.PlayersStatistics__r) {
+					statisticsOfCurrentPlayer.countWonGames += ps.CountWonGames__c;
+					statisticsOfCurrentPlayer.countLostGames += ps.CountLostGames__c;
+				}
+				competitorsData.add(statisticsOfCurrentPlayer);
+			}
+        } else {
+            competitorsWithAllDataNeeded = [Select Id,Name From Team__c Where Tournament__c =:tournament.id];
+        }
+
+		System.debug(JSON.serialize(competitorsWithAllDataNeeded));
+        return JSON.serialize(competitorsData);
+    }
+
 
     @AuraEnabled
     public static String getPlayerStatistics(Id tournamentId, Id playerId) {
@@ -142,14 +181,14 @@ public class AURA_PlayerController {
     }
 
 
-    class StatisticsOfPlayer {
-        Double countWonGames;
-        Double countLostGames;
-        String urlImage;
-        String playerName;
-        String player1OfTeamName;
-        String player2OfTeamName;
-        String tournamentFormat;
+    public class StatisticsOfPlayer {
+        public Double countWonGames;
+		public Double countLostGames;
+		public String urlImage;
+		public String playerName;
+		public String player1OfTeamName;
+		public String player2OfTeamName;
+		public String tournamentFormat;
     }
 
 }

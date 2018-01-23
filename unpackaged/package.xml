@@ -1,43 +1,390 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>*</members>
+        <members>AURA_DoubleElimination</members>
+        <members>AURA_GameController</members>
+        <members>AURA_PlayerController</members>
+        <members>AURA_RoundRobin</members>
+        <members>AURA_SingleElimination</members>
+        <members>AURA_TeamController</members>
+        <members>AURA_TournamentController</members>
+        <members>AfterUpdateGameTriggerHelper</members>
+        <members>AfterUpdateGameTriggerHelper_TEST</members>
+        <members>ApplicationsApi</members>
+        <members>AuthorizationController</members>
+        <members>ChangePasswordController</members>
+        <members>CommunitiesLandingController</members>
+        <members>CommunitiesLandingControllerTest</members>
+        <members>CommunitiesLoginController</members>
+        <members>CommunitiesLoginControllerTest</members>
+        <members>CommunitiesSelfRegConfirmController</members>
+        <members>CommunitiesSelfRegConfirmControllerTest</members>
+        <members>CommunitiesSelfRegController</members>
+        <members>DeletePlayerSchedule</members>
+        <members>DoubleEliminationTournament</members>
+        <members>DoubleEliminationTournament_TEST</members>
+        <members>Game</members>
+        <members>GameController</members>
+        <members>GameController_Test</members>
+        <members>GameJSON</members>
+        <members>GamesToPLayNotifier</members>
+        <members>GamesToPLayNotifier_TEST</members>
+        <members>GeneralController</members>
+        <members>GoogleAuthClass</members>
+        <members>GoogleAuth_Test</members>
+        <members>Helper</members>
+        <members>Helper_Test</members>
+        <members>HerokuToken</members>
+        <members>HomeController</members>
+        <members>HomeControllerTest</members>
+        <members>HtmlBodies</members>
+        <members>ISingleEliminationTournament</members>
+        <members>ITournamentGridFunctional</members>
+        <members>LightningForgotPasswordController</members>
+        <members>LightningLoginFormController</members>
+        <members>LightningSelfRegisterController</members>
+        <members>MailSender</members>
+        <members>MailSenderMock_Test</members>
+        <members>MailSender_Test</members>
+        <members>MockHttpSignInWithGoogle</members>
+        <members>PlayerController</members>
+        <members>PlayerCookie</members>
+        <members>PlayerCookiePositionInGame</members>
+        <members>PlayerCredentials</members>
+        <members>PlayerStatisticsSorter</members>
+        <members>PlayerStatisticsSorterTest</members>
+        <members>PlayerTeamController</members>
+        <members>PlayerTeamController_TEST</members>
+        <members>PlayerTournamentController</members>
+        <members>Player_Test</members>
+        <members>PlayersStatisticsGenerator</members>
+        <members>RegisterLogin_Test</members>
+        <members>RoundRobin</members>
+        <members>RoundRobin_Test</members>
+        <members>SfAccessProvider</members>
+        <members>SingleEliminationTournament</members>
+        <members>SingleEliminationTournamentTest</members>
+        <members>SomeHomePageController</members>
+        <members>TableTennisAPI</members>
+        <members>TestCsv</members>
+        <members>TournamentController</members>
+        <members>TournamentController_TEST</members>
+        <members>TournamentPDF</members>
+        <members>TournamentPDFTest</members>
+        <members>TournamentStarter</members>
+        <members>TournamentStarter_TEST</members>
+        <members>TournamentsApi</members>
+        <members>TournamentsPostAPI</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>*</members>
+        <members>DoubleEliminationTournament</members>
+        <members>Footer</members>
+        <members>Header</members>
+        <members>HomePage</members>
+        <members>RoundRobin</members>
+        <members>SingleElimination</members>
+        <members>SiteFooter</members>
+        <members>SiteHeader</members>
+        <members>SiteLogin</members>
+        <members>SitePoweredBy</members>
+        <members>TeamInvitations</members>
+        <members>TournamentForm</members>
+        <members>TournamentInformation</members>
+        <members>TournamentsSearch</members>
+        <members>myComponent</members>
         <name>ApexComponent</name>
     </types>
     <types>
-        <members>*</members>
+        <members>CommunitiesLanding</members>
+        <members>CommunitiesLogin</members>
+        <members>CommunitiesSelfReg</members>
+        <members>CommunitiesSelfRegConfirm</members>
+        <members>CommunitiesTemplate</members>
+        <members>ConfirmRegistration</members>
+        <members>CreateTournament</members>
+        <members>EditTournament</members>
+        <members>ForgotPassword</members>
+        <members>Game</members>
+        <members>GoogleAuthEmptyRedirect</members>
+        <members>GoogleAuthPage</members>
+        <members>Home</members>
+        <members>HomePage</members>
+        <members>LoginRegister</members>
+        <members>LogoutPage</members>
+        <members>OpportunityPage</members>
+        <members>PageNotFound</members>
+        <members>Player</members>
+        <members>PlayerPage</members>
+        <members>PlayerTeamCreate</members>
+        <members>PlayerTournamentCreate</members>
+        <members>Players</members>
+        <members>SiteTemplate</members>
+        <members>Test</members>
+        <members>Tournament</members>
+        <members>TournamentPDF</members>
+        <members>Tournaments</members>
+        <members>Unauthorized</members>
         <name>ApexPage</name>
     </types>
     <types>
-        <members>*</members>
+        <members>AfterUpdateGameTrigger</members>
+        <members>BeforeInsertTeamTrigger</members>
+        <members>GeneratePlayersStatisticsOfTournament</members>
+        <members>OppTrigger</members>
+        <members>PlayerUpdateTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Component1</members>
+        <members>MyFirstLightingApp</members>
+        <members>TournamentInformation</members>
+        <members>TournamentInformationApp</members>
+        <members>TournamentItem</members>
+        <members>TournamentSearch</members>
+        <members>TournamentSearchAppWithoutSharing</members>
+        <members>TournamentSelectedEvent</members>
+        <members>TournamentsTable</members>
+        <members>UpdateTournamentsTableOnDelete</members>
+        <members>doubleEliminationGrid</members>
+        <members>doubleEliminationGridCmp</members>
+        <members>findPlayersByNameEvent</members>
+        <members>gameApp</members>
+        <members>gameComponent</members>
+        <members>myFirstLightningApp</members>
+        <members>newApp</members>
+        <members>playerPageApp</members>
+        <members>playerUpperInfo</members>
+        <members>popupWindowApp</members>
+        <members>popupWindowCmp</members>
+        <members>roundRobinApp</members>
+        <members>roundRobinCmp</members>
+        <members>roundRobinPlayerName</members>
+        <members>set_game_layout</members>
+        <members>singleEliminationGridCmp</members>
+        <members>table_tennis_app</members>
+        <members>table_tennis_player_item</members>
+        <members>table_tennis_players</members>
+        <members>table_tennis_players_all_by_input</members>
+        <members>table_tennis_players_find_form</members>
+        <members>teamInvitationAccepted</members>
+        <members>teamInvitationItem</members>
+        <members>teamInvitationTable</members>
+        <members>teamInvitationsCmp</members>
+        <members>tournamentSearchApp</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>*</members>
+        <members>standard__AppLauncher</members>
+        <members>standard__Chatter</members>
+        <members>standard__Community</members>
+        <members>standard__Content</members>
+        <members>standard__LightningSales</members>
+        <members>standard__LightningSalesConsole</members>
+        <members>standard__LightningService</members>
+        <members>standard__Marketing</members>
+        <members>standard__Platform</members>
+        <members>standard__Sales</members>
+        <members>standard__Service</members>
+        <members>standard__ServiceConsole</members>
+        <members>standard__Sites</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>CustomLabels</members>
+        <name>CustomLabels</name>
+    </types>
+    <types>
+        <members>Account</members>
+        <members>AccountCleanInfo</members>
+        <members>AccountContactRole</members>
+        <members>Activity</members>
+        <members>Asset</members>
+        <members>AssetRelationship</members>
+        <members>AssistantProgress</members>
+        <members>Campaign</members>
+        <members>CampaignMember</members>
+        <members>Case</members>
+        <members>CaseContactRole</members>
+        <members>Contact</members>
+        <members>ContactCleanInfo</members>
+        <members>ContentVersion</members>
+        <members>Contract</members>
+        <members>ContractContactRole</members>
+        <members>DandBCompany</members>
+        <members>DuplicateRecordItem</members>
+        <members>DuplicateRecordSet</members>
+        <members>EmailMessage</members>
+        <members>Event</members>
+        <members>ExchangeUserMapping</members>
+        <members>FeedItem</members>
+        <members>ForecastingCategoryMapping</members>
+        <members>Game__c</members>
+        <members>Idea</members>
+        <members>Lead</members>
+        <members>LeadCleanInfo</members>
+        <members>Macro</members>
+        <members>MacroAction</members>
+        <members>MacroInstruction</members>
+        <members>Opportunity</members>
+        <members>OpportunityCompetitor</members>
+        <members>OpportunityContactRole</members>
+        <members>OpportunityLineItem</members>
+        <members>Order</members>
+        <members>OrderItem</members>
+        <members>PartnerRole</members>
+        <members>PlayerStatistics__c</members>
+        <members>PlayerTeam__c</members>
+        <members>PlayerTournament__c</members>
+        <members>Player__c</members>
+        <members>Pricebook2</members>
+        <members>PricebookEntry</members>
+        <members>Product2</members>
+        <members>Scorecard</members>
+        <members>ScorecardMetric</members>
+        <members>Site</members>
+        <members>SocialPersona</members>
+        <members>Solution</members>
+        <members>StreamingChannel</members>
+        <members>Task</members>
+        <members>Team__c</members>
+        <members>Tournament__c</members>
+        <members>User</members>
+        <members>UserProvisioningRequest</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Game__c</members>
+        <members>PlayerStatistics__c</members>
+        <members>PlayerTeam__c</members>
+        <members>PlayerTournament__c</members>
+        <members>Player__c</members>
+        <members>Team__c</members>
+        <members>Tournament__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>sf_com_apps</members>
         <name>InstalledPackage</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Account-Account %28Marketing%29 Layout</members>
+        <members>Account-Account %28Sales%29 Layout</members>
+        <members>Account-Account %28Support%29 Layout</members>
+        <members>Account-Account Layout</members>
+        <members>Asset-Asset Layout</members>
+        <members>AssetRelationship-Asset Relationship Layout</members>
+        <members>Campaign-Campaign Layout</members>
+        <members>CampaignMember-Campaign Member Page Layout</members>
+        <members>Case-Case %28Marketing%29 Layout</members>
+        <members>Case-Case %28Sales%29 Layout</members>
+        <members>Case-Case %28Support%29 Layout</members>
+        <members>Case-Case Layout</members>
+        <members>CaseClose-Close Case Layout</members>
+        <members>Contact-Contact %28Marketing%29 Layout</members>
+        <members>Contact-Contact %28Sales%29 Layout</members>
+        <members>Contact-Contact %28Support%29 Layout</members>
+        <members>Contact-Contact Layout</members>
+        <members>ContentVersion-Content Version Layout</members>
+        <members>Contract-Contract Layout</members>
+        <members>DandBCompany-D%26B Company Layout</members>
+        <members>DuplicateRecordSet-Duplicate Record Set Layout</members>
+        <members>EmailMessage-Email Message Layout</members>
+        <members>Event-Event Layout</members>
+        <members>FeedItem-Feed Item Layout</members>
+        <members>Game__c-Game Layout</members>
+        <members>Global-Global Layout</members>
+        <members>Idea-Idea Layout</members>
+        <members>Lead-Lead %28Marketing%29 Layout</members>
+        <members>Lead-Lead %28Sales%29 Layout</members>
+        <members>Lead-Lead %28Support%29 Layout</members>
+        <members>Lead-Lead Layout</members>
+        <members>Macro-Macro Layout</members>
+        <members>Opportunity-Opportunity %28Marketing%29 Layout</members>
+        <members>Opportunity-Opportunity %28Sales%29 Layout</members>
+        <members>Opportunity-Opportunity %28Support%29 Layout</members>
+        <members>Opportunity-Opportunity Layout</members>
+        <members>OpportunityLineItem-Opportunity Product Layout</members>
+        <members>Order-Order Layout</members>
+        <members>OrderItem-Order Product Layout</members>
+        <members>PlayerStatistics__c-PlayerStatistic Layout</members>
+        <members>PlayerTeam__c-PlayerTeam Layout</members>
+        <members>PlayerTournament__c-PlayerTournament Layout</members>
+        <members>Player__c-Player Layout</members>
+        <members>Pricebook2-Price Book Layout</members>
+        <members>PricebookEntry-Price Book Entry Layout</members>
+        <members>Product2-Product Layout</members>
+        <members>Scorecard-Scorecard Layout</members>
+        <members>ScorecardMetric-Scorecard Metric Layout</members>
+        <members>SocialPersona-Social Persona Layout</members>
+        <members>SocialPost-Social Post Layout</members>
+        <members>Solution-Solution Layout</members>
+        <members>Task-Task Layout</members>
+        <members>Team__c-Team Layout</members>
+        <members>Tournament__c-Tournament Layout</members>
+        <members>User-User Layout</members>
+        <members>UserAlt-User Profile Layout</members>
+        <members>UserProvAccount-User Provisioning Account Layout</members>
+        <members>UserProvisioningLog-User Provisioning Log Layout</members>
+        <members>UserProvisioningRequest-User Provisioning Request Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>*</members>
+        <members>AccountsOpps</members>
+        <members>Name</members>
+        <members>SiteSamples</members>
+        <members>jqueryLib</members>
+        <members>login_css</members>
+        <members>login_css_1</members>
+        <members>style_resources</members>
+        <members>testAccounts</members>
+        <members>testContacts</members>
+        <members>testOpportunities</members>
         <name>StaticResource</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Account</members>
+        <members>Asset</members>
+        <members>AssetRelationship</members>
+        <members>AssistantProgress</members>
+        <members>Campaign</members>
+        <members>CampaignMember</members>
+        <members>Case</members>
+        <members>Contact</members>
+        <members>Contract</members>
+        <members>DandBCompany</members>
+        <members>DuplicateRecordItem</members>
+        <members>DuplicateRecordSet</members>
+        <members>EmailMessage</members>
+        <members>Event</members>
+        <members>ExchangeUserMapping</members>
+        <members>FeedItem</members>
+        <members>Game__c</members>
+        <members>Idea</members>
+        <members>Lead</members>
+        <members>Macro</members>
+        <members>MacroAction</members>
+        <members>MacroInstruction</members>
+        <members>Opportunity</members>
+        <members>OpportunityLineItem</members>
+        <members>Order</members>
+        <members>OrderItem</members>
+        <members>Organization</members>
+        <members>PlayerStatistics__c</members>
+        <members>PlayerTeam__c</members>
+        <members>PlayerTournament__c</members>
+        <members>Player__c</members>
+        <members>Product2</members>
+        <members>Site</members>
+        <members>SocialPersona</members>
+        <members>Solution</members>
+        <members>StreamingChannel</members>
+        <members>Task</members>
+        <members>Team__c</members>
+        <members>Tournament__c</members>
+        <members>User</members>
+        <members>UserLicense</members>
+        <members>UserProvisioningRequest</members>
         <name>Workflow</name>
     </types>
     <version>41.0</version>

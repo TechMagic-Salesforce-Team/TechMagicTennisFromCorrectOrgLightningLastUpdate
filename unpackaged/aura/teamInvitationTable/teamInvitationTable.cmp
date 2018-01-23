@@ -1,4 +1,4 @@
-<aura:component>
+<aura:component >
     <aura:attribute name="teamInvitations" type="PlayerTeamController.TeamInvitation[]"/>
     <aura:attribute name="currentPlayerId" type="String"/>
     <div class="slds-page-header" role="banner" style="background-color: white; margin-top: 20px;">

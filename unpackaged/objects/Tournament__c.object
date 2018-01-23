@@ -160,5 +160,12 @@
     <pluralLabel>Tournaments</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Name_Length_Less_Than_15_Symbols</fullName>
+        <active>true</active>
+        <errorConditionFormula>LEN(Name) &gt; 15</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>Name of tournament must be less than 16 symbols</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

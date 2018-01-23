@@ -34,7 +34,7 @@
             <!--</apex:form>-->
 
     <div id="lightning"/>
-    <apex:includeLightning/>
+    <apex:includeLightning />
 
     <script>
         $Lightning.use("c:gameApp", function () {

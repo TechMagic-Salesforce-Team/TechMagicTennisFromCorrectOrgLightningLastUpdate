@@ -23,7 +23,7 @@ public with sharing class MailSender {
         HttpRequest request = new HttpRequest();
         HttpResponse response = new HttpResponse();
         Http http = new Http();
-        request.setEndPoint('https://lit-falls-19490.herokuapp.com/v1/mailer/send');
+        request.setEndPoint('http://tomcat-techmagic-servletmail.1d35.starter-us-east-1.openshiftapps.com/email/send');
         request.setHeader('Content-Type', 'application/json');
         request.setMethod('POST');
         Emails emailsSend = new Emails();
@@ -33,7 +33,7 @@ public with sharing class MailSender {
         emailToSend.subject = subject;
         emailToSend.html = text;
         emailJSONS.add(emailToSend);
-        emailsSend.token = '7C91A11D-D48D-4C52-98FB-E10E876500B7';
+        emailsSend.token = 'ASDYQW127BFYWEBCAQWUQWNCE38ASDNCNUEO12';
         emailsSend.emails = emailJSONS;
         request.setBody(JSON.serialize(emailsSend));
         System.debug(JSON.serialize(emailsSend));
@@ -48,7 +48,7 @@ public with sharing class MailSender {
         HttpRequest request = new HttpRequest();
         HttpResponse response = new HttpResponse();
         Http http = new Http();
-        request.setEndPoint('https://lit-falls-19490.herokuapp.com/v1/mailer/send');
+        request.setEndPoint('http://tomcat-techmagic-servletmail.1d35.starter-us-east-1.openshiftapps.com/email/send');
         request.setHeader('Content-Type', 'application/json');
         request.setMethod('POST');
         request.setBody(emailsJSON);

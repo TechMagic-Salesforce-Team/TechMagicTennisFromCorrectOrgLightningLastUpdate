@@ -213,6 +213,7 @@ function carousel(){
     $( window ).resize(function() {
         marginTogResize();
         clearInterval(id);
+        circle_selected(count);
     });
     
     

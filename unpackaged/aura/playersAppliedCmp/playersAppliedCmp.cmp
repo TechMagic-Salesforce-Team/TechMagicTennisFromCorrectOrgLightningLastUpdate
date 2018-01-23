@@ -1,0 +1,46 @@
+<aura:component controller="AURA_PlayerController">
+
+    <aura:attribute name="upcomingTournament" type="Tournament__c"/>
+    <aura:attribute name="upcomingTournamentId" type="Id"/>
+    <aura:attribute name="tournamentName" type="String"/>
+    <aura:handler action="{!c.getAppliedPlayers}" name="init" value="{!this}"/>
+    <aura:attribute name="competitorsData" type="AURA_PlayerController.StatisticsOfPlayer[]"/>
+
+
+    <div style="margin-bottom: 20px;">
+
+    <div style="width: 100%; height: auto; float: left;">
+        <p style="font-size: 20px; margin-left: 1%; margin-top: 20px;">
+            Players, that applied for '{!v.upcomingTournament != null ? v.upcomingTournament.Name : v.tournamentName}'</p>
+    </div>
+
+    <aura:iteration items="{!v.competitorsData}" var="competitor">
+        <!--<div style= "background-color: white; width: auto; height: auto; visibility: visible; float:left;">-->
+            <!--<img src="{!competitor.Image__c}" style="height: 200px;"/>-->
+        <!--</div>-->
+
+
+        <div style="background-color: white; width: auto; height: auto; visibility: visible; margin-left: auto; margin-left: 20px; margin-top: 20px; float: left; margin-bottom: 20px;">
+
+                <aura:if isTrue="{!competitor.urlImage != null}">
+                    <img src="{!competitor.urlImage}" style="height: 200px; background-size: cover;"/>
+                </aura:if>
+
+                <aura:if isTrue="{!competitor.urlImage == null}">
+                    <img src="https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png" style="height: 200px; background-size: cover;"/>
+                </aura:if>
+                <p style="margin-top: 20px; text-align: center">{!competitor.playerName}</p>
+                <p style="text-align: center;">Win rate</p>
+                <p style="text-align: center;">{!competitor.countWonGames} : {!competitor.countLostGames}</p>
+
+                <div style='width: 100%; height: 20px; background-color: #DC143C'>
+                    <div style="{! 'width: '+(100*(competitor.countWonGames / (competitor.countLostGames+competitor.countWonGames)))+'%; height: 100%; background-color: limegreen; float: left;'}">
+                    </div>
+                </div>
+
+            </div>
+
+    </aura:iteration>
+    </div>
+
+</aura:component>

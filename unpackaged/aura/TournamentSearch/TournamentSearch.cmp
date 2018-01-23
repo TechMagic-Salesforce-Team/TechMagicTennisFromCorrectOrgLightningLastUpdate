@@ -21,10 +21,9 @@
     <aura:handler event="aura:doneRendering" action="{!c.hideSpinner}"/>
     <aura:attribute name="doneWaitingBollean" type="Boolean" default="false"/>
     <!--<aura:attribute name="tw" type="TournamentController.TournamentWrapper[]"/>-->
-
     <body>
 
-    <aura:if isTrue="{!v.tournamentsWrapper.length!=0}">
+    <aura:if isTrue="{!!v.home}">
     <fieldset style="width: 100%; margin: 10px auto">
         <div class="slds-page-header" role="banner" style="background-color: white;">
             <div class="slds-grid">
@@ -112,7 +111,7 @@
             </div>
         </form>
     </fieldset>
-
+    </aura:if>
 
 
     <aura:if isTrue="{!v.createTournamentWindow}">
@@ -213,7 +212,7 @@
 
     <div class="slds-backdrop slds-backdrop--open"></div>
     </aura:if>
-    </aura:if>
+    <!--</aura:if>-->
 
         <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
 
@@ -222,6 +221,13 @@
                 <c:TournamentInformation tournamentId="{!v.tournamentToDisplay.Id}" playerId="{!v.currentPlayerId}"
                                          tournamentType="{!v.tournamentToDisplay.Type__c}" pageName="{!v.pageName}" tournamentName="{!v.tournamentToDisplay.Name}"/>
             </aura:if>
+
+
+            <aura:if isTrue="{!v.tournamentToDisplay.Status__c == 'Upcoming'}">
+                <c:playersAppliedCmp upcomingTournament="{!v.tournamentToDisplay}" />
+            </aura:if>
+
+
         </aura:if>
 
     <aura:if isTrue="{!v.tournamentsWrapper.length==0}">

@@ -70,7 +70,7 @@ public with sharing virtual class TournamentController extends PlayerCookie{
     }
     
     @future(callout=true)
-    private static void sendNotification(List<String> ids, List<String> emails, String currentTournamentId, String currentTournamentName, String currentTournamentType, String currentTournamentFormat) {
+    public static void sendNotification(List<String> ids, List<String> emails, String currentTournamentId, String currentTournamentName, String currentTournamentType, String currentTournamentFormat) {
         String text = 'You can apply for a new tournament ' + currentTournamentName + '! The type of the tournament is '+ currentTournamentType
         + ', and the format is ' + currentTournamentFormat + '.\n';
         for (Integer i = 0; i < ids.size(); i++){

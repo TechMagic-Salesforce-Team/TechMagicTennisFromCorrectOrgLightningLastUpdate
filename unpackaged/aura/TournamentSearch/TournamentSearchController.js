@@ -2,7 +2,6 @@
     search: function (component, event, helper) {
         //alert(component.get("v.home"));
         var action = component.get("c.findAll");
-            
         action.setParams({
                 "searchTournament": component.get("v.tournament"),
                 "home": component.get("v.home"),
@@ -16,18 +15,19 @@
                     var tournamentsJSON = JSON.parse(tournaments);
                     //alert(JSON.parse(tournaments));
                     //component.set("v.tournaments", tournaments);
-                    for (var i = 0; i < tournamentsJSON.length; i++) {
-                        //alert(tournamentsJSON[i].tournament.Name + ', '+tournamentsJSON[i].isApplied);
-                        component.set("v.tournamentsWrapper", tournamentsJSON);
-                    }
+
+                    // for (var i = 0; i < tournamentsJSON.length; i++) {
+                    //     component.set("v.tournamentsWrapper", tournamentsJSON);
+                    // }
+                    component.set("v.tournamentsWrapper", tournamentsJSON);
                 }
             })
             $A.enqueueAction(action);
         
 
-        if (component.get("v.tournamentToDisplay") == null && component.get("v.playerPage") == false) {
-            helper.loadFirstIfHomePage(component);
-        }
+        // if (component.get("v.tournamentToDisplay") == null && component.get("v.playerPage") == false) {
+        //     helper.loadFirstIfHomePage(component);
+        // }
 
         //if (component.get("v.currentPlayer") == null) {
             helper.loadPlayer(component);

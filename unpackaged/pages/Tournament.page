@@ -21,7 +21,8 @@
                             playerId: "{!currentPlayer.Id}",
                             tournamentType: "{!currentTournament.Type__c}",
                             pageName: "Tournament",
-                            tournamentName: "{!currentTournament.Name}"
+                            tournamentName: "{!currentTournament.Name}",
+                            tournamentStatus: "{!currentTournament.Status__c}"
                         },
                         "lightning",
                         function (cmp) {
