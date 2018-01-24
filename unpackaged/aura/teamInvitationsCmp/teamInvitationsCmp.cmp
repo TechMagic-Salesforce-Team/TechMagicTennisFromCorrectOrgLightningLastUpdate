@@ -23,14 +23,14 @@
                 </div>
             </div>
         </aura:if>
-
-
     </aura:if>
 
 
     <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--7-of-7 slds-large-size--7-of-7">
         <div style="margin-top: 100px;">
-            <c:TournamentSearch playerId="{!v.currentPlayer}" home="false" currentPlayerId="{!v.playerFromCookie}" justAcceptedTournament="{!v.tournamentJustAccepted}" playerPage="true"/>
+            <c:TournamentSearch playerId="{!v.currentPlayer}" home="false" currentPlayerId="{!v.playerFromCookie}"  playerPage="true"/>
         </div>
     </div>
+
+
 </aura:component>

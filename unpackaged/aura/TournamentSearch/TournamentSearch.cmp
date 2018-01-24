@@ -2,6 +2,7 @@
 
     <!--<aura:attribute name="tournaments" type="Tournament__c[]" default="[]"/>-->
     <aura:attribute name="tournamentsWrapper" type="TournamentController.TournamentWrapper[]"/>
+    <aura:attribute name="tournamentsWrapperAll" type="TournamentController.TournamentWrapper[]"/>
     <aura:attribute name="tournament" type="Tournament__c" default="{}"/>
     <aura:attribute name="tournamentToDisplay" type="Tournament__c"/>
     <aura:attribute name="currentPlayerId" type="Id"/>
@@ -20,12 +21,18 @@
     <aura:attribute name="justAcceptedTournament" type="TournamentController.TournamentWrapper"/>
     <aura:handler event="aura:doneRendering" action="{!c.hideSpinner}"/>
     <aura:attribute name="doneWaitingBollean" type="Boolean" default="false"/>
+    <aura:attribute name="wasInit" type="Boolean" default="false"/>
     <!--<aura:attribute name="tw" type="TournamentController.TournamentWrapper[]"/>-->
     <body>
 
     <aura:if isTrue="{!!v.home}">
-    <fieldset style="width: 100%; margin: 10px auto">
-        <div class="slds-page-header" role="banner" style="background-color: white;">
+        <fieldset style="{!'width: 100%; margin: 10px auto; display: '+
+                (v.playerPage ? v.tournamentsWrapperAll.length > 0 ? 'block;'
+                                : 'none;'
+                            : 'block;')
+                }">
+
+            <div class="slds-page-header" role="banner" style="background-color: white;">
             <div class="slds-grid">
                 <div class="slds-col">
                     <p class="slds-text-heading--label">Tournaments</p>
@@ -214,7 +221,14 @@
     </aura:if>
     <!--</aura:if>-->
 
-        <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
+        <aura:if isTrue="{!v.tournamentsWrapper.length > 0}">
+            <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
+        </aura:if>
+
+
+        <!--<aura:if isTrue="{!v.tournamentsWrapper.length == 0}">-->
+            <!--<p>No current or completed tournaments played by this user</p>-->
+        <!--</aura:if>-->
 
         <aura:if isTrue="{!v.tournamentToDisplay != null}">
             <aura:if isTrue="{!v.tournamentToDisplay.Status__c != 'Upcoming'}">

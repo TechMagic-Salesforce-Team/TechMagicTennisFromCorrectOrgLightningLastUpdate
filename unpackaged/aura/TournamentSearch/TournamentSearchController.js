@@ -1,6 +1,5 @@
 ({
     search: function (component, event, helper) {
-        //alert(component.get("v.home"));
         var action = component.get("c.findAll");
         action.setParams({
                 "searchTournament": component.get("v.tournament"),
@@ -19,7 +18,21 @@
                     // for (var i = 0; i < tournamentsJSON.length; i++) {
                     //     component.set("v.tournamentsWrapper", tournamentsJSON);
                     // }
-                    component.set("v.tournamentsWrapper", tournamentsJSON);
+                    var notUpcomingTournamentsJSON = [];
+                    if (component.get("v.playerPage") && (component.get("v.currentPlayerId") != component.get("v.playerId"))) {
+                        for (var i = 0; i < tournamentsJSON.length; i++) {
+                            //alert(tournamentsJSON[i].tournament.Status__c);
+                             if (tournamentsJSON[i].tournament.Status__c != 'Upcoming') {
+                                 notUpcomingTournamentsJSON.push(tournamentsJSON[i]);
+                             }
+                        }
+                        component.set("v.tournamentsWrapper", notUpcomingTournamentsJSON);
+                    } else component.set("v.tournamentsWrapper", tournamentsJSON);
+
+                    if (!component.get("v.wasInit")) {
+                        component.set("v.tournamentsWrapperAll", component.get("v.tournamentsWrapper"));
+                    }
+                    component.set("v.wasInit", true);
                 }
             })
             $A.enqueueAction(action);
