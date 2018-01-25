@@ -12,54 +12,45 @@
 
     <aura:if isTrue="{!v.existsInCurrentGame}">
         <fieldset style="width: 100%; margin: 10px auto">
-            <div class="slds-page-header" role="banner" style="background-color: white;">
-                <div class="slds-grid">
-                    <div class="slds-col">
-                        <p class="slds-text-heading--label">Inserting score of the game</p>
-                        <h1 class="slds-text-heading--medium">
-                            Game
-                        </h1>
-                    </div>
-                </div>
-            </div>
             <form class="slds-form--compound">
                 <div class=" slds-grid slds-wrap">
 
-                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+                    <div class="slds-form-element slds-col slds-size--1-of-6 slds-medium-size--1-of-6 slds-large-size--1-of-6">
                     </div>
 
-                    <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
+                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--2-of-7 slds-large-size--2-of-7">
                         <aura:if isTrue="{!v.player1Name != '?'}">
-                        <label class="slds-form-element__label" for="name">{!v.player1Name}</label>
+                        <h3 class="slds-text-heading--medium">{!v.player1Name}</h3>
                         </aura:if>
 
                         <aura:if isTrue="{!v.player1Name == '?'}">
-                            <label class="slds-form-element__label" for="name">First competitor score</label>
+                            <h3 class="slds-text-heading--medium">First competitor score</h3>
                         </aura:if>
 
-                        <div class="slds-form-element__control">
+                        <div class="slds-form-element__control slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3 slds-align--absolute-center"
+                             style="margin-top: 10px;">
                             <ui:inputText class="slds-input" value="{!v.game.FirstCompetitorScore__c}"/>
                         </div>
                     </div>
 
-                    <div class="slds-form-element slds-col slds-size--1-of-2 slds-medium-size--5-of-7 slds-large-size--5-of-7">
+                    <div class="slds-form-element slds-col slds-size--6-of-6 slds-medium-size--2-of-6 slds-large-size--1-of-6">
                     </div>
 
-                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
-                    </div>
+                    <!--<div class="slds-form-element slds-col slds-size&#45;&#45;1-of-3 slds-medium-size&#45;&#45;1-of-3 slds-large-size&#45;&#45;1-of-3">-->
+                    <!--</div>-->
 
-                    <div class="slds-form-element slds-col-size--1-of-1 slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
-
+                    <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--2-of-7 slds-large-size--2-of-7">
                         <aura:if isTrue="{!v.player2Name != '?'}">
-                            <label class="slds-form-element__label" for="name">{!v.player2Name}</label>
+                            <h3 class="slds-text-heading--medium">{!v.player2Name}</h3>
                         </aura:if>
 
                         <aura:if isTrue="{!v.player2Name == '?'}">
-                            <label class="slds-form-element__label" for="name">Second competitor score</label>
+                            <h3 class="slds-text-heading--medium">Second competitor score</h3>
                         </aura:if>
 
-                        <div class="slds-form-element__control">
-                            <ui:inputText class="slds-input" value="{!v.game.SecondCompetitorScore__c}"/>
+                        <div class="slds-form-element__control slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3 slds-align--absolute-center"
+                             style="margin-top: 10px;">
+                            <ui:inputText class="slds-input" value="{!v.game.SecondCompetitorScore__c}" />
                         </div>
                     </div>
 
@@ -69,36 +60,51 @@
                     <div class="slds-form-element slds-col slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
                     </div>
 
-                    <div style="margin-top: 10px;">
-                            <lightning:button label="Input Score" onclick="{!c.inputScoreFunc}"/>
-                    </div>
+                    <!--<div style="margin-top: 20px; margin-left: 7%;">-->
+                            <!--<lightning:button label="Input Score" onclick="{!c.inputScoreFunc}"/>-->
+                    <!--</div>-->
 
 
-                    <aura:if isTrue="{!v.canSubmit}">
-                        <div style="margin-top: 10px; margin-left: 10px">
-                            <lightning:button label="Submit Score"/>
-                        </div>
-                    </aura:if>
+                    <!--<aura:if isTrue="{!v.canSubmit}">-->
+                        <!--<div style="margin-top: 10px; margin-left: 10px">-->
+                            <!--<lightning:button label="Submit Score"/>-->
+                        <!--</div>-->
+                    <!--</aura:if>-->
                 </div>
             </form>
         </fieldset>
     </aura:if>
 
-    <aura:if isTrue="{!!v.existsInCurrentGame}">
-        <h1 class="slds-text-heading--medium slds-text-align--center">
-            You have no access to this game
-        </h1>
-    </aura:if>
-    
-    <aura:if isTrue="{!v.game.FirstCompetitorAccept__c}">
-        <aura:if isTrue="{!v.game.SecondCompetitorAccept__c}">
-            <p style="font-size: 30px; text-align: center;"> Game has already been played </p>
+    <aura:if isTrue="{!!and(v.game.FirstCompetitorAccept__c,
+            v.game.SecondCompetitorAccept__c)}">
+    <div style="float: right; margin-top: 20px;">
+        <aura:if isTrue="{!v.existsInCurrentGame}">
+            <button class="slds-button slds-button--neutral" onclick="{!c.inputScoreFunc}">Input Score</button>
         </aura:if>
+        <aura:if isTrue="{!v.canSubmit}">
+            <button class="slds-button slds-button--neutral">Submit Score</button>
+        </aura:if>
+        <button class="slds-button slds-button--neutral" >Cancel</button>
+        <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
+        <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
+    </div>
     </aura:if>
 
+    <!--<aura:if isTrue="{!!v.existsInCurrentGame}">-->
+        <!--<h1 class="slds-text-heading&#45;&#45;medium slds-text-align&#45;&#45;center">-->
+            <!--You have no access to this game-->
+        <!--</h1>-->
+    <!--</aura:if>-->
+    <!---->
+    <!--<aura:if isTrue="{!v.game.FirstCompetitorAccept__c}">-->
+        <!--<aura:if isTrue="{!v.game.SecondCompetitorAccept__c}">-->
+            <!--<p style="font-size: 30px; text-align: center;"> Game has already been played </p>-->
+        <!--</aura:if>-->
+    <!--</aura:if>-->
 
-    <aura:if isTrue="{!v.isUndefined}">
-            <p style="font-size: 30px; text-align: center;"> You have not acess to achieve this game </p>
-    </aura:if>
+
+    <!--<aura:if isTrue="{!v.isUndefined}">-->
+            <!--<p style="font-size: 30px; text-align: center;"> You have not acess to achieve this game </p>-->
+    <!--</aura:if>-->
 
 </aura:component>

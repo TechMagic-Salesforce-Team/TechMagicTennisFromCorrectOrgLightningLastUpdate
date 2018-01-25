@@ -144,7 +144,7 @@
                         X
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h2 id="header99" class="slds-text-heading--medium">Input results of the game</h2>
+                    <h2 id="header99" class="slds-text-heading--medium">Insert Game Score</h2>
                 </div>
 
 
@@ -192,9 +192,11 @@
                     />
 
                 </div>
-                <div class="slds-modal__footer">
-                    <button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}" >Cancel</button>
-                </div>
+                <!--<div class="slds-modal__footer">-->
+                    <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
+                    <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
+                    <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
+                <!--</div>-->
             </div>
         </div>
         <div class="slds-backdrop slds-backdrop--open"></div>
