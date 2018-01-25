@@ -1,4 +1,9 @@
 ({
+
+    initFunc: function (component, event, helper) {
+        //alert("Table init");
+    },
+
     myFunc: function (component, event, helper) {
 
     },
@@ -8,5 +13,9 @@
         var tournamentsWrappers = component.get("v.tournamentsWrapper");
         tournamentsWrappers.push(component.get("v.justAcceptedTournament"));
         component.set("v.tournamentsWrapper", tournamentsWrappers);
+    },
+
+    changedTournamentIdApplied: function (component, event, helper) {
+        //alert("changed"+component.get("v.tournamentIdApplied"));
     }
 })

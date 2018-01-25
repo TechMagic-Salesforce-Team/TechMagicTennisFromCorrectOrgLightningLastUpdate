@@ -1,33 +1,38 @@
 ({
     clickOntournament: function (component, event, helper) {
-        if (component.get("v.refreshTournament")) {
+        //alert("clicked");
+        if (component.get("v.refreshTournament") || (component.get("v.applicationChanged") && component.get("v.applicationChangedStep1"))) {
             var tournament = component.get("v.tournament");
             var updateEvent = component.getEvent("tournamentSelector");
             updateEvent.setParams({"tournament": tournament});
             updateEvent.fire();
+        } else if (component.get("v.applicationChanged") && !component.get("v.applicationChangedStep1")) {
+            component.set("v.applicationChangedStep1", true);
         }
     },
 
     startTournament: function (component, event, helper) {
         component.set("v.refreshTournament", false);
+        component.set("v.applicationChanged", false);
         var action = component.get("c.start");
         action.setParams({
             "tournamentId": component.get("v.tournament").Id,
         });
 
-        // action.setCallback(component, function (response) {
-        //     var state = response.getState();
-        //     if (state === "SUCCESS") {
-        //         var tournament = response.getReturnValue();
-        //         component.set("v.tournament", tournament);
-        //     }
-        // })
+        action.setCallback(component, function (response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var tournament = response.getReturnValue();
+                component.set("v.tournament", tournament);
+            }
+        })
         $A.enqueueAction(action);
 
     },
 
     deleteTournamentAction: function (component, event, helper) {
         component.set("v.refreshTournament", false);
+        component.set("v.applicationChanged", false);
         //var tournamentJsonStr = component.get("v.tournament");
         // var tournamentToDelete = {};
         //
@@ -63,7 +68,9 @@
     },
     
     applyFunc: function (component, event, helper) {
+        component.set("v.applicationChanged", true);
         component.set("v.refreshTournament", false);
+        component.set("v.applicationChangedStep1", false);
         if (component.get("v.tournament").Format__c == '1 x 1') {
             component.set("v.message", "Create your team for tournament");
             var action = component.get("c.applyForTournament");
@@ -75,6 +82,13 @@
                 var state = response.getState();
                 if (state === "SUCCESS") {
                     component.set("v.isApplied", !component.get("v.isApplied"));
+
+                    var playerAppliedEvent = component.getEvent("playerAppliedOrDisapplied");
+                    playerAppliedEvent.setParams({
+                        "playerId": component.get("v.player").Id,
+                        "tournamentId": component.get("v.tournament").Id
+                    });
+                    playerAppliedEvent.fire();
                 }
             })
             $A.enqueueAction(action);

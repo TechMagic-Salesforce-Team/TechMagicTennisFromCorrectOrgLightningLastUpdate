@@ -3,8 +3,12 @@
     <aura:attribute name="teamInvitations" type="PlayerTeamController.TeamInvitation[]" default="[]"/>
     <aura:attribute name="playerId" type="Id"/>
     <aura:attribute name="player" type="Player__c"/>
+    <aura:attribute name="tournamentIdApplied" type="String"/>
     <aura:attribute name="justAcceptedTournament" type="TournamentController.TournamentWrapper"/>
+    <aura:handler action="{!c.initFunc}" name="init" value="{!this}"/>
     <aura:handler name="change" value="{!v.justAcceptedTournament}" action="{!c.newAcceptedTournament}"/>
+    <aura:handler name="change" value="{!v.tournamentIdApplied}" action="{!c.changedTournamentIdApplied}"/>
+    <aura:attribute name="refreshItems" type="Boolean" default="true"/>
     <table class="slds-table slds-table--bordered slds-theme--default" style="width: 98%; margin: 36px auto 0;">
         <thead>
         <aura:if isTrue="{!v.tournamentsWrapper.length>0}">
@@ -24,7 +28,7 @@
         <tbody>
         <aura:iteration items="{!v.tournamentsWrapper}" var="t">
             <aura:if isTrue="{!t != null}">
-              <c:TournamentItem tournament="{!t.tournament}" player="{!v.player}" isApplied="{!t.isApplied}" isShowed="{!t.isShowed}"/>
+              <c:TournamentItem tournament="{!t.tournament}" player="{!v.player}" isApplied="{!t.isApplied}" isShowed="{!t.isShowed}" refreshTournament="true"/>
             </aura:if>
         </aura:iteration>
         </tbody>

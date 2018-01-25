@@ -12,6 +12,7 @@
     <aura:handler action="{!c.search}" name="init" value="{!this}"/>
     <aura:handler name="tournamentSelector" event="c:TournamentSelectedEvent" action="{!c.handleTournamentByClick}"/>
     <aura:handler name="tournamentUpdate" event="c:UpdateTournamentsTableOnDelete" action="{!c.handleDeletedTournament}"/>
+    <aura:handler name="playerAppliedOrDisapplied" event="c:playerAppliedOrDisappliedForTournamentEvent" action="{!c.handlePlayerApplication}"/>
     <aura:attribute name="createTournamentWindow" type="Boolean" default="false"/>
     <aura:attribute name="tournamentCreate" type="Tournament__c" default="{}"/>
     <aura:attribute name="tournamentCreated" type="Boolean" default="false"/>
@@ -22,12 +23,14 @@
     <aura:handler event="aura:doneRendering" action="{!c.hideSpinner}"/>
     <aura:attribute name="doneWaitingBollean" type="Boolean" default="false"/>
     <aura:attribute name="wasInit" type="Boolean" default="false"/>
+    <aura:attribute name="tournamentIdAppliedByPlayer" type="String" default=""/>
     <!--<aura:attribute name="tw" type="TournamentController.TournamentWrapper[]"/>-->
     <body>
 
-    <aura:if isTrue="{!!v.home}">
+    <!--<aura:if isTrue="{!!v.home}">-->
         <fieldset style="{!'width: 100%; margin: 10px auto; display: '+
-                (v.playerPage ? v.tournamentsWrapperAll.length > 0 ? 'block;'
+                (v.home ? v.tournamentsWrapperAll.length > 0 ? 'block;' : 'none;' :
+                        v.playerPage ? v.tournamentsWrapperAll.length > 0 ? 'block;'
                                 : 'none;'
                             : 'block;')
                 }">
@@ -118,7 +121,7 @@
             </div>
         </form>
     </fieldset>
-    </aura:if>
+    <!--</aura:if>-->
 
 
     <aura:if isTrue="{!v.createTournamentWindow}">
@@ -222,7 +225,7 @@
     <!--</aura:if>-->
 
         <aura:if isTrue="{!v.tournamentsWrapper.length > 0}">
-            <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}"/>
+            <c:TournamentsTable tournamentsWrapper="{!v.tournamentsWrapper}" player="{!v.currentPlayer}" justAcceptedTournament="{!v.justAcceptedTournament}" tournamentIdApplied="{!v.tournamentIdAppliedByPlayer}"/>
         </aura:if>
 
 

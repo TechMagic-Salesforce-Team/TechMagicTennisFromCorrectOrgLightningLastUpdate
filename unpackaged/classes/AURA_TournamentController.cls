@@ -106,15 +106,14 @@ public class AURA_TournamentController {
 		if (tournamentId != null) {
 			Tournament__c tournament = [select Id, Name, Status__c, Format__c, StartDate__c, Type__c from Tournament__c where Id=:tournamentId];
 			if (tournament.Status__c == 'Upcoming') {
-				//TournamentStarter tStarter = new TournamentStarter();
-				//tStarter.start(tournament);
-
-//				try{
-//					System.schedule('Notify players about games to play', '0 10 * * * ?', new GamesToPLayNotifier());
-//				} catch(Exception ex) {
-//					System.debug('An exception occured while creating new schedule(if it exists)');
-//				}
-
+				TournamentStarter tStarter = new TournamentStarter();
+				tStarter.start(tournament);
+				sendNotificationsAboutStartedTournament(tournament);
+				try{
+					System.schedule('Notify players about games to play', '0 0 10 * * ?', new GamesToPLayNotifier());
+				} catch(Exception ex) {
+					System.debug('An exception occured while creating new schedule(if it exists)');
+				}
 				return tournament;
 			}
 		}
@@ -151,6 +150,26 @@ public class AURA_TournamentController {
 		}
 		System.debug('Tournament created '+tournament.Id);
 		TournamentController.sendNotification(ids, emails, tournament.Id, tournament.Name, tournament.Type__c, tournament.Format__c);
+	}
+
+	public static void sendNotificationsAboutStartedTournament(Tournament__c tournament) {
+		Set<String> emails = new Set<String>();
+		Map<String, String> competitors = Helper.getIdAndNameMap(tournament);
+		if (tournament.Format__c=='1 x 1') {
+			List<Player__c> players = [select Id, Email__c from Player__c where Id in: competitors.keySet()];
+			for (Player__c player : players){
+				emails.add(player.Email__c);
+			}
+		} else {
+			List<Team__c> teams = [select Id, (select Id, Player__r.Email__c from PlayerTeams__r) from Team__c where Id in : competitors.keySet()];
+			for (Team__c team : teams) {
+				for (PlayerTeam__c pt : team.PlayerTeams__r) {
+					emails.add(pt.Player__r.Email__c);
+				}
+			}
+		}
+		System.debug('Addresses, which will get an email about starting new tournament: '+emails);
+		TournamentController.sendNotificationAboutTournamentThatStarted(tournament.Name,emails);
 	}
 
 

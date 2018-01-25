@@ -76,8 +76,28 @@
 
     handleTournamentByClick: function (component, event, helper) {
         component.set("v.tournamentToDisplay",null);
-        if (component.get("v.tournamentToDisplay") == null) component.set("v.tournamentToDisplay",event.getParam("tournament"));
+        component.set("v.tournamentToDisplay",event.getParam("tournament"));
         //alert(component.get("v.tournamentToDisplay").Type__c);
+    },
+
+    handlePlayerApplication: function (component, event, helper) {
+        //alert(event.getParam("playerId")+","+event.getParam("tournamentId"));
+        var tournamentToDisplay = component.get("v.tournamentToDisplay");
+
+        component.set("v.tournamentToDisplay",null);
+        component.set("v.tournamentToDisplay",tournamentToDisplay);
+
+        var tournamentsAllWrappers = component.get("v.tournamentsWrapper");
+        if (component.get("v.playerPage")) {
+            for (var i = 0; i < tournamentsAllWrappers.length; i++) {
+                if (tournamentsAllWrappers[i].tournament.Id==event.getParam("tournamentId")){
+                    delete tournamentsAllWrappers[i];
+                    break;
+                }
+            }
+            component.set("v.tournamentsWrapper",tournamentsAllWrappers);
+        }
+        component.set("v.tournamentIdAppliedByPlayer", event.getParam("tournamentId"));
     },
 
     handleDeletedTournament: function (component, event, helper) {

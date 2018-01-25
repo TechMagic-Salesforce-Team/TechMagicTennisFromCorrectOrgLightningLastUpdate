@@ -6,12 +6,15 @@
     <aura:attribute name="isShowed" type="Boolean" default="false"/>
     <aura:registerEvent name="tournamentSelector" type="c:TournamentSelectedEvent"/>
     <aura:registerEvent name="tournamentUpdate" type="c:UpdateTournamentsTableOnDelete"/>
+    <aura:registerEvent name="playerAppliedOrDisapplied" type="c:playerAppliedOrDisappliedForTournamentEvent"/>
     <aura:attribute name="teamName" type="String"/>
     <aura:attribute name="idPlayerSelected" type="String"/>
     <aura:attribute name="createTeamWindow" type="Boolean"/>
     <aura:attribute name="message" type="String" default="Create your team for tournament"/>
     <aura:attribute name="teamToDelete" type="Team__c"/>
     <aura:attribute name="deleteTeam" type="Boolean" default="false"/>
+    <aura:attribute name="applicationChanged" type="Boolean" default="false"/>
+    <aura:attribute name="applicationChangedStep1" type="Boolean" default="false"/>
 
     <tr style="cursor: pointer; height: 50px;" onclick="{!c.clickOntournament}">
         <td class="slds-truncate" scope="row"><a href="{! '/Tournament?tournamentId='+v.tournament.Id}" onclick="{!c.dontRefreshTournamentAndRedirectPage}"><ui:outputText value="{!v.tournament.Name}"/></a> </td>

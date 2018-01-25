@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="Event template">
+
+    <aura:attribute name="playerId" type="String"/>
+    <aura:attribute name="tournamentId" type="String"/>
+
+</aura:event>

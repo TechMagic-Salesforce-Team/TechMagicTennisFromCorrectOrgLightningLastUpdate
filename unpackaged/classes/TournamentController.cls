@@ -84,6 +84,15 @@ public with sharing virtual class TournamentController extends PlayerCookie{
                       + currentTournamentId + ids[i]): text));
         }
     }
+
+
+
+    @future(callout=true)
+    public static void sendNotificationAboutTournamentThatStarted(String tournamentName, Set<String> emails) {
+        String text = '<p>Tournament "'+tournamentName+'" was started!!!</p>';
+        MailSender.sendEmailJSON(HerokuToken.JSONFormatEmails(emails, 'Tournament is current now', text));
+    }
+
     
     public PageReference cancel() {
         return Page.Tournaments;

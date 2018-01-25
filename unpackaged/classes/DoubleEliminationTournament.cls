@@ -76,6 +76,7 @@ public with sharing class DoubleEliminationTournament {
 
             Player__c currentPlayer = null;
             Boolean isLoggedIn = null;
+			String playerOrTeamRelatedToPlayerFromCookie = null;
 
 
             try {
@@ -97,7 +98,6 @@ public with sharing class DoubleEliminationTournament {
             }
 
             Map<Id,Sobject> teamsOrPlayers = new Map<Id,Sobject>();
-            String playerOrTeamRelatedToPlayerFromCookie = null;
             if (currentTournament.Format__c=='1 x 1'){
                 teamsOrPlayers = new Map<Id,Player__c>([select Id,Name from Player__c]);
             } else teamsOrPlayers = new Map<Id,Team__c>([select Id,Name, (select Player__c,Player__r.Name from PlayerTeams__r) from Team__c 
@@ -106,6 +106,8 @@ public with sharing class DoubleEliminationTournament {
             if (!String.isBlank(lightningPageName) && lightningPageName.equals('Tournament')){
                 lightningPageName += '?id='+currentTournament.Id;
             }
+
+
             /////////////////////////////////////////////////////////////////////
 
 //            if (isLoggedIn){
@@ -119,7 +121,9 @@ public with sharing class DoubleEliminationTournament {
                 } else {
                     playerOrTeamRelatedToPlayerFromCookie = null;
                 }
-              }
+              } else {
+					playerOrTeamRelatedToPlayerFromCookie = currentPlayer.Id;
+				}
             //}
 
             System.debug('I am here'+teamsOrPlayers.size());
@@ -142,6 +146,7 @@ public with sharing class DoubleEliminationTournament {
                     gamejs.secondCompetitorColor = g.SecondCompetitor__c==playerOrTeamRelatedToPlayerFromCookie?'#FF69B4':'black';
                     gamejs.winningGroup = g.WinningGroup__c; gamejs.stage = g.Stage__c.intValue();
                     gamejs.editable = gamejs.firstCompetitorId==playerOrTeamRelatedToPlayerFromCookie||gamejs.secondCompetitorId==playerOrTeamRelatedToPlayerFromCookie;
+                    System.debug('FirstCompetitorId == '+gamejs.firstCompetitorId+', SecondCompetitorId == '+gamejs.secondCompetitorId+', editable '+gamejs.editable+', playerOrTeamRelatedToPlayerFromCookie: '+playerOrTeamRelatedToPlayerFromCookie);
                     if (gamejs.editable) gamejs.hrefTo = 'Game?id='+gamejs.gameId+'&redirectUrl='+lightningPageName;
                     else gamejs.hrefTo = '#table1';
 

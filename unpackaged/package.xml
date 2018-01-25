@@ -57,6 +57,7 @@
         <members>PlayerTeamController_TEST</members>
         <members>PlayerTournamentController</members>
         <members>Player_Test</members>
+        <members>PlayersApi</members>
         <members>PlayersStatisticsGenerator</members>
         <members>RegisterLogin_Test</members>
         <members>RoundRobin</members>
@@ -153,8 +154,10 @@
         <members>gameComponent</members>
         <members>myFirstLightningApp</members>
         <members>newApp</members>
+        <members>playerAppliedOrDisappliedForTournamentEvent</members>
         <members>playerPageApp</members>
         <members>playerUpperInfo</members>
+        <members>playersAppliedCmp</members>
         <members>popupWindowApp</members>
         <members>popupWindowCmp</members>
         <members>roundRobinApp</members>
@@ -317,7 +320,6 @@
         <members>Scorecard-Scorecard Layout</members>
         <members>ScorecardMetric-Scorecard Metric Layout</members>
         <members>SocialPersona-Social Persona Layout</members>
-        <members>SocialPost-Social Post Layout</members>
         <members>Solution-Solution Layout</members>
         <members>Task-Task Layout</members>
         <members>Team__c-Team Layout</members>

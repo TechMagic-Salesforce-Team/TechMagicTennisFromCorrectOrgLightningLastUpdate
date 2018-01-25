@@ -20,6 +20,7 @@
     <div style="width: 100%; height: auto; float: left;">
         <p style="font-size: 20px; margin-left: 1%; margin-top: 20px;">
             Players, that applied for '{!v.upcomingTournament != null ? v.upcomingTournament.Name : v.tournamentName}'</p>
+        <p style="font-size: 20px; margin-left: 1%; margin-top: 20px;">Total: {!v.competitorsData.length}</p>
     </div>
 
     <aura:iteration items="{!v.competitorsData}" var="competitor">
@@ -29,7 +30,7 @@
 
 
 
-        <div style="background-color: white; width: auto; height: auto; visibility: visible; margin-left: auto; margin-left: 20px; margin-top: 20px; float: left; margin-bottom: 20px;">
+        <div style="background-color: white; width: auto; height: auto; visibility: visible; margin-left: auto; margin-left: 20px; margin-top: 30px; float: left; margin-bottom: 20px;">
 
                 <aura:if isTrue="{!competitor.urlImage != null}">
                     <img src="{!competitor.urlImage}" style="height: 200px; background-size: cover;"/>
