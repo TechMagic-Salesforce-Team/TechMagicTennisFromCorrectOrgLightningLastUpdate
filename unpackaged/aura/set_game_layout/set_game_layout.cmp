@@ -12,6 +12,10 @@
     <aura:attribute name="tournamentId" type="Id"/>
     <aura:attribute name="scrollX" type="Double" default="0"/>
     <aura:handler action="{!c.doInit}" value="this" name="init"/>
+    <aura:attribute name="editGameSwitched" type="Boolean" default="false"/>
+    <aura:attribute name="FirstCompetitorScore" type="Integer" default="0"/>
+    <aura:attribute name="SecondCompetitorScore" type="Integer" default="0"/>
+    <aura:attribute name="playerIdFromCookie" type="String"/>
     <style>
         .game {
             width: 250px;
@@ -78,13 +82,28 @@
                 </aura:if>
             </aura:if>
         </div>
-        <div class="gameInfo" style="width: 40%; margin-left: 30%;">
-            <a class="game_link" href="{!v.game.hrefTo}">
+        <aura:if isTrue="{!v.game.editable}">
+        <div class="gameInfo" style="width: 40%; margin-left: 30%;" onclick="{!c.gameClicked}">
+            <!--<a class="game_link" href="{!v.game.hrefTo}">-->
+            <a class="game_link">
                 <p style="margin-top: -7px;">
                 {!v.game.firstCompetitorScore} : {!v.game.secondCompetitorScore}
                 </p>
             </a>
         </div>
+        </aura:if>
+
+        <aura:if isTrue="{!!v.game.editable}">
+            <div class="gameInfo" style="width: 40%; margin-left: 30%;">
+                <!--<a class="game_link" href="{!v.game.hrefTo}">-->
+                <a class="game_link">
+                    <p style="margin-top: -7px;">
+                    {!v.game.firstCompetitorScore} : {!v.game.secondCompetitorScore}
+                    </p>
+                </a>
+            </div>
+        </aura:if>
+
         <div class="gameInfo" style="text-align: right;">
             <p onmouseover="{!c.showWindowForSecondCompetitor}" onmouseout="{!c.hideWindowSecondCompetitor}" style="cursor: pointer;">{!v.game.secondCompetitorName}</p>
             <aura:if isTrue="{!v.isOpenSecondCompetitor}">
@@ -113,4 +132,76 @@
         </div>
 
     </div>
+
+
+
+
+    <aura:if isTrue="{!v.editGameSwitched}">
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeWindow}">
+                        X
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium">Input results of the game</h2>
+                </div>
+
+
+                <div class="slds-modal__content slds-p-around--medium">
+                    <!--<fieldset style="width: 100%; margin: 20px auto">-->
+                        <!--<form class="slds-form&#45;&#45;compound">-->
+                            <!--<div class=" slds-grid slds-wrap ">-->
+
+                                <!--<div class="slds-form-element slds-col slds-size&#45;&#45;1-of-1 slds-medium-size&#45;&#45;1-of-7 slds-large-size&#45;&#45;1-of-7">-->
+                                <!--</div>-->
+
+                                <!--<div class="slds-form-element slds-col slds-size&#45;&#45;1-of-1 slds-medium-size&#45;&#45;2-of-7 slds-large-size&#45;&#45;2-of-7">-->
+                                    <!--<label class="slds-form-element__label" for="name">Name</label>-->
+                                    <!--<div class="slds-form-element__control">-->
+                                        <!--<ui:inputText class="slds-input" value="{!v.FirstCompetitorScore}" required="true"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="slds-form-element slds-col slds-size&#45;&#45;1-of-1 slds-medium-size&#45;&#45;1-of-7 slds-large-size&#45;&#45;1-of-7">-->
+                                <!--</div>-->
+
+
+                                <!--<div class="slds-form-element slds-col slds-size&#45;&#45;1-of-1 slds-medium-size&#45;&#45;2-of-7 slds-large-size&#45;&#45;2-of-7">-->
+                                    <!--<label class="slds-form-element__label" for="name">Name</label>-->
+                                    <!--<div class="slds-form-element__control">-->
+                                        <!--<ui:inputText class="slds-input" value="{!v.SecondCompetitorScore}" required="true"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div style="margin: 20px auto">-->
+                                    <!--<lightning:button variant="neutral" label="Create" iconName="utility:new" iconPosition="left" onclick="{! c.createTournament }"/>-->
+                                <!--</div>-->
+
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</fieldset>-->
+
+                    <c:gameComponent
+                            existsInCurrentGame="true"
+                            gameId="{!v.game.gameId}"
+                            tournamentId="{!v.tournamentId}"
+                            playerFromCookie="{!v.playerIdFromCookie}"
+                            player1Name="{!v.game.firstCompetitorName}"
+                            player2Name="{!v.game.secondCompetitorName}"
+                    />
+
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}" >Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+
+
+
+
+
 </aura:component>

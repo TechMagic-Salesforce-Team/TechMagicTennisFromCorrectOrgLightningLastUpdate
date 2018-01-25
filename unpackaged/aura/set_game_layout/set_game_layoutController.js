@@ -32,6 +32,16 @@
         if(component.get("v.tournamentId") == 'a010Y00000b9IFuQAM') {
             console.log(component.get("v.game"));
         }
+    },
+
+    gameClicked : function (component, event, helper) {
+        //alert("clicked");
+        component.set("v.editGameSwitched", true);
+    },
+
+    closeWindow : function (component, event, helper) {
+        //alert("clicked");
+        component.set("v.editGameSwitched", false);
     }
     
 })

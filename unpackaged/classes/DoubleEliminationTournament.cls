@@ -90,8 +90,11 @@ public with sharing class DoubleEliminationTournament {
                         System.debug('current player: ' + currentPlayer);
                     }
                 } else {
-                    currentPlayer = [select Id,Name,Email__c,Password__c,IsManager__c from Player__c where Id = :playerIdLightning];
-                    System.debug('Current player lightning: '+currentPlayer);
+                    if (isLoggedIn) {
+                        currentPlayer =
+                        [select Id,Name,Email__c,Password__c,IsManager__c from Player__c where Id = :playerIdLightning];
+                        System.debug('Current player lightning: ' + currentPlayer);
+                    } else currentPlayer = null;
                 }
             }catch (Exception ex) {
 				System.debug('Exception');
@@ -111,7 +114,7 @@ public with sharing class DoubleEliminationTournament {
             /////////////////////////////////////////////////////////////////////
 
 //            if (isLoggedIn){
-                if (currentTournament.Format__c!='1 x 1'){
+                if (currentTournament.Format__c!='1 x 1') {
                     if (currentPlayer != null){
                     for (Team__c team: (List<Team__c>)teamsOrPlayers.Values()){
                         playerOrTeamRelatedToPlayerFromCookie =
@@ -122,7 +125,11 @@ public with sharing class DoubleEliminationTournament {
                     playerOrTeamRelatedToPlayerFromCookie = null;
                 }
               } else {
-					playerOrTeamRelatedToPlayerFromCookie = currentPlayer.Id;
+                    if (currentPlayer != null) {
+                        playerOrTeamRelatedToPlayerFromCookie = currentPlayer.Id;
+                    } else {
+                        playerOrTeamRelatedToPlayerFromCookie = null;
+                    }
 				}
             //}
 

@@ -35,6 +35,9 @@
             if (state === 'SUCCESS') {
                 var respDataJson = response.getReturnValue();
                 alert(respDataJson);
+                if (JSON.parse(respDataJson).type=='SUCCESS') {
+                    location.reload();
+                }
             }
         })
         $A.enqueueAction(action);

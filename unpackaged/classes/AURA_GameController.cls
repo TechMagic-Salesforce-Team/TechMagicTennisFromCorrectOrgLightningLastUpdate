@@ -12,12 +12,12 @@ public class AURA_GameController {
 		CallBackMessage callBackMessage = new CallBackMessage();
 		Integer firstCompScore = (Integer)game.FirstCompetitorScore__c;
 		Integer secondCompScore = (Integer)game.SecondCompetitorScore__c;
-		if ((firstCompScore>0 || secondCompScore > 0) && (firstCompScore != secondCompScore)) {
+		if ((firstCompScore>=0 && secondCompScore >=0) && (firstCompScore != secondCompScore)) {
 			game.FirstCompetitorScore__c = firstCompScore;
 			game.SecondCompetitorScore__c = secondCompScore;
 		} else {
 			callBackMessage.type = 'Error';
-			callBackMessage.message = 'Values of scores must be more than 0 and must be different';
+			callBackMessage.message = 'Values must be different and at least >=0';
 			return JSON.serialize(callBackMessage);
 		}
 		PlayerCookiePositionInGame positionInGame = playerPositionInCurrentGame(tournament, currentPlayer, game);

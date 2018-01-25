@@ -7,6 +7,8 @@
     <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
     <aura:attribute name="canSubmit" type="Boolean" default="false"/>
     <aura:attribute name="isUndefined" type="Boolean" default="false"/>
+    <aura:attribute name="player1Name" type="String" default="?"/>
+    <aura:attribute name="player2Name" type="String" default="?"/>
 
     <aura:if isTrue="{!v.existsInCurrentGame}">
         <fieldset style="width: 100%; margin: 10px auto">
@@ -27,7 +29,14 @@
                     </div>
 
                     <div class="slds-form-element slds-col slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
-                        <label class="slds-form-element__label" for="name">First competitor score</label>
+                        <aura:if isTrue="{!v.player1Name != '?'}">
+                        <label class="slds-form-element__label" for="name">{!v.player1Name}</label>
+                        </aura:if>
+
+                        <aura:if isTrue="{!v.player1Name == '?'}">
+                            <label class="slds-form-element__label" for="name">First competitor score</label>
+                        </aura:if>
+
                         <div class="slds-form-element__control">
                             <ui:inputText class="slds-input" value="{!v.game.FirstCompetitorScore__c}"/>
                         </div>
@@ -40,7 +49,15 @@
                     </div>
 
                     <div class="slds-form-element slds-col-size--1-of-1 slds-size--1-of-1 slds-medium-size--2-of-7 slds-large-size--2-of-7">
-                        <label class="slds-form-element__label" for="name">Second competitor score</label>
+
+                        <aura:if isTrue="{!v.player2Name != '?'}">
+                            <label class="slds-form-element__label" for="name">{!v.player2Name}</label>
+                        </aura:if>
+
+                        <aura:if isTrue="{!v.player2Name == '?'}">
+                            <label class="slds-form-element__label" for="name">Second competitor score</label>
+                        </aura:if>
+
                         <div class="slds-form-element__control">
                             <ui:inputText class="slds-input" value="{!v.game.SecondCompetitorScore__c}"/>
                         </div>

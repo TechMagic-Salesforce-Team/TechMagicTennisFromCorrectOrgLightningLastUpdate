@@ -159,7 +159,8 @@
                                             <!--</div>-->
                                         <!--</div>-->
                                         <c:set_game_layout game="{!g}" tournamentId="{!v.tournamentId}" firstCompetitorId="{!g.firstCompetitorId}"
-                                                           secondCompetitorId="{!g.secondCompetitorId}" scrollX="{!v.scrollX__OfWinnersBasket}"/>
+                                                           secondCompetitorId="{!g.secondCompetitorId}" scrollX="{!v.scrollX__OfWinnersBasket}"
+                                                           playerIdFromCookie="{!v.playerId}"/>
                                         <p style="clear: left"/>
                                     </aura:if>
                                 </aura:iteration>
