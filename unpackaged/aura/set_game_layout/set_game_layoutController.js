@@ -29,6 +29,7 @@
     },
 
     doInit: function (component, event, helper) {
+        //alert(component.get("v.playerIdFromCookie"));
         if(component.get("v.tournamentId") == 'a010Y00000b9IFuQAM') {
             console.log(component.get("v.game"));
         }

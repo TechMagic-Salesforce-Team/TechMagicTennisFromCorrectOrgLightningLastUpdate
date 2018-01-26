@@ -146,7 +146,7 @@
                         <!--X-->
                         <!--<span class="slds-assistive-text">Close</span>-->
                     <!--</button>-->
-                    <h2 id="header99" class="slds-text-heading--medium">Insert Game Score</h2>
+                    <h2 id="header99" class="slds-text-heading--medium" style="color: green">Insert Game Score</h2>
                 </div>
 
 

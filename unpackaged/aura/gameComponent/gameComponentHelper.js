@@ -14,5 +14,19 @@
                 }
             })
             $A.enqueueAction(action);
+    },
+
+
+    setDisabledStatusForButtons : function (component) {
+         var inputScoreBtn = component.find("inputScoreButton");
+         inputScoreBtn.set("v.disabled",true);
+         var cancelScoreBtn = component.find("cancelButton");
+         cancelScoreBtn.set("v.disabled",true);
+         try {
+             var submitScoreBtn = component.find("submitScoreButton");
+             submitScoreBtn.set("v.disabled", true);
+         } catch (error) {
+             console.log("no element found with id 'submitScoreButton'")
+         }
     }
 })

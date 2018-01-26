@@ -8,6 +8,15 @@ public class AURA_GameController {
 
 	@AuraEnabled
 	public static String insertScore(String tournamentId, String currentPlayer, Game__c game) {
+		System.debug('Inserting scores: '+tournamentId+', player: '+currentPlayer+', game: '+game);
+		if (currentPlayer==null || String.isBlank(currentPlayer)) {
+			try {
+				currentPlayer = PlayerCookie.playerCookieId;
+				system.debug('now player is '+currentPlayer);
+			} catch (Exception ex) {
+
+			}
+		}
 		Tournament__c tournament = [select Id, Name, Type__c, Format__c from Tournament__c where Id=:tournamentId];
 		CallBackMessage callBackMessage = new CallBackMessage();
 		Integer firstCompScore = (Integer)game.FirstCompetitorScore__c;
@@ -70,6 +79,14 @@ public class AURA_GameController {
 	@AuraEnabled
 	public static String submitScore(String tournamentId, String currentPlayer, Game__c game) {
 		Tournament__c tournament = [select Id, Name, Type__c, Format__c from Tournament__c where Id=:tournamentId];
+		if (currentPlayer==null || String.isBlank(currentPlayer)) {
+			try {
+				currentPlayer = PlayerCookie.playerCookieId;
+				system.debug('now player is '+currentPlayer);
+			} catch (Exception ex) {
+
+			}
+		}
 		CallBackMessage callBackMessage = new CallBackMessage();
 		PlayerCookiePositionInGame positionInGame = playerPositionInCurrentGame(tournament, currentPlayer, game);
 		if (positionInGame==PlayerCookiePositionInGame.FIRST_COMPETITOR) {

@@ -10,6 +10,56 @@
     <aura:attribute name="player1Name" type="String" default="?"/>
     <aura:attribute name="player2Name" type="String" default="?"/>
     <aura:registerEvent name="windowCloser" type="c:closeWindowEvent"/>
+    <aura:attribute name="messageStatus" type="String"/>
+
+
+    <style>
+        #snackbar {
+            visibility: hidden;
+            min-width: 50%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            font-size: 17px;
+            width: 100%;
+            margin: auto;
+        }
+
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+    </style>
+
+
+    <div id="snackbar">{!v.messageStatus}</div>
 
     <aura:if isTrue="{!v.existsInCurrentGame}">
         <fieldset style="width: 100%; margin: 10px auto">
@@ -51,34 +101,34 @@
     </aura:if>
 
     <div style="float: right; margin-top: 20px;">
-    <aura:if isTrue="{!!and(v.game.FirstCompetitorAccept__c,
-            v.game.SecondCompetitorAccept__c)}">
-        <aura:if isTrue="{!v.existsInCurrentGame}">
-            <button class="slds-button slds-button--neutral" onclick="{!c.inputScoreFunc}">Input Score</button>
+        <aura:if isTrue="{!!and(v.game.FirstCompetitorAccept__c,
+                v.game.SecondCompetitorAccept__c)}">
+            <aura:if isTrue="{!v.existsInCurrentGame}">
+                <lightning:button class="slds-button slds-button--neutral" onclick="{!c.inputScoreFunc}" disabled="false" aura:id="inputScoreButton">Input Score</lightning:button>
+            </aura:if>
+            <aura:if isTrue="{!v.canSubmit}">
+                <lightning:button class="slds-button slds-button--neutral" onclick="{!c.submitScoreFunc}" disabled="false" aura:id="submitScoreButton">Submit Score</lightning:button>
+            </aura:if>
+            <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
         </aura:if>
-        <aura:if isTrue="{!v.canSubmit}">
-            <button class="slds-button slds-button--neutral" onclick="{!c.submitScoreFunc}">Submit Score</button>
-        </aura:if>
-        <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
-    </aura:if>
-        <button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}">Cancel</button>
+        <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}" disabled="false" aura:id="cancelButton">Cancel</lightning:button>
     </div>
 
     <!--<aura:if isTrue="{!!v.existsInCurrentGame}">-->
-        <!--<h1 class="slds-text-heading&#45;&#45;medium slds-text-align&#45;&#45;center">-->
-            <!--You have no access to this game-->
-        <!--</h1>-->
+    <!--<h1 class="slds-text-heading&#45;&#45;medium slds-text-align&#45;&#45;center">-->
+    <!--You have no access to this game-->
+    <!--</h1>-->
     <!--</aura:if>-->
     <!---->
     <!--<aura:if isTrue="{!v.game.FirstCompetitorAccept__c}">-->
-        <!--<aura:if isTrue="{!v.game.SecondCompetitorAccept__c}">-->
-            <!--<p style="font-size: 30px; text-align: center;"> Game has already been played </p>-->
-        <!--</aura:if>-->
+    <!--<aura:if isTrue="{!v.game.SecondCompetitorAccept__c}">-->
+    <!--<p style="font-size: 30px; text-align: center;"> Game has already been played </p>-->
+    <!--</aura:if>-->
     <!--</aura:if>-->
 
 
     <!--<aura:if isTrue="{!v.isUndefined}">-->
-            <!--<p style="font-size: 30px; text-align: center;"> You have not acess to achieve this game </p>-->
+    <!--<p style="font-size: 30px; text-align: center;"> You have not acess to achieve this game </p>-->
     <!--</aura:if>-->
 
 </aura:component>

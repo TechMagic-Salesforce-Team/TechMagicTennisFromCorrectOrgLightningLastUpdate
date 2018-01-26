@@ -1,6 +1,6 @@
 ({
     doInit: function (component, event, helper) {
-        //alert("Id from cookie: "+component.get("v.playerFromCookie")+', game: '+component.get("v.gameId")+', exists in current game:' + component.get("v.existsInCurrentGame"));
+        //alert(component.get("v.playerFromCookie"));
         var action = component.get("c.findGame");
         action.setParams({
             "gameId" : component.get("v.gameId")
@@ -23,22 +23,36 @@
         //alert(component.get('v.isUndefined')+','+component.get("v.playerFromCookie"));
     },
 
-    inputScoreFunc: function (component) {
+    inputScoreFunc: function (component, event, helper) {
+        //alert(component.get("v.playerFromCookie"));
         var action = component.get("c.insertScore");
         action.setParams({
-             "tournamentId" : component.get("v.tournamentId"),
-             "currentPlayer" : component.get("v.playerFromCookie"),
-             "game" : component.get("v.game")
+            "tournamentId" : component.get("v.tournamentId"),
+            "currentPlayer" : component.get("v.playerFromCookie"),
+            "game" : component.get("v.game")
         });
         action.setCallback(component, function (response) {
             var state = response.getState();
             if (state === 'SUCCESS') {
                 var respDataJson = response.getReturnValue();
-                alert(respDataJson);
+                //alert(respDataJson);
                 if (JSON.parse(respDataJson).type=='SUCCESS') {
-                    location.reload();
+                    helper.setDisabledStatusForButtons(component);
+                    component.set("v.messageStatus","Game was successfully updated");
+                } else {
+                    component.set("v.messageStatus","Error with updating game : "+JSON.parse(respDataJson).message);
                 }
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+
+                setTimeout(function(){
+                    x.className = x.className.replace("show", "");
+                    if (component.get("v.messageStatus").indexOf("Game was successfully updated")!=-1) {
+                            location.reload();
+                        }
+                }, 3000);
             }
+
         })
         $A.enqueueAction(action);
     },
@@ -56,17 +70,29 @@
             var state = response.getState();
             if (state === 'SUCCESS') {
                 var respDataJson = response.getReturnValue();
-                alert(respDataJson);
                 if (JSON.parse(respDataJson).type=='SUCCESS') {
-                    location.reload();
+                    helper.setDisabledStatusForButtons(component);
+                    component.set("v.messageStatus","Game was successfully submitted");
+                } else {
+                    component.set("v.messageStatus","Error with updating game : "+JSON.parse(respDataJson).message);
                 }
+                var x = document.getElementById("snackbar")
+                x.className = "show";
+                setTimeout(function(){
+                        x.className = x.className.replace("show", "");
+                        if (component.get("v.messageStatus").indexOf("Game was successfully submitted")!=-1) location.reload();
+                        }, 3000);
             }
-        })
+        });
         $A.enqueueAction(action);
     },
 
     closeWindow : function (component) {
         var closeWindowEv = component.getEvent("windowCloser");
         closeWindowEv.fire();
+    },
+
+    setDisabledStatusForButtonsCmp : function (component) {
+        alert('aaa');
     }
 })
