@@ -41,5 +41,27 @@
             }
         })
         $A.enqueueAction(action);
+    },
+
+    submitScoreFunc : function (component) {
+        var action = component.get("c.submitScore");
+        action.setParams({
+            "tournamentId" : component.get("v.tournamentId"),
+            "currentPlayer" : component.get("v.playerFromCookie"),
+            "game" : component.get("v.game")
+        });
+
+
+        action.setCallback(component, function (response) {
+            var state = response.getState();
+            if (state === 'SUCCESS') {
+                var respDataJson = response.getReturnValue();
+                alert(respDataJson);
+                if (JSON.parse(respDataJson).type=='SUCCESS') {
+                    location.reload();
+                }
+            }
+        })
+        $A.enqueueAction(action);
     }
 })

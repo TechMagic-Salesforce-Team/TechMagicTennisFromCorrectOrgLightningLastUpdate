@@ -37,18 +37,30 @@
     <apex:includeLightning />
 
     <script>
-        $Lightning.use("c:gameApp", function () {
-            $Lightning.createComponent("c:gameComponent", {
-                        gameId: "{!currentGame.Id}",
-                        playerFromCookie: "{!currentPlayer.Id}",
-                        existsInCurrentGame: "{!isExistInCurrentGame}",
-                        tournamentId : "{!tournament.Id}"
-                    },
-                    "lightning",
-                    function (cmp) {
+            $Lightning.use("c:gameApp", function () {
+                $Lightning.createComponent("c:gameComponent", {
+                            gameId: "{!currentGame.Id}",
+                            playerFromCookie: "{!currentPlayer.Id}",
+                            existsInCurrentGame: "{!isExistInCurrentGame}",
+                            tournamentId: "{!tournament.Id}",
+                            player1Name: "{!FirstCompetitor}",
+                            player2Name: "{!SecondCompetitor}"
+                        },
+                        "lightning",
+                        function (cmp) {
 
-                    });
-        });
+                        });
+            });
+        
+        function homeRedirect() {
+            if("{!isExistInCurrentGame}"==="false") {
+                alert("Game was played or you are not competitor of this game!");
+                location.href = "/Home"
+            }
+        }
+
+        homeRedirect();
+
     </script>
    <c:Footer />
 </apex:page>

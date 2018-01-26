@@ -27,7 +27,7 @@ global class GamesToPLayNotifier implements Schedulable{
 		AND secondCompetitorScore__c = 0];
 		for (Player__c p : players) {
 			for (Game__c g : games) {
-				if (g.firstCompetitor__c == p.Id || g.secondCompetitor__c == p.Id) {
+				if ((g.FirstCompetitor__c != '?' && g.firstCompetitor__c == p.Id) || (g.SecondCompetitor__c != '?' && g.SecondCompetitor__c == p.Id)) {
 					resultEmails.add(p.Email__c);
 					break;
 				}

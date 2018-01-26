@@ -14,7 +14,6 @@ public with sharing class GameController extends PlayerCookie{
     public String SecondCompetitor{get;set;} 
     public boolean isHoverCommandButton {get;set;}
     public String redirectUrl {get;set;}
-
     public GameController(){
         List<Game__c> currentGames  = [Select FirstCompetitor__c, FirstCompetitorScore__c, FirstCompetitorAccept__c,
                                        SecondCompetitor__c, SecondCompetitorScore__c, SecondCompetitorAccept__c,

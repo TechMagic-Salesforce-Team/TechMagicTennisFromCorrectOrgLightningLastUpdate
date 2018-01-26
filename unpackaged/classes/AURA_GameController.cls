@@ -68,7 +68,8 @@ public class AURA_GameController {
 
 
 	@AuraEnabled
-	public static String submitScore(Tournament__c tournament, String currentPlayer, Game__c game) {
+	public static String submitScore(String tournamentId, String currentPlayer, Game__c game) {
+		Tournament__c tournament = [select Id, Name, Type__c, Format__c from Tournament__c where Id=:tournamentId];
 		CallBackMessage callBackMessage = new CallBackMessage();
 		PlayerCookiePositionInGame positionInGame = playerPositionInCurrentGame(tournament, currentPlayer, game);
 		if (positionInGame==PlayerCookiePositionInGame.FIRST_COMPETITOR) {

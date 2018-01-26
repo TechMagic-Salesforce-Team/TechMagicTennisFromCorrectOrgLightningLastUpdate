@@ -1,4 +1,4 @@
-<aura:component>
+<aura:component >
     <aura:attribute name="playerId" type="Id"/>
     <aura:attribute name="tournamentId" type="Id"/>
     <aura:attribute name="tournamentType" type="String"/>
