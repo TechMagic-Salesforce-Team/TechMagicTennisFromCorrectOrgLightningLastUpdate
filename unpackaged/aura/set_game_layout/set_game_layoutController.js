@@ -42,6 +42,10 @@
     closeWindow : function (component, event, helper) {
         //alert("clicked");
         component.set("v.editGameSwitched", false);
+    },
+
+    handleWindowClose : function (component) {
+        component.set("v.editGameSwitched", false);
     }
     
 })

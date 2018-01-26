@@ -63,5 +63,10 @@
             }
         })
         $A.enqueueAction(action);
+    },
+
+    closeWindow : function (component) {
+        var closeWindowEv = component.getEvent("windowCloser");
+        closeWindowEv.fire();
     }
 })

@@ -9,6 +9,7 @@
     <aura:attribute name="isUndefined" type="Boolean" default="false"/>
     <aura:attribute name="player1Name" type="String" default="?"/>
     <aura:attribute name="player2Name" type="String" default="?"/>
+    <aura:registerEvent name="windowCloser" type="c:closeWindowEvent"/>
 
     <aura:if isTrue="{!v.existsInCurrentGame}">
         <fieldset style="width: 100%; margin: 10px auto">
@@ -49,20 +50,19 @@
         </fieldset>
     </aura:if>
 
+    <div style="float: right; margin-top: 20px;">
     <aura:if isTrue="{!!and(v.game.FirstCompetitorAccept__c,
             v.game.SecondCompetitorAccept__c)}">
-    <div style="float: right; margin-top: 20px;">
         <aura:if isTrue="{!v.existsInCurrentGame}">
             <button class="slds-button slds-button--neutral" onclick="{!c.inputScoreFunc}">Input Score</button>
         </aura:if>
         <aura:if isTrue="{!v.canSubmit}">
             <button class="slds-button slds-button--neutral" onclick="{!c.submitScoreFunc}">Submit Score</button>
         </aura:if>
-        <!--<button class="slds-button slds-button&#45;&#45;neutral" >Cancel</button>-->
         <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
-        <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
-    </div>
     </aura:if>
+        <button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}">Cancel</button>
+    </div>
 
     <!--<aura:if isTrue="{!!v.existsInCurrentGame}">-->
         <!--<h1 class="slds-text-heading&#45;&#45;medium slds-text-align&#45;&#45;center">-->

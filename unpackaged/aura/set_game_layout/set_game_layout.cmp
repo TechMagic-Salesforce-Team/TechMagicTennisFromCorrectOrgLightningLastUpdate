@@ -16,6 +16,8 @@
     <aura:attribute name="FirstCompetitorScore" type="Integer" default="0"/>
     <aura:attribute name="SecondCompetitorScore" type="Integer" default="0"/>
     <aura:attribute name="playerIdFromCookie" type="String"/>
+    <aura:handler name="windowCloser" event="c:closeWindowEvent" action="{!c.handleWindowClose}"/>
+
     <style>
         .game {
             width: 250px;
@@ -140,10 +142,10 @@
         <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
             <div class="slds-modal__container">
                 <div class="slds-modal__header">
-                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeWindow}">
-                        X
-                        <span class="slds-assistive-text">Close</span>
-                    </button>
+                    <!--<button class="slds-button slds-modal__close slds-button&#45;&#45;icon-inverse" title="Close" onclick="{!c.closeWindow}">-->
+                        <!--X-->
+                        <!--<span class="slds-assistive-text">Close</span>-->
+                    <!--</button>-->
                     <h2 id="header99" class="slds-text-heading--medium">Insert Game Score</h2>
                 </div>
 
