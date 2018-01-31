@@ -1,4 +1,4 @@
-<aura:application  access="global" implements="ltng:allowGuestAccess" extends="force:slds">
+<aura:application access="global" implements="ltng:allowGuestAccess" extends="force:slds">
 
     <style>
         #snackbar {

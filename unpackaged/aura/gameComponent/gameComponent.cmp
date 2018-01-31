@@ -11,6 +11,7 @@
     <aura:attribute name="player2Name" type="String" default="?"/>
     <aura:registerEvent name="windowCloser" type="c:closeWindowEvent"/>
     <aura:attribute name="messageStatus" type="String"/>
+    
 
 
     <style>
@@ -107,7 +108,7 @@
                 <lightning:button class="slds-button slds-button--neutral" onclick="{!c.inputScoreFunc}" disabled="false" aura:id="inputScoreButton">Input Score</lightning:button>
             </aura:if>
             <aura:if isTrue="{!v.canSubmit}">
-                <lightning:button class="slds-button slds-button--neutral" onclick="{!c.submitScoreFunc}" disabled="false" aura:id="submitScoreButton">Submit Score</lightning:button>
+                <lightning:button class="slds-button slds-button--neutral" onclick="{!c.submitScoreFunc}" disabled="false" aura:id="submitScoreButton">Approve Score</lightning:button>
             </aura:if>
             <!--<button class="slds-button slds-button&#45;&#45;neutral" onclick="{!c.closeWindow}" >Cancel</button>-->
         </aura:if>

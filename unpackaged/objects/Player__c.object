@@ -142,6 +142,23 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>Managers</fullName>
+        <columns>NAME</columns>
+        <columns>Rating__c</columns>
+        <columns>Status__c</columns>
+        <columns>Image__c</columns>
+        <columns>Email__c</columns>
+        <columns>IsManager__c</columns>
+        <columns>Password__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IsManager__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Managers</label>
+    </listViews>
     <nameField>
         <label>Player Name</label>
         <trackHistory>false</trackHistory>

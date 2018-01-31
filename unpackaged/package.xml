@@ -147,6 +147,7 @@
         <members>TournamentSelectedEvent</members>
         <members>TournamentsTable</members>
         <members>UpdateTournamentsTableOnDelete</members>
+        <members>closeWindowEvent</members>
         <members>doubleEliminationGrid</members>
         <members>doubleEliminationGridCmp</members>
         <members>findPlayersByNameEvent</members>
@@ -174,6 +175,8 @@
         <members>teamInvitationItem</members>
         <members>teamInvitationTable</members>
         <members>teamInvitationsCmp</members>
+        <members>testGames</members>
+        <members>testingGamesCmpAppp</members>
         <members>tournamentSearchApp</members>
         <name>AuraDefinitionBundle</name>
     </types>
@@ -320,6 +323,7 @@
         <members>Scorecard-Scorecard Layout</members>
         <members>ScorecardMetric-Scorecard Metric Layout</members>
         <members>SocialPersona-Social Persona Layout</members>
+        <members>SocialPost-Social Post Layout</members>
         <members>Solution-Solution Layout</members>
         <members>Task-Task Layout</members>
         <members>Team__c-Team Layout</members>

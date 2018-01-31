@@ -57,7 +57,7 @@
         $A.enqueueAction(action);
     },
 
-    submitScoreFunc : function (component) {
+    submitScoreFunc : function (component,event, helper) {
         var action = component.get("c.submitScore");
         action.setParams({
             "tournamentId" : component.get("v.tournamentId"),
@@ -65,14 +65,13 @@
             "game" : component.get("v.game")
         });
 
-
         action.setCallback(component, function (response) {
             var state = response.getState();
             if (state === 'SUCCESS') {
                 var respDataJson = response.getReturnValue();
                 if (JSON.parse(respDataJson).type=='SUCCESS') {
                     helper.setDisabledStatusForButtons(component);
-                    component.set("v.messageStatus","Game was successfully submitted");
+                    component.set("v.messageStatus","Game was successfully approved");
                 } else {
                     component.set("v.messageStatus","Error with updating game : "+JSON.parse(respDataJson).message);
                 }
@@ -84,7 +83,7 @@
                         }, 3000);
             }
         });
-        $A.enqueueAction(action);
+        $A.enqueueAction(action); 
     },
 
     closeWindow : function (component) {
